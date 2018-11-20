@@ -1,6 +1,7 @@
 <template>
     <div>
         <button @click="click($event)">点击</button>
+        佛山
     </div>
 </template>
 
