@@ -13,6 +13,7 @@ import CityList from './components/citylist.vue';
 
 import Header from './components/header.vue'
 import Search from './components/search.vue'
+import LoginAndRegist from './components/loginAndRegist.vue'
 
 Vue.config.productionTip = false
 
@@ -24,6 +25,7 @@ Vue.component('citynav',CityNav)
 Vue.component('hotcity',HotCity)
 Vue.component('pinyin',PinYin)
 Vue.component('citylist',CityList)
+Vue.component('LoginAndRegist',LoginAndRegist)
 
 new Vue({
   el: '#app',

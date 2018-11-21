@@ -34,3 +34,14 @@ ul {
   justify-content: center;
   align-items: center;
 }
+
+.router-enter-active,.router-leave-active{
+    transition: opacity 1s;
+}
+.router-enter,.router-leave-to{
+    opacity: 0;
+}
+
+body,html{
+    background-color: #F0F0F0;
+}

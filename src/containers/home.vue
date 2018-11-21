@@ -3,8 +3,13 @@
     <div class="my-header">
         <my-header class="my-container my-center" />
     </div>
-    <div class="my-container my-center">
-        <my-search class="my-search" />
+    <div class="my-bg">
+        <my-search class="my-search my-container my-center" />
+    </div>
+    <div>
+        <transition name="router" mode="out-in">
+        <router-view />
+        </transition>
     </div>
 </div>
 </template>
@@ -13,8 +18,11 @@
 .my-search {
   padding: 10px 0;
 }
-.my-header{
-    background-color: #F8F8F8;
+.my-header {
+  background-color: #f8f8f8;
+}
+.my-bg{
+    background-color: white;
 }
 </style>
 
