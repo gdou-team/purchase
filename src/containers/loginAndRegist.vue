@@ -13,10 +13,10 @@
     <div class="my-login-item">
       <div class='bg'></div>
       
-          <transition name="router" mode="out-in">
-    <keep-alive>
+    <transition name="router" mode="out-in">
+    <!-- <keep-alive> -->
     <router-view/>
-    </keep-alive>
+    <!-- </keep-alive> -->
     </transition>
     
       </div>
@@ -36,9 +36,7 @@ export default {
     }
   },
   mounted(){
-    get('https://cnodejs.org/api/v1/topics',{},{
-      "Content-Type": "application/x-www-form-urlencoded"
-    })
+    
   }
 }
 </script>

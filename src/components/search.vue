@@ -2,7 +2,7 @@
     <div class="my-search">
         <div class="my-city fontsize14">
             <span class="city">北京</span>
-            <span @click="goTo">切换城市</span>
+            <span @click="selectCity">切换城市</span>
         </div>
         <div class="demo">
             <div class="my-input flexrowcenter">
@@ -28,13 +28,13 @@ export default {
         }
     },
     methods:{
-        goTo(){
+        selectCity(){
             if(this.isShow==false){
+                this.$emit('selectCity','selectCity')
                 this.isShow=true
-                this.$router.push({name:'selectCity'})
                 return
             }else{
-                this.$router.push({name:'home'})
+                this.$emit('selectCity','home')
                 this.isShow=false;
             }
         }
@@ -94,6 +94,7 @@ export default {
     left: 0;
   li{
       padding: 5px 10px 5px 0;
+      cursor: pointer;
   }
 }
 .my-bg{

@@ -12,8 +12,14 @@
 
 <script>
 // 登录表单
+import {mapGetters} from 'vuex'
 export default {
-    
+    mounted(){
+        
+    },
+    computed:{
+        ...mapGetters(['userInfo'])
+    }
 }
 </script>
 

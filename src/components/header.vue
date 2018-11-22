@@ -11,8 +11,8 @@
                 <li>团购购物车(0)</li>
                 <li>我的</li>
                 <li>更多</li>
-                <li class="my-item">[登录]</li>
-                <li class="my-item">[注册]</li>
+                <li class="my-item" @click="login">[登录]</li>
+                <li class="my-item" @click="register">[注册]</li>
             </ul>
         </div>
     </div>
@@ -21,7 +21,14 @@
 <script>
 // 头部
 export default {
-    
+    methods:{
+        register(){
+            this.$emit('register')
+        },
+        login(){
+            this.$emit('login')
+        }
+    }
 }
 </script>
 

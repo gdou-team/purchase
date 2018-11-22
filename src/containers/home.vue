@@ -1,10 +1,15 @@
 <template>
 <div>
     <div class="my-header">
-        <my-header class="my-container my-center" />
+        <my-header
+         @register='register' 
+         @login='login'
+         class="my-container my-center" />
     </div>
     <div class="my-bg">
-        <my-search class="my-search my-container my-center" />
+        <my-search
+        @selectCity='selectCity'
+         class="my-search my-container my-center" />
     </div>
     <div>
         <transition name="router" mode="out-in">
@@ -19,8 +24,22 @@
 <script>
 // 首页
 export default {
-    
-}
+  methods: {
+    register() {
+      this.$router.push({
+        name: "register"
+      });
+    },
+    login() {
+      this.$router.push({
+        name: "login"
+      });
+    },
+    selectCity(name) {
+      this.$router.push({ name });
+    }
+  }
+};
 </script>
 
 
@@ -31,8 +50,8 @@ export default {
 .my-header {
   background-color: #f8f8f8;
 }
-.my-bg{
-    background-color: white;
+.my-bg {
+  background-color: white;
 }
 </style>
 
