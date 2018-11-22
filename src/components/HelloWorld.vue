@@ -1,5 +1,5 @@
 <template>
-	<citylist />
+	<smallgoods />
 </template>
 
 <script>
