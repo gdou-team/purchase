@@ -18,6 +18,9 @@ import SmallGoods from './components/smallgoods.vue';
 
 import Header from './components/header.vue'
 import Search from './components/search.vue'
+import Nav from './components/nav.vue'
+import Item from './components/item.vue'
+import ShopList from './components/shopList.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 
@@ -32,13 +35,13 @@ Vue.component('citynav',CityNav)
 Vue.component('hotcity',HotCity)
 Vue.component('pinyin',PinYin)
 Vue.component('citylist',CityList)
-<<<<<<< HEAD
 Vue.component('SelectCity',SelectCity)
-=======
 Vue.component('pagefooter',Footer)
 Vue.component('biggoods',BigGoods)
 Vue.component('smallgoods',SmallGoods)
->>>>>>> 3d978d1152c11f7fb7f023464f5586913db37b1f
+Vue.component('Nav',Nav)
+Vue.component('Item',Item)
+Vue.component('ShopList',ShopList)
 
 new Vue({
   el: '#app',

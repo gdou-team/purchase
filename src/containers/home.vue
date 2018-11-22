@@ -15,13 +15,19 @@
          <SelectCity/>
          </div>
          </transition>
+         <Nav />
     </div>
     <div>
+      <div class="my-container my-center">
         <transition name="router" mode="out-in">
         <keep-alive>
         <router-view />
         </keep-alive>
         </transition>
+        </div>
+    </div>
+    <div>
+      <pagefooter />
     </div>
 </div>
 </template>

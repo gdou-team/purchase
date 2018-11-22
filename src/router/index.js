@@ -4,6 +4,7 @@ import Home from '@/containers/home'
 import Login from '@/components/login.vue'
 import Register from '@/components/register.vue'
 import LoginAndRegister from '@/containers/loginAndRegist.vue'
+import HomeContent from '@/containers/homeContent.vue'
 
 Vue.use(Router)
 
@@ -14,6 +15,15 @@ export default new Router({
       name: 'home',
       component: Home,
       children:[
+        {
+          path:'homeContent',
+          name:'homeContent',
+          component:HomeContent
+        },
+        {
+          path:'/',
+          redirect:'homeContent'
+        }
       ]
     },
     {
