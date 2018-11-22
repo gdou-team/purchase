@@ -21,7 +21,18 @@
 
 <script>
 	// 城市列表
-	export default{}
+	export default{
+		props:{
+			city:{
+				type:Array,
+				default:[]
+			},
+			title:{
+				type:String,
+				default:''
+			}
+		}
+	}
 </script>
 
 <style>

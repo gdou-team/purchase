@@ -10,7 +10,11 @@
 <script>
 // 选择城市
 export default {
-    
+    data(){
+        return {
+           
+        }
+    }
 }
 </script>
 
