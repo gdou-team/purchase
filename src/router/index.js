@@ -37,10 +37,10 @@ export default new Router({
           name:'register',
           component:Register
         },
-        // {
-        //   path:'/',
-        //   redirect:'login'
-        // }
+        {
+          path:'/',
+          redirect:'login'
+        }
       ]
     },
     {
