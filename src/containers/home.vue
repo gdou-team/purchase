@@ -10,6 +10,11 @@
         <my-search
         @selectCity='selectCity'
          class="my-search my-container my-center" />
+         <transition name="router" mode="out-in">
+           <div class="SelectCity" v-if="isShowSelectCity">
+         <SelectCity/>
+         </div>
+         </transition>
     </div>
     <div>
         <transition name="router" mode="out-in">
@@ -24,6 +29,11 @@
 <script>
 // 首页
 export default {
+  data(){
+    return{
+      isShowSelectCity:false
+    }
+  },
   methods: {
     register() {
       this.$router.push({
@@ -35,8 +45,8 @@ export default {
         name: "login"
       });
     },
-    selectCity(name) {
-      this.$router.push({ name });
+    selectCity(flag) {
+      this.isShowSelectCity = !flag
     }
   }
 };
@@ -52,6 +62,14 @@ export default {
 }
 .my-bg {
   background-color: white;
+  position: relative;
+  .SelectCity{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color:white;
+    width: 100%;
+  }
 }
 </style>
 

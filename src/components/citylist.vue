@@ -23,14 +23,14 @@
 	// 城市列表
 	export default{
 		props:{
-			city:{
-				type:Array,
-				default:[]
-			},
-			title:{
-				type:String,
-				default:''
-			}
+			// city:{
+			// 	type:Array,
+			// 	default:[]
+			// },
+			// title:{
+			// 	type:String,
+			// 	default:''
+			// }
 		}
 	}
 </script>

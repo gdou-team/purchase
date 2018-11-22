@@ -30,11 +30,11 @@ export default {
     methods:{
         selectCity(){
             if(this.isShow==false){
-                this.$emit('selectCity','selectCity')
+                this.$emit('selectCity',false)
                 this.isShow=true
                 return
             }else{
-                this.$emit('selectCity','home')
+                this.$emit('selectCity',true)
                 this.isShow=false;
             }
         }

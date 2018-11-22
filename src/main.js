@@ -16,6 +16,8 @@ import CityList from './components/citylist.vue';
 import Header from './components/header.vue'
 import Search from './components/search.vue'
 
+import SelectCity from '@/containers/selectCity.vue'
+
 
 Vue.config.productionTip = false
 
@@ -27,6 +29,7 @@ Vue.component('citynav',CityNav)
 Vue.component('hotcity',HotCity)
 Vue.component('pinyin',PinYin)
 Vue.component('citylist',CityList)
+Vue.component('SelectCity',SelectCity)
 
 new Vue({
   el: '#app',

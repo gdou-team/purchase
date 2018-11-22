@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/containers/home'
-import SelectCity from '@/containers/selectCity.vue'
 import Login from '@/components/login.vue'
 import Register from '@/components/register.vue'
 import LoginAndRegister from '@/containers/loginAndRegist.vue'
@@ -15,11 +14,6 @@ export default new Router({
       name: 'home',
       component: Home,
       children:[
-        {
-          path:'selectCity',
-          name:'selectCity',
-          component:SelectCity
-        }
       ]
     },
     {
