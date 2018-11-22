@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// 注册表单
 export default {
     methods:{
         goBack(){

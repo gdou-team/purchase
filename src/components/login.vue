@@ -10,6 +10,14 @@
       </div> 
 </template>
 
+<script>
+// 登录表单
+export default {
+    
+}
+</script>
+
+
 <style lang="less" scoped>
 .input{
     display: flex;

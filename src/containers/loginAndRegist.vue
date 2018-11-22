@@ -26,12 +26,19 @@
 </template>
 
 <script>
+// 登录注册
+import {get} from '@/util'
 export default {
   props:{
     title:{
       type:String,
       default:'请先登录'
     }
+  },
+  mounted(){
+    get('https://cnodejs.org/api/v1/topics',{},{
+      "Content-Type": "application/x-www-form-urlencoded"
+    })
   }
 }
 </script>

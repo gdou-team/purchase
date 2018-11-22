@@ -18,6 +18,13 @@
     </div>
 </template>
 
+<script>
+// 头部
+export default {
+    
+}
+</script>
+
 
 <style lang="less" scoped>
 .my-header {

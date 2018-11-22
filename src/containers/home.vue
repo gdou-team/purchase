@@ -16,6 +16,14 @@
 </div>
 </template>
 
+<script>
+// 首页
+export default {
+    
+}
+</script>
+
+
 <style lang="less" scoped>
 .my-search {
   padding: 10px 0;
