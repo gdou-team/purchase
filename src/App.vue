@@ -1,6 +1,10 @@
 <template>
   <div id="app">
+    <transition name="router" mode="out-in">
+    <!-- <keep-alive> -->
     <router-view/>
+    <!-- </keep-alive> -->
+    </transition>
   </div>
 </template>
 
@@ -16,5 +20,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  height: 100%;
 }
 </style>

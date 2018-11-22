@@ -1,8 +1,47 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-ul{
-    list-style: none;
+ul {
+  list-style: none;
+}
+
+.fontsize12 {
+  font-size: 12px;
+}
+
+.fontsize14 {
+  font-size: 14px;
+}
+
+.my-center {
+  margin: 0 auto;
+}
+
+.my-container {
+  width: 90%;
+}
+
+.flexrow{
+    display: flex;
+    flex-direction: row; 
+}
+
+.flexrowcenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.router-enter-active,.router-leave-active{
+    transition: opacity 1s;
+}
+.router-enter,.router-leave-to{
+    opacity: 0;
+}
+
+body,html{
+    background-color: #F0F0F0;
 }

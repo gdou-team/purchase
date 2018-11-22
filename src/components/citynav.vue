@@ -34,14 +34,14 @@
 							<el-dropdown-item>湛江</el-dropdown-item>
 						</el-dropdown-menu> 
 					</el-dropdown>
-					<input type="submit" value="确 定" class="button">
+					<input type="button" value="确 定" class="button">
 				</form>
 			</div>
 			<div>
 				<form id="search_city">
 					<span class="tips">直接输入</span>
 					<input type="text" name="cityname" class="text" placeholder="请输入城市的名称">
-					<input type="submit" value="确 定" class="button">
+					<input type="button" value="确 定" class="button">
 				</form>
 			</div>
 		</div>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+// 选择城市
 export default {
    
 }
