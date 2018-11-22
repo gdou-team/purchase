@@ -8,7 +8,9 @@
     </div>
     <div>
         <transition name="router" mode="out-in">
+        <keep-alive>
         <router-view />
+        </keep-alive>
         </transition>
     </div>
 </div>
