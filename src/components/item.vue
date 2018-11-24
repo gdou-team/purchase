@@ -37,6 +37,7 @@ export default {
         li{
             font-size: 12px;
             padding: 0 10px;
+            cursor: pointer;
         }
         li:nth-child(1){
             margin-left: 20px;

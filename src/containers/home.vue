@@ -75,6 +75,7 @@ export default {
     top: 100%;
     background-color:white;
     width: 100%;
+    z-index: 1;
   }
 }
 </style>

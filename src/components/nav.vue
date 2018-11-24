@@ -28,6 +28,7 @@
     font-weight: bold;
     li{
         padding: 0 20px 0;
+        cursor: pointer;
     }
     .all{
         background-color: white;
