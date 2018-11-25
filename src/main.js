@@ -15,6 +15,8 @@ import CityList from './components/citylist.vue';
 import Footer from './components/pagefooter.vue';
 import BigGoods from './components/biggoods.vue';
 import SmallGoods from './components/smallgoods.vue';
+import GoodsList from './components/goods_list.vue';
+import GoodsDetail from './components/goods_detail.vue';
 
 import Header from './components/header.vue'
 import Search from './components/search.vue'
@@ -33,6 +35,8 @@ Vue.component('citylist',CityList)
 Vue.component('pagefooter',Footer)
 Vue.component('biggoods',BigGoods)
 Vue.component('smallgoods',SmallGoods)
+Vue.component('goodslist',GoodsList)
+Vue.component('goodsdetail',GoodsDetail)
 
 new Vue({
   el: '#app',

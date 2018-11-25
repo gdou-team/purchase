@@ -1,5 +1,5 @@
 <template>
-	<smallgoods />
+	<goodsdetail />
 </template>
 
 <script>

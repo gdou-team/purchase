@@ -5,6 +5,7 @@ import SelectCity from '@/containers/selectCity.vue'
 import Login from '@/components/login.vue'
 import Register from '@/components/register.vue'
 import LoginAndRegister from '@/containers/loginAndRegist.vue'
+import Vanni from '@/components/HelloWorld.vue'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
     {
       path:'/',
       redirect:'/home'
+    },
+    {
+      path:'/vanni',
+      name:'vanni',
+      component:Vanni
     }
   ]
 })
