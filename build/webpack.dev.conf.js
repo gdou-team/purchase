@@ -29,6 +29,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       ],
     },
     hot: true,
+    // 解决 Webpack "Invalid Host Header",原因：webpack 对 host 进行了安全检查
+    disableHostCheck:true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,

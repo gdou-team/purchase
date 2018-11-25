@@ -28,7 +28,7 @@ export default {
 	props:{
 		width:{
 			type:String,
-			default:'341px'
+			default:'100%'
 		},
 		infoBgColor:{
 			type:String,
@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 	.big_goods{
-		width: 341px;
+		width: 100%;
     	font-family: Microsoft Yahei;
     	float: left;
     	text-decoration: none;

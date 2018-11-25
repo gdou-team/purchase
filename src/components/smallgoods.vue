@@ -21,6 +21,10 @@
 <style>
 	.noml{
 		margin-left: 0;
+		border: 1px solid transparent;
+	}
+	.noml:hover{
+		border: 1px solid #FF7E00;
 	}
 	.small_goods{
 		width: 198px;
@@ -42,7 +46,8 @@
 	    height: 40px;
 	    font-weight: 400;
 	    padding-top: 10px;
-	    overflow: hidden;
+		overflow: hidden;
+		padding: 5px 10px;
 	}
 	.small_goods h4 a{
 		display: block;
@@ -72,7 +77,8 @@
 	    height: 24px;
 	    padding-top: 4px;
 	    overflow: hidden;
-	    font-family: arial;
+		font-family: arial;
+		padding: 5px 10px;
 	}
 	.small_goods_info span.price{
 		display: inline-block;

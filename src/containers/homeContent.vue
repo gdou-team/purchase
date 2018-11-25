@@ -11,8 +11,12 @@
             <div class="food">
             <p>美食</p>
             <div class="good-food">
-            <biggoods />
-            <biggoods />
+            <div>
+              <biggoods />
+            </div>
+            <div>
+              <biggoods />
+            </div>
             </div>
             </div>
         </div>
@@ -66,7 +70,8 @@ export default {
   data() {
     return {
       title: "hot",
-      isShowNav: false
+      isShowNav: false,
+      num: 0
     };
   },
   mounted() {
@@ -141,7 +146,7 @@ export default {
         } else {
           this.isShowNav = false;
         }
-      }, 500);
+      }, 100);
     }
   },
   beforeDestroy() {
@@ -168,6 +173,7 @@ export default {
 }
 
 .home-content-top {
+  width: auto;
   .right {
     display: flex;
     flex-direction: column;
@@ -189,6 +195,10 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    >div{
+      width: 47%;
+    }
   }
 }
 
@@ -225,4 +235,5 @@ export default {
   right: 5px;
   bottom: 50%;
 }
+
 </style>
