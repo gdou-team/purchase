@@ -21,6 +21,8 @@ import Search from './components/search.vue'
 import Nav from './components/nav.vue'
 import Item from './components/item.vue'
 import ShopList from './components/shopList.vue'
+import shopContent from './components/shopContent.vue'
+import NavigationElevator from './components/NavigationElevator.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 
@@ -42,6 +44,8 @@ Vue.component('smallgoods',SmallGoods)
 Vue.component('Nav',Nav)
 Vue.component('Item',Item)
 Vue.component('ShopList',ShopList)
+Vue.component('shopContent',shopContent)
+Vue.component('NavigationElevator',NavigationElevator)
 
 new Vue({
   el: '#app',
