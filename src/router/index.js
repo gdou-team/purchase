@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/containers/home'
-import SelectCity from '@/containers/selectCity.vue'
 import Login from '@/components/login.vue'
 import Register from '@/components/register.vue'
 import LoginAndRegister from '@/containers/loginAndRegist.vue'
+
 import Vanni from '@/components/HelloWorld.vue'
+import HomeContent from '@/containers/homeContent.vue'
 
 Vue.use(Router)
 
@@ -17,9 +18,13 @@ export default new Router({
       component: Home,
       children:[
         {
-          path:'selectCity',
-          name:'selectCity',
-          component:SelectCity
+          path:'homeContent',
+          name:'homeContent',
+          component:HomeContent
+        },
+        {
+          path:'/',
+          redirect:'homeContent'
         }
       ]
     },

@@ -30,11 +30,11 @@ export default {
     methods:{
         selectCity(){
             if(this.isShow==false){
-                this.$emit('selectCity','selectCity')
+                this.$emit('selectCity',false)
                 this.isShow=true
                 return
             }else{
-                this.$emit('selectCity','home')
+                this.$emit('selectCity',true)
                 this.isShow=false;
             }
         }
@@ -64,6 +64,9 @@ export default {
       cursor: pointer;
   }
 }
+.demo{
+    width: 50%;
+}
 .my-input {
  input:nth-child(1){
      -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
@@ -73,7 +76,7 @@ export default {
     -webkit-appearance:none;
     outline: none;
      border: 2px solid #FF971B;
-     width: 474px;
+     width: 80%;
      height: 28px;
      padding: 5px 10px 5px 20px;
  }

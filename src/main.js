@@ -20,6 +20,14 @@ import GoodsDetail from './components/goods_detail.vue';
 
 import Header from './components/header.vue'
 import Search from './components/search.vue'
+import Nav from './components/nav.vue'
+import Item from './components/item.vue'
+import ShopList from './components/shopList.vue'
+import shopContent from './components/shopContent.vue'
+import NavigationElevator from './components/NavigationElevator.vue'
+import ListItem from './components/listItem.vue'
+
+import SelectCity from '@/containers/selectCity.vue'
 
 
 Vue.config.productionTip = false
@@ -32,11 +40,21 @@ Vue.component('citynav',CityNav)
 Vue.component('hotcity',HotCity)
 Vue.component('pinyin',PinYin)
 Vue.component('citylist',CityList)
+Vue.component('SelectCity',SelectCity)
 Vue.component('pagefooter',Footer)
 Vue.component('biggoods',BigGoods)
 Vue.component('smallgoods',SmallGoods)
+
 Vue.component('goodslist',GoodsList)
 Vue.component('goodsdetail',GoodsDetail)
+
+Vue.component('Nav',Nav)
+Vue.component('Item',Item)
+Vue.component('ShopList',ShopList)
+Vue.component('shopContent',shopContent)
+Vue.component('NavigationElevator',NavigationElevator)
+Vue.component('ListItem',ListItem)
+
 
 new Vue({
   el: '#app',

@@ -1,9 +1,11 @@
 <template>
-	<div class="big_goods">
+	<div class="big_goods" :style="{'width':width}">
 		<a class="big_goods_img" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">
-			<img class="dynload" src="../assets/biggoods.jpg" alt="【西红门】5_6人餐  ，交通便利" width="341" height="217">
+			<img class="dynload" src="../assets/biggoods.jpg" alt="【西红门】5_6人餐  ，交通便利">
 		</a>
-		<div class="big_goods_info">
+		<div class="big_goods_info" 
+		:style="{'background-color':infoBgColor}"
+		>
 			<h3>
 				<span class="ti">
 					<a class="big_goods_name" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">【西红门】儒家餐厅</a>
@@ -21,28 +23,50 @@
 	</div>
 </template>
 
+<script>
+export default {
+	props:{
+		width:{
+			type:String,
+			default:'100%'
+		},
+		infoBgColor:{
+			type:String,
+			default:'#f4f4f4'
+		}
+	}
+}
+</script>
+
+
 <style scoped>
 	.big_goods{
-		width: 341px;
+		width: 100%;
     	font-family: Microsoft Yahei;
     	float: left;
     	text-decoration: none;
+		border: 1px solid transparent;
+	}
+	.big_goods:hover{
+		border: 1px solid #FF7E00;
 	}
 	.big_goods_img{
-		width: 341px;
+		width: 100%;
     	font-family: Microsoft Yahei;
 	}
 	.dynload{
 		border: 0;
-		vertical-align: center;
+		vertical-align: top;
+		width: 100%;
+		height: auto;
 	}
 	.big_goods_info {
-	    width: 309px;
+	    /* width: 309px; */
 	    border: 1px solid #e9e9e9;
 	    border-top: 0;
 	    padding: 0 15px;
 	    height: 80px;
-	    background-color: #f4f4f4;
+	    /* background-color: #f4f4f4; */
 	}
 	.big_goods_info h3{
 		width: 100%;
