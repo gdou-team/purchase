@@ -65,45 +65,36 @@
 export default {
   data() {
     return {
-      offsetTop: 0,
-      title:'hot',
-      isShowNav:false
+      title: "hot",
+      isShowNav: false
     };
   },
   mounted() {
-    const hot = this.$refs.hot;
+    this.hot = this.$refs.hot;
     this.timer = null;
-    const myRef = document.getElementsByClassName('my-ref')
-    window.addEventListener("scroll", e => {
-      if (!hot) {
-        return;
-      }
-      if (this.timer) {
-        clearTimeout(this.timer);
-      }
-      this.timer = setTimeout(() => {
-          for(let j =0;j<myRef.length;j++){
-              let domTop = myRef[j].getBoundingClientRect().top
-              let domHeight = myRef[j].getBoundingClientRect().height
-              if(domTop <= 60 && (myRef[j].offsetTop + domHeight-60) > this.scroll().top){
-                  let title = myRef[j].dataset.title
-                  this.title = title
-              }
-          }
-          if(hot.getBoundingClientRect().top < 60){
-              this.isShowNav=true
-          }else{
-              this.isShowNav=false
-          }
-        this.offsetTop = parseInt(hot.getBoundingClientRect().top);
-      }, 500);
-    });
+    this.navTimer = null;
+    this.leader = 0;
+    this.myRef = document.getElementsByClassName("my-ref");
+    window.addEventListener("scroll", this.addEvent);
   },
   methods: {
     goToNav(ref) {
       const dom = this.$refs[ref];
       const top = dom.getBoundingClientRect().top + this.scroll().top;
-      window.scrollTo(0, top);
+      // window.scrollTo(0, top);
+
+      clearInterval(this.navTimer);
+      let leader = this.leader;
+      let target = top;
+      this.navTimer = setInterval(() => {
+        leader = leader + (target - leader) / 10;
+        if (Math.round(leader) == target) {
+          leader = target;
+          clearInterval(this.navTimer);
+        }
+        this.leader = leader;
+        window.scrollTo(0, leader);
+      }, 10);
     },
     scroll() {
       if (window.pageXOffset != null) {
@@ -124,12 +115,43 @@ export default {
         left: document.body.scrollLeft,
         top: document.body.scrollTop
       };
+    },
+    addEvent() {
+      if (!this.hot) {
+        return;
+      }
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        this.leader = this.scroll().top;
+        for (let j = 0; j < this.myRef.length; j++) {
+          let domTop = this.myRef[j].getBoundingClientRect().top;
+          let domHeight = this.myRef[j].getBoundingClientRect().height;
+          if (
+            domTop <= 100 &&
+            this.myRef[j].offsetTop + domHeight - 100 > this.scroll().top
+          ) {
+            let title = this.myRef[j].dataset.title;
+            this.title = title;
+          }
+        }
+        if (this.hot.getBoundingClientRect().top < 60) {
+          this.isShowNav = true;
+        } else {
+          this.isShowNav = false;
+        }
+      }, 500);
     }
   },
-  beforeDestroy(){
-      if(this.timer){
-          clearTimeout(this.timer)
-      }
+  beforeDestroy() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+    if (this.navTimer) {
+      clearInterval(this.navTimer);
+    }
+    window.removeEventListener("scroll", this.addEvent);
   }
 };
 </script>
@@ -156,6 +178,7 @@ export default {
   }
 }
 .food {
+  flex-wrap: wrap;
   p {
     font-size: 15px;
     padding: 10px 20px 10px 0px;
