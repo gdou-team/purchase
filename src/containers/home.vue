@@ -8,6 +8,7 @@
     </div>
     <div class="my-bg">
       <my-search
+      @search='search'
         @selectCity='selectCity'
         class="my-search my-container my-center"/>
       <transition name="router" mode="out-in">
@@ -19,11 +20,11 @@
     </div>
     <div>
       <div class="my-container my-center">
-        <transition name="router" mode="out-in">
+        <!-- <transition name="router" mode="out-in"> -->
           <keep-alive>
             <router-view/>
           </keep-alive>
-        </transition>
+        <!-- </transition> -->
       </div>
     </div>
     <div>
@@ -53,6 +54,11 @@
       },
       selectCity(flag) {
         this.isShowSelectCity = !flag
+      },
+      search(){
+        this.$router.push({
+          name:'goodList'
+        })
       }
     }
   };

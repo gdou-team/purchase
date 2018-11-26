@@ -1,6 +1,6 @@
 <template>
-	<div class="big_goods" :style="{'width':width}">
-		<a class="big_goods_img" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">
+	<div @click="handelClick" class="big_goods" :style="{'width':width}">
+		<a class="big_goods_img" @click.prevent href="http://beijing.lashou.com/deal/13313092.html" target="_blank">
 			<img class="dynload" src="../assets/biggoods.jpg" alt="【西红门】5_6人餐  ，交通便利">
 		</a>
 		<div class="big_goods_info" 
@@ -8,10 +8,10 @@
 		>
 			<h3>
 				<span class="ti">
-					<a class="big_goods_name" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">【西红门】儒家餐厅</a>
+					<a @click.prevent class="big_goods_name" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">【西红门】儒家餐厅</a>
 				</span>
 				<span>
-					<a class="big_goods_text" target="_blank" href="http://beijing.lashou.com/deal/13313092.html">5_6人餐  ，交通便利</a>
+					<a @click.prevent class="big_goods_text" target="_blank" href="http://beijing.lashou.com/deal/13313092.html">5_6人餐  ，交通便利</a>
 				</span>
 			</h3>
 			<div class="big_goods_price">
@@ -33,6 +33,11 @@ export default {
 		infoBgColor:{
 			type:String,
 			default:'#f4f4f4'
+		}
+	},
+	methods:{
+		handelClick(){
+			this.$emit('biggoods')
 		}
 	}
 }

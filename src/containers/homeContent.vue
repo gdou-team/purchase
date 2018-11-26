@@ -12,10 +12,10 @@
             <p>美食</p>
             <div class="good-food">
             <div>
-              <biggoods />
+              <biggoods @biggoods='goToDetail' />
             </div>
             <div>
-              <biggoods />
+              <biggoods @biggoods='goToDetail' />
             </div>
             </div>
             </div>
@@ -35,11 +35,11 @@
             <span>一周热卖</span>
         </div>
         <div class="flexrow food">
-            <smallgoods />
-            <smallgoods />
-            <smallgoods />
-            <smallgoods />
-            <smallgoods />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
         </div>
     </div>
     <div class="shop-item my-ref" ref='food' data-title='food'>
@@ -147,6 +147,11 @@ export default {
           this.isShowNav = false;
         }
       }, 100);
+    },
+    goToDetail(){
+      this.$router.push({
+        name:'goodDetail'
+      })
     }
   },
   beforeDestroy() {

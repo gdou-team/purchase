@@ -7,7 +7,7 @@
         <div class="demo">
             <div class="my-input flexrowcenter">
             <input type="text" placeholder="请输入关键字">
-            <span>搜索</span>
+            <span @click="handelClick">搜索</span>
             </div>
             <ul class="my-list flexrow fontsize12">
                 <li>水乐园</li>
@@ -37,6 +37,9 @@ export default {
                 this.$emit('selectCity',true)
                 this.isShow=false;
             }
+        },
+        handelClick(){
+            this.$emit('search')
         }
     }
 }

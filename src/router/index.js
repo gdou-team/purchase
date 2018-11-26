@@ -4,6 +4,9 @@ import Home from '@/containers/home'
 import Login from '@/components/login.vue'
 import Register from '@/components/register.vue'
 import LoginAndRegister from '@/containers/loginAndRegist.vue'
+import GoodList from '@/containers/goodList.vue'
+import GoodDetail from '@/containers/goodDetail.vue'
+import Map from '@/containers/map.vue'
 
 import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/homeContent.vue'
@@ -21,6 +24,21 @@ export default new Router({
           path:'homeContent',
           name:'homeContent',
           component:HomeContent
+        },
+        {
+          path:'goodList',
+          name:'goodList',
+          component:GoodList
+        },
+        {
+          path:'goodDetail',
+          name:'goodDetail',
+          component:GoodDetail
+        },
+        {
+          path:'map',
+          name:'map',
+          component:Map
         },
         {
           path:'/',
