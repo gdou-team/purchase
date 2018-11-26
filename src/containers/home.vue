@@ -35,60 +35,60 @@
 </template>
 
 <script>
-  // 首页
-  export default {
-    data() {
-      return {
-        isShowSelectCity: false
-      }
+// 首页
+export default {
+  data() {
+    return {
+      isShowSelectCity: false
+    };
+  },
+  methods: {
+    register() {
+      this.$router.push({
+        name: "register"
+      });
     },
-    methods: {
-      register() {
-        this.$router.push({
-          name: "register"
-        });
-      },
-      login() {
-        this.$router.push({
-          name: "login"
-        });
-      },
-      selectCity(flag) {
-        this.isShowSelectCity = !flag
-      },
-      search(){
-        this.$router.push({
-          name:'goodList'
-        })
-      },
-      goTo(name){
-        this.$router.push({name})
-      }
+    login() {
+      this.$router.push({
+        name: "login"
+      });
+    },
+    selectCity(flag) {
+      this.isShowSelectCity = !flag;
+    },
+    search() {
+      this.$router.push({
+        name: "goodList"
+      });
+    },
+    goTo(name) {
+      this.$router.push({ name });
     }
-  };
+  }
+};
 </script>
 
 
 <style lang="less" scoped>
-  .my-search {
-    padding: 10px 0;
-  }
+.my-search {
+  padding: 10px 0;
+}
 
-  .my-header {
-    background-color: #f8f8f8;
-  }
+.my-header {
+  background-color: #f8f8f8;
+}
 
-  .my-bg {
+.my-bg {
+  background-color: white;
+  position: relative;
+  .SelectCity {
+    position: absolute;
+    left: 0;
+    top: 100%;
     background-color: white;
-    position: relative;
-    .SelectCity {
-      position: absolute;
-      left: 0;
-      top: 100%;
-      background-color: white;
-      width: 100%;
-      z-index: 1;
-    }
+    width: 100%;
+    z-index: 1;
   }
+}
 </style>
 

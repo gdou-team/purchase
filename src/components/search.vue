@@ -1,7 +1,7 @@
 <template>
   <div class="my-search">
     <div class="my-city fontsize14">
-      <span class="city">北京</span>
+      <span class="city">{{location}}</span>
       <span @click="selectCity">切换城市</span>
     </div>
     <div class="demo">
@@ -20,12 +20,16 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
   // 搜索
   export default {
     data() {
       return {
         isShow: false
       }
+    },
+    computed:{
+      ...mapGetters(['location'])
     },
     methods: {
       selectCity() {

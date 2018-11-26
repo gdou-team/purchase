@@ -29,14 +29,27 @@
 // 登录注册
 import {get} from '@/util'
 export default {
-  props:{
-    title:{
-      type:String,
-      default:'请先登录'
+  data(){
+    return {
+      title:'登录'
     }
   },
-  mounted(){
-    
+  created(){
+    console.log(this.$route.name)
+    if(this.$route.name == 'login'){
+      this.title = '登录'
+    }else{
+      this.title = '注册'
+    }
+  },
+  watch:{
+    $route(){
+      if(this.$route.name == 'login'){
+      this.title = '登录'
+    }else{
+      this.title = '注册'
+    }
+    }
   }
 }
 </script>
