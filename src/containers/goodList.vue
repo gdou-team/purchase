@@ -1,9 +1,22 @@
 <template>
-    <div>
-        <goodslist  class="my-container"/>
-        <goodslist  class="my-container"/>
-        <goodslist  class="my-container"/>
-        <goodslist  class="my-container"/>
-        <goodslist  class="my-container"/>
-    </div>
+    <ul>
+        <li><goodslist  class="my-container"/></li>
+        <li><goodslist  class="my-container"/></li>
+        <li><goodslist  class="my-container"/></li>
+        <li><goodslist  class="my-container"/></li>
+        <li><goodslist  class="my-container"/></li>
+    </ul>
 </template>
+
+<style lang="less" scoped>
+ul{
+    >li{
+        background-color: white;
+        padding: 0px 30px;
+        &:hover{
+            background-color: #dddddd;
+        }
+    }
+}
+</style>
+

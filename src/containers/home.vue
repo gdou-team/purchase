@@ -16,15 +16,16 @@
           <SelectCity/>
         </div>
       </transition>
-      <Nav/>
+      <Nav @goTo='goTo'/>
     </div>
     <div>
       <div class="my-container my-center">
-        <!-- <transition name="router" mode="out-in"> -->
+        <Loading v-if="false" />
+        <transition name="router" mode="out-in">
           <keep-alive>
             <router-view/>
           </keep-alive>
-        <!-- </transition> -->
+        </transition>
       </div>
     </div>
     <div>
@@ -59,6 +60,9 @@
         this.$router.push({
           name:'goodList'
         })
+      },
+      goTo(name){
+        this.$router.push({name})
       }
     }
   };

@@ -38,10 +38,11 @@ export default {
 .big-good-list{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
     flex-wrap: wrap;
+    margin-left:-25px;
     li{
-        margin-top: 20px;
+        margin: 25px 0px 0px 25px;
     }
 }
 </style>

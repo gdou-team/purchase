@@ -13,11 +13,11 @@
     <div class="my-login-item">
       <div class='bg'></div>
       
-    <!-- <transition name="router" mode="out-in"> -->
+    <transition name="router" mode="out-in">
     <!-- <keep-alive> -->
     <router-view/>
     <!-- </keep-alive> -->
-    <!-- </transition> -->
+    </transition>
     
       </div>
   </el-main>

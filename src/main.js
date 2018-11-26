@@ -6,6 +6,7 @@ import store from './store'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueLazyload from "vue-lazyload"
 import './base.css'
 
 import CityNav from './components/citynav.vue';
@@ -26,6 +27,7 @@ import ShopList from './components/shopList.vue'
 import shopContent from './components/shopContent.vue'
 import NavigationElevator from './components/NavigationElevator.vue'
 import ListItem from './components/listItem.vue'
+import Loading from './components/loading.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 
@@ -44,16 +46,28 @@ Vue.component('SelectCity',SelectCity)
 Vue.component('pagefooter',Footer)
 Vue.component('biggoods',BigGoods)
 Vue.component('smallgoods',SmallGoods)
-
 Vue.component('goodslist',GoodsList)
 Vue.component('goodsdetail',GoodsDetail)
-
 Vue.component('Nav',Nav)
 Vue.component('Item',Item)
 Vue.component('ShopList',ShopList)
 Vue.component('shopContent',shopContent)
 Vue.component('NavigationElevator',NavigationElevator)
 Vue.component('ListItem',ListItem)
+Vue.component('Loading',Loading)
+
+// 登录权限控制
+router.beforeEach((to, from, next) => {
+  if(!store.userInfo){
+    console.log('用户还没有登陆')
+  }
+  next()
+})
+
+// 图片懒加载
+Vue.use(VueLazyload,{
+  loading:require("@/assets/default.png")
+})
 
 
 new Vue({
