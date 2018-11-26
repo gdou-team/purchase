@@ -1,41 +1,70 @@
 <template>
-    <div id="map" ref="map"></div>
+    <div class="map">
+      <div id="map" ref="map"></div>
+    <div class="input">
+        <el-input
+  placeholder="请输入地名"
+  v-model="searchKey"
+  @change="search"
+  clearable>
+</el-input>
+<el-button style="margin-left:10px;" type="primary" plain @click="search">搜索</el-button>
+<el-button type="primary" plain @click="reset">重置</el-button>
+      </div>
+    </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters,mapMutations } from "vuex";
 export default {
+  data(){
+    return {
+      searchKey:''
+    }
+  },
   mounted() {
     this.initMap();
   },
-  computed:{
-      ...mapGetters(['location'])
+  computed: {
+    ...mapGetters(["location"])
   },
   methods: {
+    ...mapMutations(['setLocation']),
+    search(){
+      this.map.centerAndZoom(this.searchKey, 15);
+    },
+    reset(){
+      this.map.centerAndZoom(this.location, 15);
+      this.searchKey =''
+    },
     initMap() {
+      const that = this
       // 百度地图API功能
-      var map = new BMap.Map(this.$refs.map); // 创建Map实例
+      this.map = new BMap.Map(this.$refs.map); // 创建Map实例
       // map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
-      map.centerAndZoom(this.location, 15);
-      map.addControl(
+      this.map.centerAndZoom(this.location, 15);
+      this.map.addControl(
         new BMap.MapTypeControl({
           mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]
         })
       );
-    //   map.setCurrentCity("湛江市");
-      map.enableScrollWheelZoom(true);
-      var geoc = new BMap.Geocoder();
-      map.addEventListener("click", function(e) {
+      this.map.enableScrollWheelZoom(true);
+      this.map.addEventListener("click", function(e) {
+        var geoc = new BMap.Geocoder();
         var pt = e.point;
+        // 获取地理位置
         geoc.getLocation(pt, function(rs) {
-          var addComp = rs.addressComponents;
-          const str = `${addComp.province}${addComp.city}${addComp.district}${
-            addComp.street
-          }${addComp.streetNumber}`;
-        //   console.log(str);
-          map.centerAndZoom(str, 15);
+          if(rs.surroundingPois[0].address){
+            that.setLocation(rs.surroundingPois[0].address)
+            that.map.centerAndZoom(rs.surroundingPois[0].address, 15);
+          }
         });
       });
+    }
+  },
+  beforeDestroy(){
+    if(this.map){
+      this.map=null;
     }
   }
 };
@@ -45,6 +74,16 @@ export default {
 #map {
   height: 600px;
   margin-top: 10px;
+}
+.map{
+  position: relative;
+  .input{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+  }
 }
 </style>
 

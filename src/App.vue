@@ -18,7 +18,6 @@ export default {
       var myCity = new BMap.LocalCity();
       myCity.get((result)=>{
         var cityName = result.name;
-        console.log("当前定位城市:" + cityName);
         this.setLocation(cityName)
       });
     }

@@ -3,7 +3,7 @@
     <ul class="my-item my-center my-container fontsize14">
       <li class="all">全部商品分类</li>
       <li @click="handelClick('homeContent')">首页</li>
-      <li>身边团购</li>
+      <li @click="handelClick('map')">周边地图</li>
       <li>今日新单</li>
       <li>美食</li>
       <li>电影</li>
