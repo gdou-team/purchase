@@ -22,9 +22,9 @@
       <div class="my-container my-center">
         <Loading v-if="false" />
         <transition name="router" mode="out-in">
-          <keep-alive>
+          <!-- <keep-alive> -->
             <router-view/>
-          </keep-alive>
+          <!-- </keep-alive> -->
         </transition>
       </div>
     </div>

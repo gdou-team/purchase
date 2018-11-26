@@ -21,7 +21,9 @@
     
       </div>
   </el-main>
-  <el-footer class="my-footer" height='30px'>团购网</el-footer>
+  <el-footer class="my-footer" height='30px'>
+    2018软酷网广东海洋大学实训项目
+  </el-footer>
 </el-container>
 </template>
 

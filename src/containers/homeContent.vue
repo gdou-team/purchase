@@ -87,7 +87,6 @@ export default {
       const dom = this.$refs[ref];
       const top = dom.getBoundingClientRect().top + this.scroll().top;
       // window.scrollTo(0, top);
-
       clearInterval(this.navTimer);
       let leader = this.leader;
       let target = top;
@@ -161,7 +160,10 @@ export default {
     if (this.navTimer) {
       clearInterval(this.navTimer);
     }
-    window.removeEventListener("scroll", this.addEvent);
+    if(this.hot){
+      this.hot=null
+    }
+    window.removeEventListener("scroll", this.addEvent,false);
   }
 };
 </script>
