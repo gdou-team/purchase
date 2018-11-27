@@ -3,19 +3,21 @@
     <div><h2>Welcome~</h2></div>
     <div>
       <el-input v-model="form.phone" placeholder="请输入手机号码"/>
-      <p v-if="isError.phone" class="p">手机号码格式有误</p>
+      <p v-if="isError.phone" class="p fontsize12">手机号码格式有误</p>
     </div>
     <div>
       <el-input v-model="form.password" placeholder="请输入密码"/>
-      <p v-if="isError.password" class="p">密码错误</p>
+      <p v-if="isError.password" class="p fontsize12">密码错误</p>
     </div>
     <div>
-      <el-button @click='login' type="primary" style='width:100%;'>登录
+      <el-button @click='login' type="primary" style='width:100%;' :disabled='disabled'>
+        登录
       </el-button>
     </div>
     <div style="text-align:right;">
-      <router-link class="my-regist" :to='{name:"register"}'>注册</router-link>
+      <router-link class="my-regist fontsize14" :to='{name:"register"}'>注册</router-link>
       <span @click="goBack" class="my-regist fontsize14">返回</span>
+      <span @click="goToHome" class="my-regist fontsize14">游客</span>
     </div>
   </div>
 </template>
@@ -26,6 +28,7 @@ import {checkPhone} from '@/util'
   export default {
     data() {
       return {
+        disabled:false,
         form: {
           phone: "",
           password: ""
@@ -48,6 +51,9 @@ import {checkPhone} from '@/util'
       },
       goBack() {
         this.$router.back()
+      },
+      goToHome(){
+        this.$router.push({name:'homeContent'})
       }
     },
   };

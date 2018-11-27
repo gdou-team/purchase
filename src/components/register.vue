@@ -4,7 +4,7 @@
     <div><h2>Welcome~</h2></div>
     <div>
       <el-input v-model="form.phone" placeholder="请输入手机号码"/>
-      <p v-if="isError.phone" class="p">手机号码格式有误</p>
+      <p v-if="isError.phone" class="p fontsize12">手机号码格式有误</p>
     </div>
     <div>
       <el-input v-model="form.password" placeholder="请输入密码"/>
@@ -12,22 +12,31 @@
     <div>
       <div class="flexrow">
       <el-input v-model="form.code" placeholder="请输入验证码"/>
-      <el-button @click="getCode">获取手机验证码</el-button>
+      <el-button :disabled='getcode' @click="getCode">获取验证码</el-button>
     </div>
-    <p v-if="isError.code" class="p">验证码错误</p>
+    <p v-if="getcode" class="fontsize12 send">{{second}}s后可以重新发送</p>
+    <p v-if="isError.code" class="p fontsize12">验证码错误</p>
     </div>
     <div>
-      <el-button @click='register' type="primary" style='width:100%;'>注册</el-button>
+      <el-button @click='register' type="primary" style='width:100%;' :disabled='disabled'>注册</el-button>
     </div>
-    <div class="fontsize14 my-regist" @click="goBack">返回</div>
+    <div style="text-align:right;">
+      <router-link class="my-regist fontsize14" :to='{name:"login"}'>登陆</router-link>
+      <span class="fontsize14 my-regist" @click="goBack">返回</span>
+      <span @click="goToHome" class="my-regist fontsize14">游客</span>
+    </div>
   </div>
 </template>
 
 <script>
+import {checkPhone} from '@/util'
   // 注册表单
   export default {
     data() {
       return {
+        second:60,
+        getcode:false,
+        disabled:false,
         form: {
           phone: '',
           password: '',
@@ -39,13 +48,50 @@
         }
       }
     },
+    mounted(){
+      this.timer = null;
+    },
     methods: {
       goBack() {
         this.$router.back()
       },
       getCode() {
+        if(this.timer){
+          clearInterval(this.timer)
+        }
+        this.isError.phone = false
+        this.isError.code =false
+        if(!checkPhone(this.form.phone)){
+          this.isError.phone = true
+          return
+        }
+        this.getcode = true
+        this.timer = setInterval(()=>{
+          this.second--
+          if(this.second == 0){
+            clearInterval(this.timer)
+            this.getcode = false
+            this.second = 60
+          }
+        },1000)
       },
       register() {
+        if(!checkPhone(this.form.phone)){
+          this.$message.error('请检查手机号码是否正确')
+          return
+        }
+        if(!this.form.code){
+          this.$message.error('请填写手机验证码')
+          return
+        }
+      },
+      goToHome(){
+        this.$router.push({name:'homeContent'})
+      }
+    },
+    beforeDestroy(){
+      if(this.timer){
+        clearInterval(this.timer)
       }
     }
   }
@@ -67,6 +113,7 @@
       color: blue;
       padding: 10px;
       cursor: pointer;
+      text-decoration: none;
     }
 
   }
@@ -79,5 +126,10 @@
 
   .input > div > h2 {
     color: #409EFF;
+  }
+
+  .send{
+    margin-top: 5px;
+    text-align: left;
   }
 </style>
