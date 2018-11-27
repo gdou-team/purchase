@@ -12,6 +12,7 @@ import Map from '@/containers/map.vue'
 
 import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/homeContent.vue'
+import OrderDetails from '@/components/orderDetails.vue'
 
 Vue.use(Router)
 
@@ -86,6 +87,10 @@ export default new Router({
           path:'userinfo',
           name:'userinfo',
           component:UserInfo
+        },{
+          path:'orderdetails',
+          name:'orderdetails',
+          component:OrderDetails
         }
       ]
     }

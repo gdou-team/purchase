@@ -26,7 +26,7 @@
 				<div class="field_value">
 					<span class="value">安全强度：弱</span>
 				</div>
-				<button class="btn_change" @click="changePass">修改</button>
+				<button class="btn_change" @click="showChangePass">修改</button>
 			</div>
 		</div>
 
@@ -78,29 +78,26 @@
 						<div class="row">
 							<label class="field-name">当前密码</label>
 							<div class="field-input input-normal">
-								<input v-model="password_old" type="password" @keyup="changePass">
-								<img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/fail-ico.png" class="icon icon-fail" alt=""><img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/succ-ico.png" class="icon icon-success" alt=""><p class="error-msg"></p>
+								<input v-model="password_old" type="password" @blur="checkPass">
+								<img  src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/fail-ico.png" class="icon icon-fail" alt="" />
+								<img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/succ-ico.png" class="icon icon-success" alt="" />
+								<p class="error-msg"></p>
 							</div>
 						</div>
 						<div class="row clearfix">
-							<label class="field-name">密码</label>
+							<label class="field-name">新密码</label>
 							<div class="field-input input-normal">
-								<input v-model="password_new" @keyup="changePass" type="password">
-								<img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/fail-ico.png" class="icon icon-fail" alt="">
-								<img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/succ-ico.png" class="icon icon-success" alt="">
-							</div>
-							
-							<div class="field-input input-normal" style="float:right;margin-right:106px">
-								<p class="error-msg"></p>
+								<input v-model="password_new" @blur="changePassSame" type="password">
+								<img v-if="password_new" :class="{show: pass2_confirm}" src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/fail-ico.png" class="icon icon-fail" alt="">
+								<img :class="{show: pass2_confirm}" src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/succ-ico.png" class="icon icon-success" alt="">
 							</div>
 						</div>
 						<div class="row">
 							<label class="field-name">确认密码</label>
 							<div class="field-input input-normal">
-								<input v-model="password_second" type="password" @keyup="changePass">
-								<img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/fail-ico.png" class="icon icon-fail" alt="">
-								<img src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/succ-ico.png" class="icon icon-success" alt="">
-								<p class="error-msg"></p>
+								<input v-model="password_second" type="password" @blur="changePassSame">
+								<img v-if="password_second" :class="{show: !pass3_confirm}" src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/fail-ico.png" class="icon icon-fail" alt="">
+								<img :class="{show: pass3_confirm}" src="//s1.meituan.net/bs/fe-web-meituan/64a089b/img/form/succ-ico.png" class="icon icon-success" alt="">
 							</div>
 						</div>
 					</div>
@@ -132,7 +129,10 @@
 	            password_old:'',
 	            password_new:'',
 	            password_second:'',
-	            
+
+	            pass_right:true,
+	            pass2_confirm:false,
+	            pass3_confirm:false
 	        }
 	    },
 	    methods:{
@@ -152,7 +152,6 @@
 	        		this.name_success = false;
 	        		return ;
 	        	}
-	        	
 	        	/*验证昵称是否重复*/
 	        	try{
 	        		//const result = await get('/v1',{username:this.username})
@@ -163,22 +162,76 @@
 	        			this.name_success = false;
 	        		}
 	        	}catch(e){
-
+	        		console.log(e);
+	        		return;
 	        	}
 	        },
 	        changeMobile(){
 	        	//页面跳转
 	        	
 	        },
-	        changePass(){
+	        showChangePass(){
 	        	//验证密码
 	        	this.show_pass_tag = true;
-	        	
+	        },
+	        async checkPass(){
 	        	var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
-	        	const res = reg.test(this.password)
+	        	const res = reg.test(this.password_old);
+	        	if(res){
+	        		try {
+	        			//const result = await post('addr',{userid:123,password:this.password_old});
+	        			result = true;
+	        			if(result){
+	        				/*验证当前密码*/
+	        				this.pass_right = true;
+	        			}else{
+	        				this.pass_right = false;
+	        				return;
+	        			}
+	        		} catch(e) {
+	        			// statements
+	        			console.log(e);
+	        		}
+	        	}else{
+	        		this.pass_right = false;
+	        	}
+	        },
+	        changePassSame(){
 
+	        	var reg = /([a-zA-Z0-9!@#$%^&*()_?<>{}]){6,18}/;
 
-
+	        	const res1 = reg.test(this.password_new);
+	        	const res2 = reg.test(this.password_second);
+	        	const res3 = this.password_new == this.password_second;
+	        	if(res1 && res2 && res3){
+	        		console.log('密码合法且一样')
+	        		this.pass2_confirm = this.pass3_confirm = true;
+	        	}else if(res1 && res2){
+	        		console.log('密码合法但不一样')
+	        		this.pass2_confirm = true;
+	        		this.pass3_confirm = false;
+	        	}else if(res1){
+	        		console.log('密码2非法');
+	        		this.pass2_confirm = true;
+	        		this.pass3_confirm = false;
+	        	}else{
+	        		console.log('密码非法')
+	        		this.pass2_confirm = this.pass3_confirm = false;
+	        	}
+	        	return;
+	        },
+	        async changePass(){
+	        	if(this.pass2_confirm && this.pass3_confirm){
+	        		/*发送更换密码请求*/
+	        		//const result = await post('addr',{userid:123,password:this.password_new});
+	        		result = true;
+	        		if(result){
+	        			alert('更换密码成功');
+	        			this.pass2_confirm = this.pass3_confirm = false;
+	        			this.show_pass_tag = false;
+	        			return;
+	        		}
+	        	}
 	        },
 	        close(){
 	        	//关闭对话框
