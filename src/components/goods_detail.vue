@@ -111,12 +111,13 @@
 		width: 1200px;
 	    min-width: 1200px;
 	    margin: 0 auto;
+	    overflow: hidden;
 	}
 	.detail_intro{
 		padding: 20px 25px 25px;
 	    border: 1px solid #E0E0E0;
 	    background-color: #FFF;
-	    height: 480px;
+	   	overflow: hidden;
 	}
 	.detail_intro a{
 		text-decoration: none;

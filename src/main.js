@@ -26,6 +26,7 @@ import ShopList from './components/shopList.vue'
 import shopContent from './components/shopContent.vue'
 import NavigationElevator from './components/NavigationElevator.vue'
 import ListItem from './components/listItem.vue'
+import OrderList from './components/order_list.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 
@@ -44,9 +45,9 @@ Vue.component('SelectCity',SelectCity)
 Vue.component('pagefooter',Footer)
 Vue.component('biggoods',BigGoods)
 Vue.component('smallgoods',SmallGoods)
-
 Vue.component('goodslist',GoodsList)
 Vue.component('goodsdetail',GoodsDetail)
+Vue.component('orderlist',OrderList)
 
 Vue.component('Nav',Nav)
 Vue.component('Item',Item)

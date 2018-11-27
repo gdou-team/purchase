@@ -4,6 +4,8 @@ import Home from '@/containers/home'
 import Login from '@/components/login.vue'
 import Register from '@/components/register.vue'
 import LoginAndRegister from '@/containers/loginAndRegist.vue'
+import OrderList from '@/containers/OrderList.vue'
+import UserInfo from '@/containers/userinfo.vue'
 
 import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/homeContent.vue'
@@ -56,7 +58,18 @@ export default new Router({
     {
       path:'/vanni',
       name:'vanni',
-      component:Vanni
+      component:Vanni,
+      children:[
+        {
+           path:'orderlist',
+           name:'orderlist',
+           component:OrderList
+        },{
+          path:'userinfo',
+          name:'userinfo',
+          component:UserInfo
+        }
+      ]
     }
   ]
 })
