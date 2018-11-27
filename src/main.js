@@ -6,7 +6,7 @@ import store from './store'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-//import VueLazyload from "vue-lazyload"
+import VueLazyload from "vue-lazyload"
 import './base.css'
 
 import CityNav from './components/citynav.vue';
@@ -33,7 +33,7 @@ import OrderDetails from './components/orderDetails.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 import UserInfo from '@/containers/userinfo.vue'
-import ChangePhone from '@/containers/changePhone.vue'import Loading from '@/components/loading.vue'
+import ChangePhone from '@/containers/changePhone.vue'
 
 Vue.config.productionTip = false
 
