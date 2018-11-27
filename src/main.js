@@ -6,7 +6,7 @@ import store from './store'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import VueLazyload from "vue-lazyload"
+//import VueLazyload from "vue-lazyload"
 import './base.css'
 
 import CityNav from './components/citynav.vue';
@@ -29,11 +29,11 @@ import NavigationElevator from './components/NavigationElevator.vue'
 import ListItem from './components/listItem.vue'
 import OrderList from './components/order_list.vue'
 import Comment from './components/comment.vue'
+import OrderDetails from './components/orderDetails.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 import UserInfo from '@/containers/userinfo.vue'
-import ChangePhone from '@/containers/changePhone.vue'
-
+import ChangePhone from '@/containers/changePhone.vue'import Loading from '@/components/loading.vue'
 
 Vue.config.productionTip = false
 
@@ -51,6 +51,9 @@ Vue.component('biggoods',BigGoods)
 Vue.component('smallgoods',SmallGoods)
 Vue.component('goodslist',GoodsList)
 Vue.component('goodsdetail',GoodsDetail)
+Vue.component('orderlist',OrderList)
+Vue.component('orderdetails',OrderDetails)
+
 Vue.component('Nav',Nav)
 Vue.component('Item',Item)
 Vue.component('ShopList',ShopList)
@@ -72,9 +75,9 @@ router.beforeEach((to, from, next) => {
 })
 
 // 图片懒加载
-Vue.use(VueLazyload,{
+	Vue.use(VueLazyload,{
   loading:require("@/assets/default.png")
-})
+})*
 
 
 new Vue({
