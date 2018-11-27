@@ -49,6 +49,11 @@ export default new Router({
       ]
     },
     {
+      path:'/orderList',
+      name:'orderList',
+      component:OrderList
+    },
+    {
       path:'/loginandregister',
       name: 'loginandregister',
       component: LoginAndRegister,

@@ -4,6 +4,7 @@
       <my-header
         @register='register'
         @login='login'
+        @goTo='goTo'
         class="my-container my-center"/>
     </div>
     <div class="my-bg">

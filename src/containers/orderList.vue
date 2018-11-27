@@ -8,15 +8,38 @@
 				<p class="username">Vanni辉</p>
 				<p class="usermoney">我的余额：￥<span class="money">0</span></p>
 			</div>
-			<span class="setting">个人信息设置 ></span>
+			<div class="setting">
+				<div @click="setUserInfo">个人信息设置 ></div>
+				<div @click="goBack">返回</div>
+			</div>
 		</div>
 		<el-tabs :stretch="true" class='my_tabs' v-model="activeName" @tab-click="handleClick">
-			<el-tab-pane label="全部订单" name="first"><orderlist/></el-tab-pane>
-			<el-tab-pane label="待付款" name="second"></el-tab-pane>
+			<el-tab-pane label="全部订单" name="first">
+				<orderlist class="order-list"/>
+				<orderlist class="order-list"/>
+				<orderlist class="order-list"/>
+				<orderlist class="order-list"/>
+				<orderlist class="order-list"/>
+				<orderlist class="order-list"/>
+				<orderlist class="order-list"/>
+			</el-tab-pane>
+			<el-tab-pane label="待付款" name="second">代付款</el-tab-pane>
 			<el-tab-pane label="待使用" name="third">待使用</el-tab-pane>
 			<el-tab-pane label="待评价" name="fourth">待评价</el-tab-pane>
 			<el-tab-pane label="退款/售后" name="fifth">退款/售后</el-tab-pane>
 		</el-tabs>
+		<el-dialog
+			title="修改用户信息"
+			:visible.sync="dialogVisible"
+			width="70%"
+			top='10px'
+			>
+			<user-info />
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisible = false">关 闭</el-button>
+				<!-- <el-button type="primary" @click="dialogVisible = false">确 定</el-button> -->
+			</span>
+		</el-dialog>
 	 </div>
 </template>
 
@@ -24,18 +47,29 @@
 	export default {
 	    data() {
 	      return {
-	        activeName: 'first'
+			activeName: 'first',
+			dialogVisible:false
 	      };
 	    },
 	    methods: {
 	      handleClick(tab, event) {
 	        //console.log(tab, event);
-	      }
+		  },
+		  setUserInfo(){
+			  this.dialogVisible = true;
+		  },
+		  goBack(){
+			  this.$router.back()
+		  }
 	    }
 	  };
 </script>
 
 <style scoped>
+.order-list{
+	background-color: white;
+	padding: 10px 20px;
+}
 	/*个人信息*/
 	.main{
 		width: 90%;
@@ -89,6 +123,10 @@
 	    position: relative;
 	    left: -30px;
 	    top: 90px;
+		cursor: pointer;
+	}
+	.setting div:nth-child(2){
+		margin-top: 20px;
 	}
 	/*订单列表*/
 	.list_item:first-child{
