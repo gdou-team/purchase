@@ -28,6 +28,7 @@ import shopContent from './components/shopContent.vue'
 import NavigationElevator from './components/NavigationElevator.vue'
 import ListItem from './components/listItem.vue'
 import OrderList from './components/order_list.vue'
+import Comment from './components/comment.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 import UserInfo from '@/containers/userinfo.vue'
@@ -60,6 +61,7 @@ Vue.component('Loading',Loading)
 Vue.component('orderlist',OrderList)
 Vue.component('UserInfo',UserInfo)
 Vue.component('ChangePhone',ChangePhone)
+Vue.component('Comment',Comment)
 
 // 登录权限控制
 router.beforeEach((to, from, next) => {
