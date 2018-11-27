@@ -168,7 +168,7 @@
 	        },
 	        changeMobile(){
 	        	//页面跳转
-	        	
+	        	this.$emit('changeMobile')
 	        },
 	        changePass(){
 	        	//验证密码

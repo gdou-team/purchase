@@ -34,109 +34,122 @@
 			width="70%"
 			top='10px'
 			>
-			<user-info />
+			<user-info @changeMobile='changeMobile' />
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible = false">关 闭</el-button>
 				<!-- <el-button type="primary" @click="dialogVisible = false">确 定</el-button> -->
+			</span>
+		</el-dialog>
+
+		<el-dialog
+			title="手机换绑"
+			:visible.sync="dialogVisiblePhone"
+			width="50%"
+			top='10px'
+			>
+			<ChangePhone />
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisiblePhone = false">关 闭</el-button>
 			</span>
 		</el-dialog>
 	 </div>
 </template>
 
 <script>
-	export default {
-	    data() {
-	      return {
-			activeName: 'first',
-			dialogVisible:false
-	      };
-	    },
-	    methods: {
-	      handleClick(tab, event) {
-	        //console.log(tab, event);
-		  },
-		  setUserInfo(){
-			  this.dialogVisible = true;
-		  },
-		  goBack(){
-			  this.$router.back()
-		  }
-	    }
-	  };
+export default {
+  data() {
+    return {
+      activeName: "first",
+      dialogVisible: false,
+      dialogVisiblePhone: false
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      //console.log(tab, event);
+    },
+    setUserInfo() {
+      this.dialogVisible = true;
+    },
+    goBack() {
+      this.$router.back();
+    },
+    changeMobile() {
+      this.dialogVisiblePhone = true;
+    }
+  }
+};
 </script>
 
 <style scoped>
-.order-list{
-	background-color: white;
-	padding: 10px 20px;
+.order-list {
+  background-color: white;
+  padding: 10px 20px;
 }
-	/*个人信息*/
-	.main{
-		width: 90%;
-		margin: 0 auto;
-		font-family: "-apple-system",BlinkMacSystemFont,Roboto,"Helvetica Neue","MIcrosoft YaHei",sans-serif!important;
-	}
-	.user_info{
-		height: 209px;
-		background: linear-gradient(to right, rgb(255,160,47),rgb(255,110,0)); 
-		border-radius: 4px 4px 0 0;
-		
-	}
-	/*用户头像*/
-	.head_img{
-		width: 110px;
-	    height: 110px;
-	    border: 10px solid #fac67d;
-	    border-radius: 100%;
-	    position: relative;
-	    float: left;
-	    top: 38px;
-	    left: 30px;
-	}
-	.avatar{
-		height: 100%;
-	    width: 100%;
-	    border-radius: 100%;
-	    box-shadow: 0 3px 7px 0 rgba(204,161,100,.4);
-	    border: 0;
-	}
-	/*用户名称*/
-	.nickname{
-		float: left;
-	    color: #fff;
-	    position: relative;
-	    left: 51px;
-	    top: 70px;
-	    font-weight: 500;
-	}
-	.username{
-		font-size: 26px;
-	}
-	.usermoney{
-		margin-top: 10px;
-	}
-	/*个人设置*/
-	.setting{
-		color: #fff;
-	    float: right;
-	    font-size: 14px;
-	    position: relative;
-	    left: -30px;
-	    top: 90px;
-		cursor: pointer;
-	}
-	.setting div:nth-child(2){
-		margin-top: 20px;
-	}
-	/*订单列表*/
-	.list_item:first-child{
-		border-top: 0;
-	}
-	.list_item{
-		overflow: hidden;
-		border-top: 1px solid #E5E5E5;
-	}
-	
-	
-
+/*个人信息*/
+.main {
+  width: 90%;
+  margin: 0 auto;
+  font-family: "-apple-system", BlinkMacSystemFont, Roboto, "Helvetica Neue",
+    "MIcrosoft YaHei", sans-serif !important;
+}
+.user_info {
+  height: 209px;
+  background: linear-gradient(to right, rgb(255, 160, 47), rgb(255, 110, 0));
+  border-radius: 4px 4px 0 0;
+}
+/*用户头像*/
+.head_img {
+  width: 110px;
+  height: 110px;
+  border: 10px solid #fac67d;
+  border-radius: 100%;
+  position: relative;
+  float: left;
+  top: 38px;
+  left: 30px;
+}
+.avatar {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  box-shadow: 0 3px 7px 0 rgba(204, 161, 100, 0.4);
+  border: 0;
+}
+/*用户名称*/
+.nickname {
+  float: left;
+  color: #fff;
+  position: relative;
+  left: 51px;
+  top: 70px;
+  font-weight: 500;
+}
+.username {
+  font-size: 26px;
+}
+.usermoney {
+  margin-top: 10px;
+}
+/*个人设置*/
+.setting {
+  color: #fff;
+  float: right;
+  font-size: 14px;
+  position: relative;
+  left: -30px;
+  top: 90px;
+  cursor: pointer;
+}
+.setting div:nth-child(2) {
+  margin-top: 20px;
+}
+/*订单列表*/
+.list_item:first-child {
+  border-top: 0;
+}
+.list_item {
+  overflow: hidden;
+  border-top: 1px solid #e5e5e5;
+}
 </style>

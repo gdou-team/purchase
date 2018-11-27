@@ -31,6 +31,7 @@ import OrderList from './components/order_list.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
 import UserInfo from '@/containers/userinfo.vue'
+import ChangePhone from '@/containers/changePhone.vue'
 
 
 Vue.config.productionTip = false
@@ -58,6 +59,7 @@ Vue.component('ListItem',ListItem)
 Vue.component('Loading',Loading)
 Vue.component('orderlist',OrderList)
 Vue.component('UserInfo',UserInfo)
+Vue.component('ChangePhone',ChangePhone)
 
 // 登录权限控制
 router.beforeEach((to, from, next) => {
