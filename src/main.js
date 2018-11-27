@@ -18,7 +18,7 @@ import BigGoods from './components/biggoods.vue';
 import SmallGoods from './components/smallgoods.vue';
 import GoodsList from './components/goods_list.vue';
 import GoodsDetail from './components/goods_detail.vue';
-
+import Loading from './components/loading.vue'
 import Header from './components/header.vue'
 import Search from './components/search.vue'
 import Nav from './components/nav.vue'
@@ -28,11 +28,12 @@ import shopContent from './components/shopContent.vue'
 import NavigationElevator from './components/NavigationElevator.vue'
 import ListItem from './components/listItem.vue'
 import OrderList from './components/order_list.vue'
+import Comment from './components/comment.vue'
 import OrderDetails from './components/orderDetails.vue'
 
 import SelectCity from '@/containers/selectCity.vue'
-import Loading from '@/components/loading.vue'
-
+import UserInfo from '@/containers/userinfo.vue'
+import ChangePhone from '@/containers/changePhone.vue'import Loading from '@/components/loading.vue'
 
 Vue.config.productionTip = false
 
@@ -60,6 +61,10 @@ Vue.component('shopContent',shopContent)
 Vue.component('NavigationElevator',NavigationElevator)
 Vue.component('ListItem',ListItem)
 Vue.component('Loading',Loading)
+Vue.component('orderlist',OrderList)
+Vue.component('UserInfo',UserInfo)
+Vue.component('ChangePhone',ChangePhone)
+Vue.component('Comment',Comment)
 
 // 登录权限控制
 router.beforeEach((to, from, next) => {
@@ -70,9 +75,9 @@ router.beforeEach((to, from, next) => {
 })
 
 // 图片懒加载
-/*Vue.use(VueLazyload,{
+	Vue.use(VueLazyload,{
   loading:require("@/assets/default.png")
-})*/
+})*
 
 
 new Vue({

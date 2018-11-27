@@ -9,6 +9,7 @@ import UserInfo from '@/containers/userinfo.vue'
 import GoodList from '@/containers/goodList.vue'
 import GoodDetail from '@/containers/goodDetail.vue'
 import Map from '@/containers/map.vue'
+import NotFound from '@/containers/notFound.vue'
 
 import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/homeContent.vue'
@@ -48,6 +49,11 @@ export default new Router({
           redirect:'homeContent'
         }
       ]
+    },
+    {
+      path:'/orderList',
+      name:'orderList',
+      component:OrderList
     },
     {
       path:'/loginandregister',
@@ -93,6 +99,10 @@ export default new Router({
           component:OrderDetails
         }
       ]
+    },
+    {
+      path:'*',
+      component:NotFound
     }
   ]
 })

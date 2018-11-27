@@ -9,7 +9,7 @@
     <div class="my-right fontsize14">
       <ul>
         <li>团购购物车(0)</li>
-        <li>我的</li>
+        <li @click="handelClick('orderList')">我的</li>
         <li>更多</li>
         <li v-if="userInfo.id">12345678</li>
         <li v-if="userInfo.id" class="my-item">退出</li>
@@ -31,6 +31,9 @@
       },
       login() {
         this.$emit('login')
+      },
+      handelClick(str){
+        this.$emit('goTo',str)
       }
     },
     computed: {
