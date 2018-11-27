@@ -21,7 +21,9 @@
     
       </div>
   </el-main>
-  <el-footer class="my-footer" height='30px'>团购网</el-footer>
+  <el-footer class="my-footer" height='30px'>
+    2018软酷网广东海洋大学实训项目
+  </el-footer>
 </el-container>
 </template>
 
@@ -29,14 +31,27 @@
 // 登录注册
 import {get} from '@/util'
 export default {
-  props:{
-    title:{
-      type:String,
-      default:'请先登录'
+  data(){
+    return {
+      title:'登录'
     }
   },
-  mounted(){
-    
+  created(){
+    console.log(this.$route.name)
+    if(this.$route.name == 'login'){
+      this.title = '登录'
+    }else{
+      this.title = '注册'
+    }
+  },
+  watch:{
+    $route(){
+      if(this.$route.name == 'login'){
+      this.title = '登录'
+    }else{
+      this.title = '注册'
+    }
+    }
   }
 }
 </script>

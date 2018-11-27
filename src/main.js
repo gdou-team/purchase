@@ -6,6 +6,7 @@ import store from './store'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueLazyload from "vue-lazyload"
 import './base.css'
 
 import CityNav from './components/citynav.vue';
@@ -55,6 +56,20 @@ Vue.component('ShopList',ShopList)
 Vue.component('shopContent',shopContent)
 Vue.component('NavigationElevator',NavigationElevator)
 Vue.component('ListItem',ListItem)
+Vue.component('Loading',Loading)
+
+// 登录权限控制
+router.beforeEach((to, from, next) => {
+  if(!store.userInfo){
+    console.log('用户还没有登陆')
+  }
+  next()
+})
+
+// 图片懒加载
+Vue.use(VueLazyload,{
+  loading:require("@/assets/default.png")
+})
 
 
 new Vue({

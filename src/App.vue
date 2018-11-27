@@ -9,8 +9,22 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
-  name: 'App'
+  name: 'App',
+  methods:{
+    ...mapMutations(['setLocation']),
+    getLocation() {
+      var myCity = new BMap.LocalCity();
+      myCity.get((result)=>{
+        var cityName = result.name;
+        this.setLocation(cityName)
+      });
+    }
+  },
+  created() {
+    this.getLocation();
+  }
 }
 </script>
 

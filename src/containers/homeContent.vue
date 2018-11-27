@@ -12,10 +12,10 @@
             <p>美食</p>
             <div class="good-food">
             <div>
-              <biggoods />
+              <biggoods @biggoods='goToDetail' />
             </div>
             <div>
-              <biggoods />
+              <biggoods @biggoods='goToDetail' />
             </div>
             </div>
             </div>
@@ -35,11 +35,11 @@
             <span>一周热卖</span>
         </div>
         <div class="flexrow food">
-            <smallgoods />
-            <smallgoods />
-            <smallgoods />
-            <smallgoods />
-            <smallgoods />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
+            <smallgoods  @biggoods='goToDetail' />
         </div>
     </div>
     <div class="shop-item my-ref" ref='food' data-title='food'>
@@ -87,7 +87,6 @@ export default {
       const dom = this.$refs[ref];
       const top = dom.getBoundingClientRect().top + this.scroll().top;
       // window.scrollTo(0, top);
-
       clearInterval(this.navTimer);
       let leader = this.leader;
       let target = top;
@@ -147,6 +146,11 @@ export default {
           this.isShowNav = false;
         }
       }, 100);
+    },
+    goToDetail(){
+      this.$router.push({
+        name:'goodDetail'
+      })
     }
   },
   beforeDestroy() {
@@ -156,7 +160,10 @@ export default {
     if (this.navTimer) {
       clearInterval(this.navTimer);
     }
-    window.removeEventListener("scroll", this.addEvent);
+    if(this.hot){
+      this.hot=null
+    }
+    window.removeEventListener("scroll", this.addEvent,false);
   }
 };
 </script>
