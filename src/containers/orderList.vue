@@ -2,7 +2,7 @@
 	<div class="main">
 		<div class="user_info">
 			<div class="head_img">
-				<img class="avatar" src="../assets/avatar.jpg"></img>
+				<img class="avatar" src="../assets/avatar.jpg" />
 			</div>
 			<div class="nickname">
 				<p class="username">Vanni辉</p>
