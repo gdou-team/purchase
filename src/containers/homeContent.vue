@@ -10,7 +10,13 @@
             <Item title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]' />
             <div class="food">
             <p>美食</p>
-            <div class="good-food">
+
+
+
+           <div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+<div class="good-food">
             <div>
               <biggoods @biggoods='goToDetail' />
             </div>
@@ -18,7 +24,34 @@
               <biggoods @biggoods='goToDetail' />
             </div>
             </div>
+
+
+        </div>
+        <div class="swiper-slide">
+          <div class="good-food">
+            <div>
+              <biggoods @biggoods='goToDetail' />
             </div>
+            <div>
+              <biggoods @biggoods='goToDetail' />
+            </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="good-food">
+            <div>
+              <biggoods @biggoods='goToDetail' />
+            </div>
+            <div>
+              <biggoods @biggoods='goToDetail' />
+            </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+            </div>
+
         </div>
         <div class="right" style="width:200px;background-color:white;">
             <div class="smallgoods">
@@ -81,6 +114,7 @@ export default {
     this.leader = 0;
     this.myRef = document.getElementsByClassName("my-ref");
     window.addEventListener("scroll", this.addEvent);
+    this.initSlider();
   },
   methods: {
     goToNav(ref) {
@@ -147,10 +181,17 @@ export default {
         }
       }, 100);
     },
-    goToDetail(){
+    goToDetail() {
       this.$router.push({
-        name:'goodDetail'
-      })
+        name: "goodDetail"
+      });
+    },
+    initSlider() {
+      this.mySwiper = new Swiper(".swiper-container", {
+        // direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        autoplay: true,
+      });
     }
   },
   beforeDestroy() {
@@ -160,10 +201,10 @@ export default {
     if (this.navTimer) {
       clearInterval(this.navTimer);
     }
-    if(this.hot){
-      this.hot=null
+    if (this.hot) {
+      this.hot = null;
     }
-    window.removeEventListener("scroll", this.addEvent,false);
+    window.removeEventListener("scroll", this.addEvent, false);
   }
 };
 </script>
@@ -177,6 +218,8 @@ export default {
   border: 1px solid #cccccc;
   padding: 0 20px 20px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .home-content-top {
@@ -243,4 +286,8 @@ export default {
   bottom: 50%;
 }
 
+.swiper-container {
+  max-width: 900px;
+  height: auto;
+}
 </style>
