@@ -10,22 +10,17 @@
             <Item title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]' />
             <div class="food">
             <p>美食</p>
-
-
-
-           <div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">
-<div class="good-food">
-            <div>
-              <biggoods @biggoods='goToDetail' />
-            </div>
-            <div>
-              <biggoods @biggoods='goToDetail' />
-            </div>
-            </div>
-
-
+                    <div class="swiper-container">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+          <div class="good-food">
+                      <div>
+                        <biggoods @biggoods='goToDetail' />
+                      </div>
+                      <div>
+                        <biggoods @biggoods='goToDetail' />
+                      </div>
+                      </div>
         </div>
         <div class="swiper-slide">
           <div class="good-food">
@@ -213,13 +208,12 @@ export default {
 
 <style lang="less" scoped>
 .item {
-  flex: 1;
-  margin: 0 20px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 220px;
   border: 1px solid #cccccc;
   padding: 0 20px 20px;
   background-color: white;
-  display: flex;
-  flex-direction: column;
 }
 
 .home-content-top {
@@ -287,7 +281,7 @@ export default {
 }
 
 .swiper-container {
-  max-width: 900px;
+  width: 100%;
   height: auto;
 }
 </style>
