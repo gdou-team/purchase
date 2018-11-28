@@ -10,10 +10,16 @@
 			</div>
 			<div class="setting">
 				<div @click="setUserInfo">个人信息设置 ></div>
-				<div @click="goBack">返回</div>
+				<div @click="goBackHome">返回首页</div>
 			</div>
 		</div>
-		<el-tabs :stretch="true" class='my_tabs' v-model="activeName" @tab-click="handleClick">
+
+     <transition name="router" mode="out-in">
+    <orderdetails v-if="isShowOrderDetails" @goBack="goBack" />
+     </transition>
+
+      <transition name="router" mode="out-in">
+		<el-tabs v-if="!isShowOrderDetails" :stretch="true" class='my_tabs' v-model="activeName" @tab-click="handleClick">
 			<el-tab-pane label="全部订单" name="first">
 				<orderlist class="order-list"/>
 				<orderlist class="order-list"/>
@@ -34,9 +40,9 @@
 				<orderlist class="order-list"/>
       </el-tab-pane>
 			<el-tab-pane label="待评价" name="fourth">
-        <orderlist class="order-list"/>
-				<orderlist class="order-list"/>
-				<orderlist class="order-list"/>
+        <orderlist @comment='comment' :isComment='true' class="order-list"/>
+				<orderlist @comment='comment' :isComment='true' class="order-list"/>
+				<orderlist @comment='comment' :isComment='true' class="order-list"/>
       </el-tab-pane>
 			<el-tab-pane label="退款/售后" name="fifth">
       <orderlist class="order-list"/>
@@ -44,6 +50,7 @@
 				<orderlist class="order-list"/>
       </el-tab-pane>
 		</el-tabs>
+      </transition>
 		<el-dialog
 			title="修改用户信息"
 			:visible.sync="dialogVisible"
@@ -77,7 +84,8 @@ export default {
     return {
       activeName: "first",
       dialogVisible: false,
-      dialogVisiblePhone: false
+      dialogVisiblePhone: false,
+      isShowOrderDetails:false
     };
   },
   methods: {
@@ -87,11 +95,17 @@ export default {
     setUserInfo() {
       this.dialogVisible = true;
     },
-    goBack() {
+    goBackHome() {
       this.$router.back();
     },
     changeMobile() {
       this.dialogVisiblePhone = true;
+    },
+    comment(){
+      this.isShowOrderDetails = true
+    },
+    goBack(){
+      this.isShowOrderDetails = false
     }
   }
 };

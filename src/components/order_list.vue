@@ -17,7 +17,8 @@
 				</div>
 			</div>
 			<div class="order_price">总价：¥188.00</div>
-			<div class="order_status">待付款</div>
+			<div v-if="!isComment" class="order_status">去付款</div>
+			<div v-else class="order_status" @click="comment">去评论</div>
 			<div class="order_btn"></div>
 		</div>
 	</div>
@@ -25,7 +26,19 @@
 </template>
 
 <script>
-	
+	export default{
+		props:{
+			isComment:{
+				type:Boolean,
+				default:false
+			}
+		},
+		methods:{
+			comment(){
+				this.$emit('comment')
+			}
+		}
+	}
 </script>
 
 <style scoped>
@@ -105,7 +118,8 @@
 	    line-height: 90px;
 	    text-align: center;
 	    width: 100px;
-	    margin-left: 10%;
+		margin-left: 10%;
+		cursor: pointer;
 	}
 	
 

@@ -10,10 +10,9 @@ import GoodList from '@/containers/goodList.vue'
 import GoodDetail from '@/containers/goodDetail.vue'
 import Map from '@/containers/map.vue'
 import NotFound from '@/containers/notFound.vue'
-
+import OrderDetails from '@/containers/orderDetails.vue'
 import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/homeContent.vue'
-import OrderDetails from '@/components/orderDetails.vue'
 
 Vue.use(Router)
 

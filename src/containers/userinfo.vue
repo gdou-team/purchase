@@ -9,7 +9,7 @@
 				<div class="field_name">头像</div>
 				<div class="field_value"><img class="head_img" src="../assets/avatar.jpg"></div>
 				<button class="btn_change" @click="upload">修改</button>
-				<input ref='input' type="file" name="avater" class="user_avater">
+				<input @change="uploadFile" ref='input' type="file" name="avater" class="user_avater">
 			</div>
 			<div class="item clearfix">
 				<div class="field_name">昵称</div>
@@ -108,8 +108,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 
 
@@ -137,9 +135,14 @@
 	    },
 	    methods:{
 	        upload(){
-	        	//上传头像
 				this.$refs.input.click()
-	        },
+			},
+			//上传头像
+			uploadFile(){
+				let file = this.$refs.input.files[0]
+				let formData = new FormData()
+				formData.append('file',file);
+			},
 	        async changeName(){
 	        	this.show_name_tag = true;
 	        	//修改用户名

@@ -66,7 +66,11 @@
 					<div class="field_value desc">在当天14:00前使用，逾期自动退款</div>
 				</div>
 			</div>
-			
+		</div>
+		<div class="item">
+			<div class="btn_group">
+				<button class="btn" @click="goBack" >返回</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -98,7 +102,10 @@
 			          type: 'warning'
 			        });
 	    		}
-	    	}
+			},
+			goBack(){
+				this.$emit('goBack')
+			}
 	    }
   }
 </script>
@@ -106,13 +113,14 @@
 <style scoped>
 	.main{
 	    font-family: "-apple-system",BlinkMacSystemFont,Roboto,"Helvetica Neue","MIcrosoft YaHei",sans-serif!important;
-	    width: 90%;
-	    margin: 0 auto 20px;
+	    width: 95%;
+	    /* margin: 0 auto 20px; */
 	    border: 1px solid #E5E5E5;
 	    border-radius: 4px;
 	    min-height: 200px;
 	    background: #fff;
-	    padding: 30px 30px 0;
+		padding: 30px 30px 0;
+		margin: 10px auto 0;
 	}
 	.head{
 		margin-bottom: 20px;
