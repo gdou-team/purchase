@@ -10,6 +10,15 @@
         <Item title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]'/>
         <div class="food">
           <p>美食</p>
+          <div class="slider-container">
+            <div class="good-food">
+            <div>
+              <biggoods @biggoods='goToDetail'/>
+            </div>
+            <div>
+              <biggoods @biggoods='goToDetail'/>
+            </div>
+          </div>  
           <div class="good-food">
             <div>
               <biggoods @biggoods='goToDetail'/>
@@ -18,6 +27,15 @@
               <biggoods @biggoods='goToDetail'/>
             </div>
           </div>  
+          <div class="good-food">
+            <div>
+              <biggoods @biggoods='goToDetail'/>
+            </div>
+            <div>
+              <biggoods @biggoods='goToDetail'/>
+            </div>
+          </div>  
+          </div>
         </div>
       </div>
       <div class="right" style="width:200px;background-color:white;">
@@ -192,6 +210,7 @@
 
   .food {
     flex-wrap: wrap;
+    overflow: hidden;
     width: 100%;
     p {
       font-size: 15px;
@@ -199,6 +218,8 @@
       font-weight: bold;
     }
     .good-food {
+      float: left;
+      width: 33.33%;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -242,5 +263,8 @@
     position: fixed;
     right: 5px;
     bottom: 50%;
+  }
+  .slider-container{
+    width: 300%;
   }
 </style>
