@@ -10,8 +10,16 @@
         <Item title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]'/>
         <div class="food">
           <p>美食</p>
-          <div class="slider-container">
+          <div class="slider-container clearfix" ref="slider">
             <div class="good-food">
+            <div>
+              <biggoods @biggoods='goToDetail'/>
+            </div>
+            <div>
+              <biggoods @biggoods='goToDetail'/>
+            </div>
+          </div>  
+          <div class="good-food">
             <div>
               <biggoods @biggoods='goToDetail'/>
             </div>
@@ -89,16 +97,20 @@
       return {
         title: "hot",
         isShowNav: false,
-        num: 0
+        num: 0,
+        sliderNum:0
       };
     },
     mounted() {
       this.hot = this.$refs.hot;
+      this.slider = this.$refs.slider
       this.timer = null;
       this.navTimer = null;
+      this.sliderTimer = null;
       this.leader = 0;
       this.myRef = document.getElementsByClassName("my-ref");
       window.addEventListener("scroll", this.addEvent);
+      this.initSlider()
     },
     methods: {
       goToNav(ref) {
@@ -170,6 +182,21 @@
           name: "goodDetail"
         });
       },
+      transitionend(){
+        if(this.sliderNum==3){
+          this.sliderNum=0;
+          this.slider.style.transition = 'transform 0s'
+          this.slider.style.transform = `translateX(0)`
+        }
+      },
+      initSlider(){
+        this.slider.addEventListener('transitionend',this.transitionend)
+        this.sliderTimer = setInterval(()=>{
+          this.sliderNum++
+          this.slider.style.transition = 'transform 2s'
+          this.slider.style.transform = `translateX(${this.sliderNum*(-25)}%)`
+        },6000)
+      }
     },
     beforeDestroy() {
       if (this.timer) {
@@ -178,10 +205,17 @@
       if (this.navTimer) {
         clearInterval(this.navTimer);
       }
+      if(this.sliderTimer){
+        clearInterval(this.sliderTimer)
+      }
       if (this.hot) {
         this.hot = null;
       }
+      if(this.slider){
+        this.slider =null
+      }
       window.removeEventListener("scroll", this.addEvent, false);
+      this.slider.addEventListener('transitionend',this.transitionend,false)
     }
   };
 </script>
@@ -219,11 +253,11 @@
     }
     .good-food {
       float: left;
-      width: 33.33%;
+      width: 25%;
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-around;
       flex-wrap: wrap;
       > div {
         width: 47%;
@@ -265,6 +299,7 @@
     bottom: 50%;
   }
   .slider-container{
-    width: 300%;
+    width: 400%;
+    transition: transform 2s;
   }
 </style>

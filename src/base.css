@@ -53,3 +53,13 @@ body,html{
   color: red;
   margin-top: 5px;
 }
+
+
+.clearfix:before,.clearfix:after {
+  content:"";
+  display:table;
+}
+.clearfix:after{clear:both;}
+.clearfix{
+  *zoom:1;/*IE/7/6*/
+}
