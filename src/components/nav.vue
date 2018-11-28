@@ -4,11 +4,11 @@
       <li class="all">全部商品分类</li>
       <li @click="handelClick('homeContent')">首页</li>
       <li @click="handelClick('map')">周边地图</li>
-      <li>今日新单</li>
-      <li>美食</li>
-      <li>电影</li>
-      <li>旅游</li>
-      <li>特价机票</li>
+      <li @click="handelClick('goodList','new')">今日新单</li>
+      <li @click="handelClick('goodList','food')">美食</li>
+      <li @click="handelClick('goodList','movie')">电影</li>
+      <li @click="handelClick('goodList','Tourism')">旅游</li>
+      <li @click="handelClick('goodList','ticket')">特价机票</li>
     </ul>
   </div>
 </template>
@@ -16,8 +16,11 @@
 <script>
   export default {
     methods: {
-      handelClick(str) {
-        this.$emit('goTo', str)
+      handelClick(str,keyWord) {
+        this.$emit('goTo', {
+          name:str,
+          keyWord
+        })
       }
     }
   }
@@ -39,7 +42,11 @@
     font-weight: bold;
     li {
       padding: 0 20px 0;
+      line-height: 40px;
       cursor: pointer;
+      &:not(.all):hover{
+        background-color: #EF6452;
+      }
     }
     .all {
       background-color: white;

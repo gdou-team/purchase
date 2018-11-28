@@ -2,7 +2,7 @@
   <div class="flexrow my-item">
     <span class="title">{{title}}</span>
     <ul class="flexrow">
-      <li v-for="(item,index) in itemList" :key="index">{{item}}</li>
+      <li v-for="(item,index) in itemList" :key="index" @click="handelClick(item)">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -17,6 +17,14 @@
       itemList: {
         type: Array,
         default: []
+      }
+    },
+    methods:{
+      handelClick(keyWord){
+        this.$emit('goTo',{
+          name:'goodList',
+          keyWord
+        })
       }
     }
   }

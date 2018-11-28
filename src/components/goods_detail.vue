@@ -7,7 +7,8 @@
 		        <h1>华美食品</h1>
 		        <p>花团锦簇月饼1盒，免费配送，独特美味，一吃难忘，品质享受</p>
 	    	</div>
-	    	<!-- 商品图片 -->
+	    	<div class="product_bottom">
+				<!-- 商品图片 -->
 			<div class="roduct_left">
 				<img src="">
 			</div>
@@ -80,6 +81,7 @@
 					<a class="button-gray" href="javascript:void(0)">已结束</a>
 				</div>
 			</div>
+			</div>
 		</div>
 	</div>
 	
@@ -92,6 +94,9 @@
 				end:false,
 				goods_num:1
 			}
+		},
+		created(){
+			console.log(this.$route.params.id)
 		},
 		methods:{
 			add(){
@@ -107,9 +112,17 @@
 </script>
 
 <style scoped>
+.product_bottom{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+}
 	.main{
-		width: 1200px;
-	    min-width: 1200px;
+		/* width: 1200px;
+		min-width: 1200px; */
+		width: 100%;
 	    margin: 0 auto;
 	    overflow: hidden;
 	}
@@ -150,7 +163,6 @@
 	.roduct_left {
 	    width: 440px;
 	    height: 280px;
-	    float: left;
 	    position: relative;
 	}
 	.roduct_left img{
@@ -162,7 +174,6 @@
 	/*右侧商品信息*/
 	.roduct_info{
 		width: 678px;
-	    float: right;
 	    position: relative;
 	}
 	/*价格部分*/

@@ -22,6 +22,7 @@
     align-items: center;
     justify-content: center;
     .my-comment{
+        width: 100%;
         margin-top: 10px;
         border: 1px solid #cccccc;
         ul{

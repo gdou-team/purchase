@@ -8,6 +8,20 @@
     </ul>
 </template>
 
+<script>
+export default {
+    created(){
+        console.log(this.$route.query.keyWord)
+    },
+    watch:{
+        $route(){
+            console.log(this.$route.query.keyWord)
+        }
+    }
+}
+</script>
+
+
 <style lang="less" scoped>
 ul{
     >li{

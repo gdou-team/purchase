@@ -34,7 +34,7 @@ export default new Router({
           component:GoodList
         },
         {
-          path:'goodDetail',
+          path:'goodDetail/:id',
           name:'goodDetail',
           component:GoodDetail
         },

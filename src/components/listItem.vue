@@ -2,7 +2,7 @@
   <div>
     <p class="my-title">{{title}}</p>
     <ul class="my-list">
-      <li v-for="(item,index) in list" :key="index">{{item}}</li>
+      <li v-for="(item,index) in list" :key="index" @click="handelClick(item)">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -18,6 +18,14 @@
       list: {
         type: Array,
         default: []
+      }
+    },
+    methods:{
+      handelClick(keyWord){
+        this.$emit('goTo',{
+          name:'goodList',
+          keyWord
+        })
       }
     }
   }

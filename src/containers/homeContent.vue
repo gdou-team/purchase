@@ -2,45 +2,50 @@
   <div>
     <div class="flexrow home-content-top">
       <div style="width:200px;">
-        <ShopList/>
+        <ShopList @goTo='goTo'/>
       </div>
       <div class="item">
-        <Item title='热门团购' :itemList='["电影","自助餐","门票","旅游"]'/>
-        <Item title='全部区域' :itemList='["越秀","番禺","天河","荔湾","花都","黄埔"]'/>
-        <Item title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]'/>
+        <Item @goTo='goTo' title='热门团购' :itemList='["电影","自助餐","门票","旅游"]'/>
+        <Item @goTo='goTo' title='全部区域' :itemList='["越秀","番禺","天河","荔湾","花都","黄埔"]'/>
+        <Item @goTo='goTo' title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]'/>
         <div class="food">
           <p>美食</p>
-          <div class="slider-container clearfix" ref="slider">
+          <div 
+          @mouseenter='mouseenter' 
+          @mouseleave='mouseleave' 
+          @transitionend='transitionend'
+          class="slider-container clearfix" 
+          ref="slider">
             <div class="good-food">
             <div>
-              <biggoods @biggoods='goToDetail'/>
+              <biggoods @biggoods='goToDetail(1)'/>
             </div>
             <div>
-              <biggoods @biggoods='goToDetail'/>
-            </div>
-          </div>  
-          <div class="good-food">
-            <div>
-              <biggoods @biggoods='goToDetail'/>
-            </div>
-            <div>
-              <biggoods @biggoods='goToDetail'/>
+              <biggoods @biggoods='goToDetail(2)'/>
             </div>
           </div>  
           <div class="good-food">
             <div>
-              <biggoods @biggoods='goToDetail'/>
+              <biggoods @biggoods='goToDetail(3)'/>
             </div>
             <div>
-              <biggoods @biggoods='goToDetail'/>
+              <biggoods @biggoods='goToDetail(4)'/>
             </div>
           </div>  
           <div class="good-food">
             <div>
-              <biggoods @biggoods='goToDetail'/>
+              <biggoods @biggoods='goToDetail(5)'/>
             </div>
             <div>
-              <biggoods @biggoods='goToDetail'/>
+              <biggoods @biggoods='goToDetail(6)'/>
+            </div>
+          </div>  
+          <div class="good-food">
+            <div>
+              <biggoods @biggoods='goToDetail(7)'/>
+            </div>
+            <div>
+              <biggoods @biggoods='goToDetail(8)'/>
             </div>
           </div>  
           </div>
@@ -48,10 +53,10 @@
       </div>
       <div class="right" style="width:200px;background-color:white;">
         <div class="smallgoods">
-          <smallgoods/>
+          <smallgoods @smallGoods='goToDetail(13)'/>
         </div>
         <div>
-          <smallgoods/>
+          <smallgoods @smallGoods='goToDetail(13)'/>
         </div>
       </div>
     </div>
@@ -61,27 +66,27 @@
         <span>一周热卖</span>
       </div>
       <div class="flexrow food">
-        <smallgoods @biggoods='goToDetail'/>
-        <smallgoods @biggoods='goToDetail'/>
-        <smallgoods @biggoods='goToDetail'/>
-        <smallgoods @biggoods='goToDetail'/>
-        <smallgoods @biggoods='goToDetail'/>
+        <smallgoods @smallGoods='goToDetail(9)'/>
+        <smallgoods @smallGoods='goToDetail(10)'/>
+        <smallgoods @smallGoods='goToDetail(11)'/>
+        <smallgoods @smallGoods='goToDetail(12)'/>
+        <smallgoods @smallGoods='goToDetail(13)'/>
       </div>
     </div>
     <div class="shop-item my-ref" ref='food' data-title='food'>
-      <shopContent title="美食"/>
+      <shopContent @goToDetail='goToDetail' title="美食"/>
     </div>
     <div class="shop-item my-ref" ref='entertainment' data-title='entertainment'>
-      <shopContent title="休闲娱乐"/>
+      <shopContent  @goToDetail='goToDetail' title="休闲娱乐"/>
     </div>
     <div class="shop-item my-ref" ref='movie' data-title='movie'>
-      <shopContent title="电影"/>
+      <shopContent  @goToDetail='goToDetail' title="电影"/>
     </div>
     <div class="shop-item my-ref" ref='hotel' data-title='hotel'>
-      <shopContent title="酒店"/>
+      <shopContent  @goToDetail='goToDetail' title="酒店"/>
     </div>
     <div class="shop-item my-ref" ref='tourism' data-title='tourism'>
-      <shopContent title="旅游"/>
+      <shopContent  @goToDetail='goToDetail' title="旅游"/>
     </div>
     <transition name="router" mode="out-in">
       <div class="navigation-elevator" v-if="isShowNav">
@@ -113,6 +118,14 @@
       this.initSlider()
     },
     methods: {
+      goTo(obj){
+        this.$router.push({
+          name:obj.name,
+          query:{
+            keyWord:obj.keyWord
+          }
+        })
+      },
       goToNav(ref) {
         const dom = this.$refs[ref];
         const top = dom.getBoundingClientRect().top + this.scroll().top;
@@ -177,25 +190,42 @@
           }
         }, 100);
       },
-      goToDetail() {
+      goToDetail(id) {
         this.$router.push({
-          name: "goodDetail"
+          name: "goodDetail",
+          params:{
+            id
+          }
         });
       },
       transitionend(){
+        if(!this.slider){
+          return;
+        }
         if(this.sliderNum==3){
           this.sliderNum=0;
           this.slider.style.transition = 'transform 0s'
           this.slider.style.transform = `translateX(0)`
         }
       },
-      initSlider(){
-        this.slider.addEventListener('transitionend',this.transitionend)
-        this.sliderTimer = setInterval(()=>{
+      Interval(){
+        if(this.slider){
+          return;
+        }
           this.sliderNum++
           this.slider.style.transition = 'transform 2s'
           this.slider.style.transform = `translateX(${this.sliderNum*(-25)}%)`
-        },6000)
+      },
+      initSlider(){
+        this.sliderTimer = setInterval(this.Interval,6000)
+      },
+      mouseenter(){
+        if(this.sliderTimer){
+          clearInterval(this.sliderTimer)
+        }
+      },
+      mouseleave(){
+        this.sliderTimer = setInterval(this.Interval,6000)
       }
     },
     beforeDestroy() {
@@ -215,7 +245,6 @@
         this.slider =null
       }
       window.removeEventListener("scroll", this.addEvent, false);
-      this.slider.addEventListener('transitionend',this.transitionend,false)
     }
   };
 </script>

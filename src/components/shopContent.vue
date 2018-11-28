@@ -2,18 +2,18 @@
     <div>
         <h2 class="h2">{{title}}</h2>
         <ul class="big-good-list">
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
-            <li><biggoods infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(17)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(27)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(37)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(47)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(57)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(67)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(77)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(87)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(97)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(117)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(227)' infoBgColor='white' width='250px' /></li>
+            <li><biggoods  @biggoods='goToDetail(7)' infoBgColor='white' width='250px' /></li>
         </ul>
     </div>
 </template>
@@ -24,6 +24,11 @@ export default {
         title:{
             type:String,
             default:'美食'
+        }
+    },
+    methods:{
+        goToDetail(id){
+            this.$emit('goToDetail',id)
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="my-container">
+    <div class="my-container1">
         <div class="my-user flexrow">
             <img src="@/assets/default.png">
             <div class="rate">
@@ -32,12 +32,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.my-container{
+.my-container1{
     background-color: white;
     padding: 30px;
-    width: 1200px;
-    min-width: 1200px;
+    // width: 1200px;
+    // min-width: 1200px;
     box-sizing: border-box;
+    width: 100%;
 }
 .my-user{
     >img{

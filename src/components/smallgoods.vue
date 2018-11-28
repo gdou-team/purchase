@@ -1,11 +1,11 @@
 <template>
-	<div class="small_goods noml">
-		<a class="small_goods_img" href="javascritp:;" target="_blank">
+	<div class="small_goods noml" @click="smallGoods">
+		<a @click.prevent class="small_goods_img" href="javascritp:;">
 			<img class="dynload" src="../assets/smallgoods.jpg" alt="【庞各庄镇】西瓜礼盒1个，可配送可自提" width="198" height="126">
 		</a>
 		<h4>
-			<a class="small_goods_name" href="javascritp:;" target="_blank">【庞各庄镇】小仇西瓜</a>
-			<a class="small_goods_text" href="javascritp:;" target="_blank">西瓜礼盒1个，可配送可自提</a>
+			<a @click.prevent class="small_goods_name" href="javascritp:;">【庞各庄镇】小仇西瓜</a>
+			<a @click.prevent class="small_goods_text" href="javascritp:;">西瓜礼盒1个，可配送可自提</a>
 		</h4>
 		<div class="small_goods_info">
 			<span class="price"><em>¥</em>99</span>
@@ -15,8 +15,15 @@
 </template>
 
 <script>
-	
+export default {
+	methods:{
+		smallGoods(){
+			this.$emit('smallGoods')
+		}
+	}
+}
 </script>
+
 
 <style>
 	.noml{

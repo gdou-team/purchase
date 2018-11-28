@@ -11,6 +11,7 @@
       <my-search
       @search='search'
         @selectCity='selectCity'
+        @goTo='goTo'
         class="my-search my-container my-center"/>
       <transition name="router" mode="out-in">
         <div class="SelectCity" v-if="isShowSelectCity">
@@ -62,8 +63,13 @@ export default {
         name: "goodList"
       });
     },
-    goTo(name) {
-      this.$router.push({ name });
+    goTo(obj) {
+      this.$router.push({ 
+        name:obj.name,
+        query:{
+          keyWord:obj.keyWord
+        }
+      });
     }
   }
 };
