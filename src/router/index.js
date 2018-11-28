@@ -22,86 +22,86 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: Home,
-      children:[
+      children: [
         {
-          path:'homeContent',
-          name:'homeContent',
-          component:HomeContent
+          path: 'homeContent',
+          name: 'homeContent',
+          component: HomeContent
         },
         {
-          path:'goodList',
-          name:'goodList',
-          component:GoodList
+          path: 'goodList',
+          name: 'goodList',
+          component: GoodList
         },
         {
-          path:'goodDetail/:id',
-          name:'goodDetail',
-          component:GoodDetail
+          path: 'goodDetail/:id',
+          name: 'goodDetail',
+          component: GoodDetail
         },
         {
-          path:'map',
-          name:'map',
-          component:Map
+          path: 'map',
+          name: 'map',
+          component: Map
         },
         {
-          path:'/',
-          redirect:'homeContent'
+          path: '/',
+          redirect: 'homeContent'
         }
       ]
     },
     {
-      path:'/orderList',
-      name:'orderList',
-      component:OrderList
+      path: '/orderList',
+      name: 'orderList',
+      component: OrderList
     },
     {
-      path:'/loginandregister',
+      path: '/loginandregister',
       name: 'loginandregister',
       component: LoginAndRegister,
-      children:[
+      children: [
         {
-          path:'login',
-          name:'login',
-          component:Login
+          path: 'login',
+          name: 'login',
+          component: Login
         },
         {
-          path:'register',
-          name:'register',
-          component:Register
+          path: 'register',
+          name: 'register',
+          component: Register
         },
         {
-          path:'/',
-          redirect:'login'
+          path: '/',
+          redirect: 'login'
         }
       ]
     },
     {
-      path:'/',
-      redirect:'/home'
+      path: '/',
+      redirect: '/home'
     },
     {
-      path:'/vanni',
-      name:'vanni',
-      component:Vanni,
-      children:[
+      path: '/vanni',
+      name: 'vanni',
+      component: Vanni,
+      children: [
         {
-           path:'orderlist',
-           name:'orderlist',
-           component:OrderList
-        },{
-          path:'userinfo',
-          name:'userinfo',
-          component:UserInfo
-        },{
-          path:'orderdetails',
-          name:'orderdetails',
-          component:OrderDetails
+          path: 'orderlist',
+          name: 'orderlist',
+          component: OrderList
+        }, {
+          path: 'userinfo',
+          name: 'userinfo',
+          component: UserInfo
+        }, {
+          path: 'orderdetails',
+          name: 'orderdetails',
+          component: OrderDetails
         }
       ]
     },
     {
-      path:'*',
-      component:NotFound
+      path: '*',
+      component: NotFound
     }
   ]
 })

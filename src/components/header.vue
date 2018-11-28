@@ -32,9 +32,9 @@
       login() {
         this.$emit('login')
       },
-      handelClick(str){
-        this.$emit('goTo',{
-          name:str
+      handelClick(str) {
+        this.$emit('goTo', {
+          name: str
         })
       }
     },
@@ -63,7 +63,7 @@
         &.my-item {
           color: #506EAA;
         }
-        >a{
+        > a {
           display: block;
           text-decoration: none;
           color: black;

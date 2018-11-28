@@ -20,10 +20,10 @@
         default: []
       }
     },
-    methods:{
-      handelClick(keyWord){
-        this.$emit('goTo',{
-          name:'goodList',
+    methods: {
+      handelClick(keyWord) {
+        this.$emit('goTo', {
+          name: 'goodList',
           keyWord
         })
       }

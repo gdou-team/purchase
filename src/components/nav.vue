@@ -16,9 +16,9 @@
 <script>
   export default {
     methods: {
-      handelClick(str,keyWord) {
+      handelClick(str, keyWord) {
         this.$emit('goTo', {
-          name:str,
+          name: str,
           keyWord
         })
       }
@@ -44,7 +44,7 @@
       padding: 0 20px 0;
       line-height: 40px;
       cursor: pointer;
-      &:not(.all):hover{
+      &:not(.all):hover {
         background-color: #EF6452;
       }
     }

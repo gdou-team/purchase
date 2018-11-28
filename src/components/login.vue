@@ -23,20 +23,20 @@
 </template>
 
 <script>
-import {checkPhone} from '@/util'
+  import {checkPhone} from '@/util'
   // 登录表单
   export default {
     data() {
       return {
-        disabled:false,
+        disabled: false,
         form: {
           phone: "",
           password: ""
         },
-        isError:{
-            phone:false,
-            password:false
-          }
+        isError: {
+          phone: false,
+          password: false
+        }
       };
     },
     methods: {
@@ -44,7 +44,7 @@ import {checkPhone} from '@/util'
         this.isError.phone = false
         this.isError.password = false
         const result = checkPhone(this.form.phone)
-        if(!result){
+        if (!result) {
           this.isError.phone = true
           return
         }
@@ -52,8 +52,8 @@ import {checkPhone} from '@/util'
       goBack() {
         this.$router.back()
       },
-      goToHome(){
-        this.$router.push({name:'homeContent'})
+      goToHome() {
+        this.$router.push({name: 'homeContent'})
       }
     },
   };

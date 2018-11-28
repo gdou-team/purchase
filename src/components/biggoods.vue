@@ -1,6 +1,6 @@
 <template>
   <div @click="handelClick" class="big_goods" :style="{'width':width}">
-    <a class="big_goods_img" @click.prevent href="http://beijing.lashou.com/deal/13313092.html" target="_blank">
+    <a class="big_goods_img" @click.prevent>
       <img class="dynload" src="../assets/biggoods.jpg" alt="【西红门】5_6人餐  ，交通便利">
     </a>
     <div class="big_goods_info"

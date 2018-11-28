@@ -10,44 +10,44 @@
         <Item @goTo='goTo' title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]'/>
         <div class="food">
           <p>美食</p>
-          <div 
-          @mouseenter='mouseenter' 
-          @mouseleave='mouseleave' 
-          @transitionend='transitionend'
-          class="slider-container clearfix" 
-          ref="slider">
+          <div
+            @mouseenter='mouseenter'
+            @mouseleave='mouseleave'
+            @transitionend='transitionend'
+            class="slider-container clearfix"
+            ref="slider">
             <div class="good-food">
-            <div>
-              <biggoods @biggoods='goToDetail(1)'/>
+              <div>
+                <biggoods @biggoods='goToDetail(1)'/>
+              </div>
+              <div>
+                <biggoods @biggoods='goToDetail(2)'/>
+              </div>
             </div>
-            <div>
-              <biggoods @biggoods='goToDetail(2)'/>
+            <div class="good-food">
+              <div>
+                <biggoods @biggoods='goToDetail(3)'/>
+              </div>
+              <div>
+                <biggoods @biggoods='goToDetail(4)'/>
+              </div>
             </div>
-          </div>  
-          <div class="good-food">
-            <div>
-              <biggoods @biggoods='goToDetail(3)'/>
+            <div class="good-food">
+              <div>
+                <biggoods @biggoods='goToDetail(5)'/>
+              </div>
+              <div>
+                <biggoods @biggoods='goToDetail(6)'/>
+              </div>
             </div>
-            <div>
-              <biggoods @biggoods='goToDetail(4)'/>
+            <div class="good-food">
+              <div>
+                <biggoods @biggoods='goToDetail(7)'/>
+              </div>
+              <div>
+                <biggoods @biggoods='goToDetail(8)'/>
+              </div>
             </div>
-          </div>  
-          <div class="good-food">
-            <div>
-              <biggoods @biggoods='goToDetail(5)'/>
-            </div>
-            <div>
-              <biggoods @biggoods='goToDetail(6)'/>
-            </div>
-          </div>  
-          <div class="good-food">
-            <div>
-              <biggoods @biggoods='goToDetail(7)'/>
-            </div>
-            <div>
-              <biggoods @biggoods='goToDetail(8)'/>
-            </div>
-          </div>  
           </div>
         </div>
       </div>
@@ -77,16 +77,16 @@
       <shopContent @goToDetail='goToDetail' title="美食"/>
     </div>
     <div class="shop-item my-ref" ref='entertainment' data-title='entertainment'>
-      <shopContent  @goToDetail='goToDetail' title="休闲娱乐"/>
+      <shopContent @goToDetail='goToDetail' title="休闲娱乐"/>
     </div>
     <div class="shop-item my-ref" ref='movie' data-title='movie'>
-      <shopContent  @goToDetail='goToDetail' title="电影"/>
+      <shopContent @goToDetail='goToDetail' title="电影"/>
     </div>
     <div class="shop-item my-ref" ref='hotel' data-title='hotel'>
-      <shopContent  @goToDetail='goToDetail' title="酒店"/>
+      <shopContent @goToDetail='goToDetail' title="酒店"/>
     </div>
     <div class="shop-item my-ref" ref='tourism' data-title='tourism'>
-      <shopContent  @goToDetail='goToDetail' title="旅游"/>
+      <shopContent @goToDetail='goToDetail' title="旅游"/>
     </div>
     <transition name="router" mode="out-in">
       <div class="navigation-elevator" v-if="isShowNav">
@@ -103,7 +103,7 @@
         title: "hot",
         isShowNav: false,
         num: 0,
-        sliderNum:0
+        sliderNum: 0
       };
     },
     mounted() {
@@ -118,11 +118,11 @@
       this.initSlider()
     },
     methods: {
-      goTo(obj){
+      goTo(obj) {
         this.$router.push({
-          name:obj.name,
-          query:{
-            keyWord:obj.keyWord
+          name: obj.name,
+          query: {
+            keyWord: obj.keyWord
           }
         })
       },
@@ -193,39 +193,39 @@
       goToDetail(id) {
         this.$router.push({
           name: "goodDetail",
-          params:{
+          params: {
             id
           }
         });
       },
-      transitionend(){
-        if(!this.slider){
+      transitionend() {
+        if (!this.slider) {
           return;
         }
-        if(this.sliderNum==3){
-          this.sliderNum=0;
+        if (this.sliderNum == 3) {
+          this.sliderNum = 0;
           this.slider.style.transition = 'transform 0s'
           this.slider.style.transform = `translateX(0)`
         }
       },
-      Interval(){
-        if(this.slider){
+      Interval() {
+        if (!this.slider) {
           return;
         }
-          this.sliderNum++
-          this.slider.style.transition = 'transform 2s'
-          this.slider.style.transform = `translateX(${this.sliderNum*(-25)}%)`
+        this.sliderNum++
+        this.slider.style.transition = 'transform 2s'
+        this.slider.style.transform = `translateX(${this.sliderNum * (-25)}%)`
       },
-      initSlider(){
-        this.sliderTimer = setInterval(this.Interval,6000)
+      initSlider() {
+        this.sliderTimer = setInterval(this.Interval, 6000)
       },
-      mouseenter(){
-        if(this.sliderTimer){
+      mouseenter() {
+        if (this.sliderTimer) {
           clearInterval(this.sliderTimer)
         }
       },
-      mouseleave(){
-        this.sliderTimer = setInterval(this.Interval,6000)
+      mouseleave() {
+        this.sliderTimer = setInterval(this.Interval, 6000)
       }
     },
     beforeDestroy() {
@@ -235,14 +235,14 @@
       if (this.navTimer) {
         clearInterval(this.navTimer);
       }
-      if(this.sliderTimer){
+      if (this.sliderTimer) {
         clearInterval(this.sliderTimer)
       }
       if (this.hot) {
         this.hot = null;
       }
-      if(this.slider){
-        this.slider =null
+      if (this.slider) {
+        this.slider = null
       }
       window.removeEventListener("scroll", this.addEvent, false);
     }
@@ -327,7 +327,8 @@
     right: 5px;
     bottom: 50%;
   }
-  .slider-container{
+
+  .slider-container {
     width: 400%;
     transition: transform 2s;
   }

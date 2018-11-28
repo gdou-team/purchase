@@ -2,7 +2,6 @@
 	<div class="hotcity">
 		<span>热门城市</span>
 		<a href="javascript:;">佛山</a>
-
 	</div>
 
 </template>
