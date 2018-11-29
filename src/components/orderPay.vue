@@ -11,7 +11,7 @@
             <el-radio class="radio" v-model="pay" label="1" size='medium'>支付宝支付</el-radio>
             <div class="num">支付 ￥<span>41.5</span></div>
             <div class="gopay">
-                <div>返回修改订单</div>
+                <div @click="goBack">返回修改订单</div>
                 <el-button :disabled="isOverdue" type="primary">去付款</el-button>
             </div>
         </div>
@@ -53,6 +53,9 @@ export default {
         }
         this.time = `${h}:${m}:${s}`;
       }, 1000);
+    },
+    goBack(){
+      this.$router.back()
     }
   },
   mounted() {
@@ -71,6 +74,7 @@ export default {
 <style lang="less" scoped>
 .pay-container {
   background-color: #f8f8f8;
+  margin-top: 20px;
 }
 .title {
   width: 100%;

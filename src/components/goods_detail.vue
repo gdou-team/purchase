@@ -39,11 +39,11 @@
             <div class="otherinfo_content">
               <em class="serving" title="支持“未消费，随时退款”">
                 <i class="suishi"></i>
-                <a href="javascript:;" target="_blank">随时退</a>
+                <a @click.prevent href="javascript:;" target="_blank">随时退</a>
               </em>
               <em class="serving" title="支持 “过期未消费，一键退款”">
                 <i class="guoqi"></i>
-                <a href="javascript:;" target="_blank">过期退</a>
+                <a @click.prevent href="javascript:;" target="_blank">过期退</a>
               </em>
             </div>
           </div>
@@ -52,13 +52,13 @@
           <div class="roduct_otherinfo">
             <span class="otherinfo_title">套餐</span>
             <div class="otherinfo_module cl newga ga" p="套餐切换">
-              <a class="current" href="javascript:;"><span>华美食品单黄白莲蓉铁盒<em>¥</em>72</span><i></i></a>
-              <a href="javascript:;"><span>华美食品七星伴月月饼1盒<em>¥</em>108</span><i></i></a>
-              <a href="javascript:;"><span>华美食品花团锦簇月饼1盒<em>¥</em>69</span><i></i></a>
-              <a href="javascript:;"><span>华美食品冰皮月饼榴芒冰皮<em>¥</em>98</span><i></i></a>
-              <a href="javascript:;"><span>华美食品吉祥福贵月饼礼盒<em>¥</em>98</span><i></i></a>
-              <a href="javascript:;"><span>华美食品时尚双黄月饼1盒<em>¥</em>85</span><i></i></a>
-              <a href="http://shenzhen.lashou.com/deal/14365498.html"><span>华美食品华美蛋黄酥1盒<em>¥</em>88</span><i></i></a>
+              <a @click.prevent class="current" href="javascript:;"><span>华美食品单黄白莲蓉铁盒<em>¥</em>72</span><i></i></a>
+              <a @click.prevent href="javascript:;"><span>华美食品七星伴月月饼1盒<em>¥</em>108</span><i></i></a>
+              <a @click.prevent href="javascript:;"><span>华美食品花团锦簇月饼1盒<em>¥</em>69</span><i></i></a>
+              <a @click.prevent href="javascript:;"><span>华美食品冰皮月饼榴芒冰皮<em>¥</em>98</span><i></i></a>
+              <a @click.prevent href="javascript:;"><span>华美食品吉祥福贵月饼礼盒<em>¥</em>98</span><i></i></a>
+              <a @click.prevent href="javascript:;"><span>华美食品时尚双黄月饼1盒<em>¥</em>85</span><i></i></a>
+              <a @click.prevent href="http://shenzhen.lashou.com/deal/14365498.html"><span>华美食品华美蛋黄酥1盒<em>¥</em>88</span><i></i></a>
             </div>
           </div>
 
@@ -76,11 +76,11 @@
 
           <!-- 按钮 -->
           <div class="roduct_button" v-if="!end">
-            <a class="button_red" href="javascript:;">立即购买</a>
-            <a class="button_cart button_cart_add" _goodid="13993308"><i></i><span>加入购物车</span></a>
+            <a @click.stop.prevent="buy" class="button_red" href="javascript:;">立即购买</a>
+            <a @click.stop.prevent="addCar" class="button_cart button_cart_add"><i></i><span>加入购物车</span></a>
           </div>
           <div class="roduct_button end" v-if="end">
-            <a class="button-gray" href="javascript:void(0)">已结束</a>
+            <a @click.prevent class="button-gray" href="javascript:void(0)">已结束</a>
           </div>
         </div>
       </div>
@@ -106,9 +106,18 @@
       },
       minus() {
         this.goods_num == 1 ? 1 : this.goods_num--;
+      },
+      buy(){
+        this.$router.push({
+          name:'order',
+          query:{
+            id:3,
+          }
+        })
+      },
+      addCar(){
+        this.$message.success('添加成功')
       }
-
-
     },
   }
 </script>
@@ -408,6 +417,7 @@
     font-size: 14px;
     color: #565656;
     box-shadow: 0 1px 0 #DEDEDE;
+    cursor: pointer;
   }
 
   .button_gray {

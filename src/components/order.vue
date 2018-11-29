@@ -1,6 +1,5 @@
 <template>
 	<div class="main">
-
 	    <el-table
 	      :data="tableData"
 	      :cell-style="{'text-align':'center'}"
@@ -22,7 +21,7 @@
 	      <el-table-column
 	        label="数量">
 	        <template slot-scope="scope">
-	        	<el-input-number v-model='tableData[scope.$index].count' @change="handleChange(scope.$index)" :min="1" :max="10"></el-input-number>
+	        	<el-input-number ref="input" v-model='tableData[scope.$index].count' @change="handleChange(scope.$index)" :min="1" :max="10"></el-input-number>
 	        </template>
 	      </el-table-column>
 	      <el-table-column
@@ -37,6 +36,7 @@
 			<span>应付金额￥</span>
 			<span class="total_price_num">{{total_price_num}}</span>
 		</h3>
+		<el-button type="primary" class="submit_order" @click="goBack" style="margin-left:20px;">返回</el-button>
 		<el-button type="primary" class="submit_order" @click="submit_order">提交订单</el-button>
 	</div>
 </template>
@@ -50,26 +50,25 @@
 					count:1,
 					single_price:42,
 					total:42
-				},
-				{
-					name:'大汉风下午茶',
-					count:1,
-					single_price:42,
-					total:42
-				}
-				],
+				}],
 				total_price_num:0
 			}
 		},
 		methods:{
 			handleChange(index){
 				this.tableData[index].total =  this.tableData[index].count * this.tableData[index].single_price;
-				this.tableData.forEach( (element, index)=> {
-					this.total_price_num += element.total
-				});
+				this.total_price_num = this.tableData[index].total
+				// this.tableData.forEach( (element, index)=> {
+				// 	this.total_price_num += element.total
+				// });
 			},
 			submit_order(){
-				this.$router.push({name:'orderPay'})
+				this.$router.push({name:'orderPay',params:{
+					id:101
+				}})
+			},
+			goBack(){
+				this.$router.back()
 			}
 		},
 		mounted(){
@@ -85,6 +84,7 @@
 	.main{
 		width: 90%;
 		margin: 0 auto;
+		margin-top: 20px;
 	}
 	.total_price{
 		margin-top: 20px;

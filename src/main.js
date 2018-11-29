@@ -32,8 +32,6 @@ import OrderDetails from './containers/orderDetails.vue'
 import SelectCity from '@/containers/selectCity.vue'
 import UserInfo from '@/containers/userinfo.vue'
 import ChangePhone from '@/containers/changePhone.vue'
-import Order from '@/components/order.vue'
-import OrderPay from './components/orderPay.vue'
 
 Vue.config.productionTip = false
 
@@ -64,8 +62,6 @@ Vue.component('orderlist', OrderList)
 Vue.component('UserInfo', UserInfo)
 Vue.component('ChangePhone', ChangePhone)
 Vue.component('Comment', Comment)
-Vue.component('Order',Order)
-Vue.component('OrderPay', OrderPay)
 
 
 // 登录权限控制
