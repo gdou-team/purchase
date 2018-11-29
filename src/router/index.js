@@ -13,6 +13,7 @@ import NotFound from '@/containers/notFound.vue'
 import OrderDetails from '@/containers/orderDetails.vue'
 import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/homeContent.vue'
+import Order from '@/components/order.vue'
 
 Vue.use(Router)
 
@@ -96,6 +97,10 @@ export default new Router({
           path: 'orderdetails',
           name: 'orderdetails',
           component: OrderDetails
+        },{
+          path:'order',
+          name:'order',
+          component:Order
         }
       ]
     },
