@@ -1,6 +1,6 @@
 # purchase
 
-> A Vue.js project
+> 团购网
 
 ## Build Setup
 
