@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<goodslist />
+		<OrderPay/>
 	</div>
 </template>
 

@@ -202,7 +202,7 @@
         if (!this.slider) {
           return;
         }
-        if (this.sliderNum == 3) {
+        if (this.sliderNum >= 3) {
           this.sliderNum = 0;
           this.slider.style.transition = 'transform 0s'
           this.slider.style.transform = `translateX(0)`
@@ -217,7 +217,7 @@
         this.slider.style.transform = `translateX(${this.sliderNum * (-25)}%)`
       },
       initSlider() {
-        this.sliderTimer = setInterval(this.Interval, 6000)
+        this.sliderTimer = setInterval(this.Interval, 3000)
       },
       mouseenter() {
         if (this.sliderTimer) {
@@ -225,7 +225,7 @@
         }
       },
       mouseleave() {
-        this.sliderTimer = setInterval(this.Interval, 6000)
+        this.sliderTimer = setInterval(this.Interval, 3000)
       }
     },
     beforeDestroy() {
