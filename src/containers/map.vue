@@ -45,7 +45,7 @@
         this.searchKey = ''
       },
       initMap() {
-        let location = this.shopLocation || this.location
+        let location = this.shopLocation || this.$route.query.location || this.location
         // 百度地图API功能
         this.map = new BMap.Map(this.$refs.map); // 创建Map实例
         // map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别

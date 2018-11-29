@@ -6,7 +6,7 @@
     </div>
     <div class="demo">
       <div class="my-input flexrowcenter">
-        <input type="text" placeholder="请输入关键字">
+        <input type="text" placeholder="请输入关键字" v-model="keyWord">
         <span @click="handelClick">搜索</span>
       </div>
       <ul class="my-list flexrow fontsize12">
@@ -25,7 +25,8 @@
   export default {
     data() {
       return {
-        isShow: false
+        isShow: false,
+        keyWord:''
       };
     },
     computed: {
@@ -43,7 +44,9 @@
         }
       },
       handelClick() {
-        this.$emit("search");
+        this.$emit("search",{
+          keyWord:this.keyWord
+        });
       },
       goTo(keyWord) {
         this.$emit('goTo', {

@@ -58,9 +58,12 @@
       selectCity(flag) {
         this.isShowSelectCity = !flag;
       },
-      search() {
+      search(obj) {
         this.$router.push({
-          name: "goodList"
+          name: "goodList",
+          query:{
+            keyWord:obj.keyWord
+          }
         });
       },
       goTo(obj) {

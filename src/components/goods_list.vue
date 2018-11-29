@@ -44,7 +44,7 @@
             <span title="番禺区大石镇迎宾路长隆旅游度假村内（近长隆酒店）">番禺区大石镇迎宾路长隆旅游度假村内（近长隆酒店）</span>
             <div class="item_site_map">
               <i class="el-icon-location"></i>
-              <span>查看地图</span>
+              <span class="map" @click.stop="goToMap">查看地图</span>
             </div>
           </div>
 
@@ -86,11 +86,25 @@
 </template>
 
 <script>
-
-
+export default {
+  methods:{
+    goToMap(){
+      this.$router.push({
+        name:'map',
+        query:{
+          location:'番禺区大石镇迎宾路长隆旅游度假村内（近长隆酒店）'
+        }
+      })
+    }
+  }
+}
 </script>
 
+
 <style scoped>
+.map{
+  cursor: pointer;
+}
   .trip_card_main {
     padding: 20px 0;
     min-height: 125px;
