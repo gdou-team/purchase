@@ -105,12 +105,13 @@ export default {
       title: "hot",
       isShowNav: false,
       num: 0,
-      sliderNum: 0
+      sliderNum: 0,
+      loadingHotFood:true
     };
   },
   created() {
-    this.getHotGoods()
-    this.getNewGoods()
+    // this.getHotGoods();
+    // this.getNewGoods();
   },
   mounted() {
     this.hot = this.$refs.hot;

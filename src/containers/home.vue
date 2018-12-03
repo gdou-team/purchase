@@ -22,7 +22,6 @@
     </div>
     <div>
       <div class="my-container my-center">
-        <Loading v-if="false"/>
         <transition name="router" mode="out-in">
           <router-view/>
         </transition>

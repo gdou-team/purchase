@@ -17,7 +17,6 @@ import BigGoods from './components/biggoods.vue';
 import SmallGoods from './components/smallgoods.vue';
 import GoodsList from './components/goods_list.vue';
 import GoodsDetail from './components/goods_detail.vue';
-import Loading from './components/loading.vue'
 import Header from './components/header.vue'
 import Search from './components/search.vue'
 import Nav from './components/nav.vue'
@@ -57,7 +56,6 @@ Vue.component('ShopList', ShopList)
 Vue.component('shopContent', shopContent)
 Vue.component('NavigationElevator', NavigationElevator)
 Vue.component('ListItem', ListItem)
-Vue.component('Loading', Loading)
 Vue.component('orderlist', OrderList)
 Vue.component('UserInfo', UserInfo)
 Vue.component('ChangePhone', ChangePhone)
