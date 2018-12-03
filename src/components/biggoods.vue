@@ -1,23 +1,23 @@
 <template>
   <div @click="handelClick" class="big_goods" :style="{'width':width}">
     <a class="big_goods_img" @click.prevent>
-      <img class="dynload" src="../assets/biggoods.jpg" alt="【西红门】5_6人餐  ，交通便利">
+      <img :style="{'height':height}" class="dynload" v-lazy="goodInfo.imageUrl?goodInfo.imageUrl:''" :alt="goodInfo.goodsTitle">
     </a>
     <div class="big_goods_info"
          :style="{'background-color':infoBgColor}"
     >
       <h3>
 				<span class="ti">
-					<a @click.prevent class="big_goods_name" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">【西红门】儒家餐厅</a>
+					<a @click.prevent class="big_goods_name" href="http://beijing.lashou.com/deal/13313092.html" target="_blank">{{goodInfo.shopName}}</a>
 				</span>
         <span>
-					<a @click.prevent class="big_goods_text" target="_blank" href="http://beijing.lashou.com/deal/13313092.html">5_6人餐  ，交通便利</a>
+					<a @click.prevent class="big_goods_text" target="_blank" href="http://beijing.lashou.com/deal/13313092.html">{{goodInfo.goodsDesc}}</a>
 				</span>
       </h3>
       <div class="big_goods_price">
-        <span class="price"><em>¥</em>1000</span>
-        <span class="money">¥<del>1020</del></span>
-        <span class="number">已售<span>110</span></span>
+        <span class="price"><em>¥</em>{{goodInfo.discountPrice}}</span>
+        <span class="money">¥<del>{{goodInfo.oringinalPrice}}</del></span>
+        <span class="number">已售<span>{{goodInfo.salesVolumn}}</span></span>
       </div>
     </div>
   </div>
@@ -26,6 +26,10 @@
 <script>
   export default {
     props: {
+      height:{
+        type:String,
+        default:'247px'
+      },
       width: {
         type: String,
         default: '100%'
@@ -33,6 +37,10 @@
       infoBgColor: {
         type: String,
         default: '#f4f4f4'
+      },
+      goodInfo:{
+        type:Object,
+        require:true
       }
     },
     methods: {
@@ -51,6 +59,7 @@
     float: left;
     text-decoration: none;
     border: 1px solid transparent;
+    max-width: 372px;
   }
 
   .big_goods:hover {
@@ -60,13 +69,14 @@
   .big_goods_img {
     width: 100%;
     font-family: Microsoft Yahei;
+    /* height: 247px; */
   }
 
   .dynload {
     border: 0;
     vertical-align: top;
     width: 100%;
-    height: auto;
+    height: 247px;
   }
 
   .big_goods_info {
@@ -85,7 +95,7 @@
   }
 
   .big_goods_info h3 .ti {
-    text-indent: -8px;
+    /* text-indent: -8px; */
   }
 
   .big_goods_info h3 span {

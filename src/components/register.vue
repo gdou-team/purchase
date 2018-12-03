@@ -7,7 +7,7 @@
       <p v-if="isError.phone" class="p fontsize12">手机号码格式有误</p>
     </div>
     <div>
-      <el-input v-model="form.password" placeholder="请输入密码"/>
+      <el-input type="password" v-model="form.password" placeholder="请输入密码"/>
     </div>
     <div>
       <div class="flexrow">
@@ -29,107 +29,138 @@
 </template>
 
 <script>
-  import {checkPhone} from '@/util'
-  // 注册表单
-  export default {
-    data() {
-      return {
-        second: 60,
-        getcode: false,
-        disabled: false,
-        form: {
-          phone: '',
-          password: '',
-          code: ''
-        },
-        isError: {
-          phone: false,
-          code: false
-        }
+import { checkPhone, get } from "@/util";
+import {mapMutations} from 'vuex'
+// 注册表单
+export default {
+  data() {
+    return {
+      second: 60,
+      getcode: false,
+      disabled: false,
+      form: {
+        phone: "",
+        password: "",
+        code: ""
+      },
+      isError: {
+        phone: false,
+        code: false
       }
+    };
+  },
+  mounted() {
+    this.timer = null;
+  },
+  methods: {
+    ...mapMutations(['setUserInfo']),
+    goBack() {
+      this.$router.back();
     },
-    mounted() {
-      this.timer = null;
-    },
-    methods: {
-      goBack() {
-        this.$router.back()
-      },
-      getCode() {
-        if (this.timer) {
-          clearInterval(this.timer)
-        }
-        this.isError.phone = false
-        this.isError.code = false
-        if (!checkPhone(this.form.phone)) {
-          this.isError.phone = true
-          return
-        }
-        this.getcode = true
-        this.timer = setInterval(() => {
-          this.second--
-          if (this.second == 0) {
-            clearInterval(this.timer)
-            this.getcode = false
-            this.second = 60
-          }
-        }, 1000)
-      },
-      register() {
-        if (!checkPhone(this.form.phone)) {
-          this.$message.error('请检查手机号码是否正确')
-          return
-        }
-        if (!this.form.code) {
-          this.$message.error('请填写手机验证码')
-          return
-        }
-      },
-      goToHome() {
-        this.$router.push({name: 'homeContent'})
-      }
-    },
-    beforeDestroy() {
+    async getCode() {
       if (this.timer) {
-        clearInterval(this.timer)
+        clearInterval(this.timer);
       }
+      this.isError.phone = false;
+      this.isError.code = false;
+      if (!checkPhone(this.form.phone)) {
+        this.isError.phone = true;
+        return;
+      }
+      this.getcode = true;
+      this.timer = setInterval(() => {
+        this.second--;
+        if (this.second == 0) {
+          clearInterval(this.timer);
+          this.getcode = false;
+          this.second = 60;
+        }
+      }, 1000);
+
+      try {
+        const res = await get("/tjsanshao/user/sendMsgCode", {
+          mobileNumber: this.form.phone
+        });
+        if (res.status == "success") {
+          this.$message.success("发送成功");
+        } else {
+          this.$message.error("发送失败");
+        }
+      } catch (e) {
+        this.$message.error("网络错误");
+      }
+    },
+    async register() {
+      if (!checkPhone(this.form.phone)) {
+        this.$message.error("请检查手机号码是否正确");
+        return;
+      }
+      if (!this.form.code) {
+        this.$message.error("请填写手机验证码");
+        return;
+      }
+      try {
+        const res = await get("/tjsanshao/user/register", {
+          username: this.form.phone,
+          password: this.form.password,
+          code: this.form.code,
+          mobile: this.form.phone
+        });
+        console.log(res);
+        if(res.status == 'success'){
+          this.setUserInfo(res.user)
+          this.$router.push({ name: "homeContent" });
+        }else{
+          this.$message.error('注册失败')
+        }
+      } catch (e) {
+        this.$message.error("网络错误");
+      }
+    },
+    goToHome() {
+      this.$router.push({ name: "homeContent" });
+    }
+  },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
     }
   }
+};
 </script>
 
 
 <style lang="less" scoped>
-  .input {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    height: 100%;
-    width: 50%;
-    .my-regist {
-      line-height: 20px;
-      text-align: right;
-      color: blue;
-      padding: 10px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  height: 100%;
+  width: 50%;
+  .my-regist {
+    line-height: 20px;
+    text-align: right;
+    color: blue;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
   }
+}
 
-  .input > div {
-    padding: 10px 50px;
-    width: 80%;
-    text-align: center;
-  }
+.input > div {
+  padding: 10px 50px;
+  width: 80%;
+  text-align: center;
+}
 
-  .input > div > h2 {
-    color: #409EFF;
-  }
+.input > div > h2 {
+  color: #409eff;
+}
 
-  .send {
-    margin-top: 5px;
-    text-align: left;
-  }
+.send {
+  margin-top: 5px;
+  text-align: left;
+}
 </style>

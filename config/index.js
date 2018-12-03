@@ -11,13 +11,21 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/apis': {
-        target: 'https://www.exaple.com',  // 接口域名
+      '/tjsanshao': {
+        target: 'http://tjsanshao.free.idcfengye.com',  // 接口域名
         secure: false,  // 如果是https接口，需要配置这个参数
         changeOrigin: true,  //是否跨域
-        pathRewrite: {
-          '^/apis': '/'   //需要rewrite的,
-        }
+        // pathRewrite: {
+        //   '^/apis': '/'   //需要rewrite的,
+        // }
+      },
+      '/xiaojian': {
+        target: 'http://xiaojian2333.free.idcfengye.com',  // 接口域名
+        secure: false,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true,  //是否跨域
+        // pathRewrite: {
+        //   '^/apis': '/'   //需要rewrite的,
+        // }
       }
     },
     // Various Dev Server settings

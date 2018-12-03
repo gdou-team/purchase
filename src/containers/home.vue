@@ -24,9 +24,7 @@
       <div class="my-container my-center">
         <Loading v-if="false"/>
         <transition name="router" mode="out-in">
-          <!-- <keep-alive> -->
           <router-view/>
-          <!-- </keep-alive> -->
         </transition>
       </div>
     </div>
@@ -37,6 +35,7 @@
 </template>
 
 <script>
+import {get} from '@/util'
   // 首页
   export default {
     data() {

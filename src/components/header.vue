@@ -11,8 +11,8 @@
         <!-- <li>团购购物车(0)</li> -->
         <li @click="handelClick('orderList')">我的</li>
         <!-- <li>更多</li> -->
-        <li v-if="userInfo.id">12345678</li>
-        <li v-if="userInfo.id" class="my-item">退出</li>
+        <li v-if="userInfo.id">{{userInfo.username}}</li>
+        <li v-if="userInfo.id" class="my-item" @click="logout">退出</li>
         <li v-if="!userInfo.id" class="my-item" @click="login">[登录]</li>
         <li v-if="!userInfo.id" class="my-item" @click="register">[注册]</li>
       </ul>
@@ -22,10 +22,11 @@
 
 <script>
   // 头部
-  import {mapGetters} from 'vuex'
+  import {mapGetters,mapMutations} from 'vuex'
 
   export default {
     methods: {
+      ...mapMutations(['setUserInfo']),
       register() {
         this.$emit('register')
       },
@@ -36,6 +37,10 @@
         this.$emit('goTo', {
           name: str
         })
+      },
+      logout(){
+        window.localStorage.setItem('userInfo',{})
+        this.setUserInfo({})
       }
     },
     computed: {

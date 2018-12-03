@@ -12,7 +12,7 @@ import Map from '@/containers/map.vue'
 import NotFound from '@/containers/notFound.vue'
 import OrderDetails from '@/containers/orderDetails.vue'
 import Vanni from '@/components/HelloWorld.vue'
-import HomeContent from '@/containers/homeContent.vue'
+import HomeContent from '@/containers/HomePage.vue'
 import Order from '@/components/order.vue'
 import OrderPay from '@/components/orderPay.vue'
 

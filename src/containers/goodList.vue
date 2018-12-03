@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {get} from '@/util'
   export default {
     created() {
       console.log(this.$route.query.keyWord);

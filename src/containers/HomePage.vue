@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="flexrow home-content-top">
+    <div>
+        <div class="flexrow home-content-top">
       <div style="width:200px;">
         <ShopList @goTo='goTo'/>
       </div>
@@ -16,15 +16,15 @@
             @transitionend='transitionend'
             class="slider-container clearfix"
             ref="slider">
-            <div class="good-food">
+            <div class="good-food" v-for="(item,index) in hotGoods" :key="index">
               <div>
-                <biggoods @biggoods='goToDetail(1)'/>
+                <biggoods :goodInfo='item.first' @biggoods='goToDetail(item.first.id)'/>
               </div>
               <div>
-                <biggoods @biggoods='goToDetail(2)'/>
+                <biggoods :goodInfo='item.second' @biggoods='goToDetail(item.second.id)'/>
               </div>
             </div>
-            <div class="good-food">
+            <!-- <div class="good-food">
               <div>
                 <biggoods @biggoods='goToDetail(3)'/>
               </div>
@@ -39,15 +39,15 @@
               <div>
                 <biggoods @biggoods='goToDetail(6)'/>
               </div>
-            </div>
-            <div class="good-food">
+            </div> -->
+            <!-- <div class="good-food">
               <div>
                 <biggoods @biggoods='goToDetail(7)'/>
               </div>
               <div>
                 <biggoods @biggoods='goToDetail(8)'/>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <smallgoods @smallGoods='goToDetail(13)'/>
       </div>
     </div>
-    <div class="shop-item my-ref" ref='food' data-title='food'>
+    <!-- <div class="shop-item my-ref" ref='food' data-title='food'>
       <shopContent @goToDetail='goToDetail' title="美食"/>
     </div>
     <div class="shop-item my-ref" ref='entertainment' data-title='entertainment'>
@@ -87,13 +87,13 @@
     </div>
     <div class="shop-item my-ref" ref='tourism' data-title='tourism'>
       <shopContent @goToDetail='goToDetail' title="旅游"/>
-    </div>
+    </div> -->
     <transition name="router" mode="out-in">
       <div class="navigation-elevator" v-if="isShowNav">
         <NavigationElevator :title='title' @nav='goToNav'/>
       </div>
     </transition>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -105,12 +105,14 @@ export default {
       title: "hot",
       isShowNav: false,
       num: 0,
-      sliderNum: 0
+      sliderNum: 0,
+      hotGoods: [],
+      newGoods: []
     };
   },
   created() {
-    this.getHotGoods()
-    this.getNewGoods()
+    this.getHotGoods();
+    this.getNewGoods();
   },
   mounted() {
     this.hot = this.$refs.hot;
@@ -223,7 +225,7 @@ export default {
       this.slider.style.transform = `translateX(${this.sliderNum * -25}%)`;
     },
     initSlider() {
-      this.sliderTimer = setInterval(this.Interval, 3000);
+      this.sliderTimer = setInterval(this.Interval, 6000);
     },
     mouseenter() {
       if (this.sliderTimer) {
@@ -231,14 +233,28 @@ export default {
       }
     },
     mouseleave() {
-      this.sliderTimer = setInterval(this.Interval, 3000);
+      this.sliderTimer = setInterval(this.Interval, 6000);
     },
     async getHotGoods() {
       try {
         const res = await get("/xiaojian/hotGoods", {
           city: this.location
         });
-        console.log(res);
+        let arr = {};
+        let j = 0;
+        for (let i = 0; i < res.length; i += 2) {
+          arr[j] = {
+            first: res[i],
+            second: res[i + 1]
+          };
+          j++;
+        }
+        arr[j] = {
+          first: res[0],
+          second: res[1]
+        };
+        console.log(arr[0],arr[2])
+        this.hotGoods = arr;
       } catch (e) {}
     },
     async getNewGoods() {
@@ -246,12 +262,9 @@ export default {
         const res = await get("/xiaojian/newGoods", {
           city: this.location
         });
-        console.log(res);
+        this.newGoods = res;
       } catch (e) {}
     }
-  },
-  computed: {
-    ...mapGetters(["location"])
   },
   beforeDestroy() {
     if (this.timer) {
@@ -273,7 +286,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less" scoped>
 .item {
@@ -358,3 +370,5 @@ export default {
   transition: transform 2s;
 }
 </style>
+
+

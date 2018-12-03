@@ -66,7 +66,7 @@ Vue.component('Comment', Comment)
 
 // 登录权限控制
 router.beforeEach((to, from, next) => {
-  if (!store.userInfo) {
+  if (!store.state.userInfo) {
     console.log('用户还没有登陆')
   }
   next()
