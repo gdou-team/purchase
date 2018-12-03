@@ -8,7 +8,7 @@
         <Item @goTo='goTo' title='热门团购' :itemList='["电影","自助餐","门票","旅游"]'/>
         <Item @goTo='goTo' title='全部区域' :itemList='["越秀","番禺","天河","荔湾","花都","黄埔"]'/>
         <Item @goTo='goTo' title='热门商圈' :itemList='["大学城","环市东路路线","赤岗","芳村","中华广场"]'/>
-        <div class="food">
+        <div class="food" v-loading="true">
           <p>美食</p>
           <div
             @mouseenter='mouseenter'
@@ -107,7 +107,8 @@ export default {
       num: 0,
       sliderNum: 0,
       hotGoods: [],
-      newGoods: []
+      newGoods: [],
+      loading:false
     };
   },
   created() {
@@ -237,6 +238,7 @@ export default {
     },
     async getHotGoods() {
       try {
+          this.loading = true
         const res = await get("/xiaojian/hotGoods", {
           city: this.location
         });
@@ -253,8 +255,8 @@ export default {
           first: res[0],
           second: res[1]
         };
-        console.log(arr[0],arr[2])
         this.hotGoods = arr;
+        this.loading = false
       } catch (e) {}
     },
     async getNewGoods() {

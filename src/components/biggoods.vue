@@ -1,7 +1,7 @@
 <template>
   <div @click="handelClick" class="big_goods" :style="{'width':width}">
     <a class="big_goods_img" @click.prevent>
-      <img :style="{'height':height}" class="dynload" v-lazy="goodInfo.imageUrl?goodInfo.imageUrl:''" :alt="goodInfo.goodsTitle">
+      <img :style="{'height':height}" class="dynload" v-lazy="goodInfo.imageUrl" :alt="goodInfo.goodsTitle">
     </a>
     <div class="big_goods_info"
          :style="{'background-color':infoBgColor}"
