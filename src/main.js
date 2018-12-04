@@ -83,18 +83,29 @@ if (window.Notification) {
   window.addEventListener('offline', () => {
     Notification.requestPermission(() => {
       if (Notification.permission == 'granted') {
-        const notification = new Notification('提示', {
+        let notification = new Notification('提示', {
           body: '网络已经断开,目前处于离线浏览中',
           icon: require("@/assets/default.png"),
-          vibrate:3000,
-          silent:true
+          silent:true,
+          tag:'notification',
+          renotify:true
         })
       }
     })
-    // const notification = new Notification('提示',{
-    //   body:'网络已经断开',
-    //   icon:require("@/assets/default.png")
-    // })
+  })
+
+  window.addEventListener('online', () => {
+    Notification.requestPermission(() => {
+      if (Notification.permission == 'granted') {
+        let notification = new Notification('提示', {
+          body: '网络恢复',
+          icon: require("@/assets/default.png"),
+          silent:true,
+          tag:'notification',
+          renotify:true
+        })
+      }
+    })
   })
 }
 
