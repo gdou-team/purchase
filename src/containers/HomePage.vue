@@ -44,21 +44,23 @@
         <smallgoods v-for="(item,index) in newGoods" :goodDetail='item' :key="index" @smallGoods='goToDetail(item.id)'/>
       </div>
     </div>
-    <!-- <div class="shop-item my-ref" ref='food' data-title='food'>
-      <shopContent @goToDetail='goToDetail' title="美食"/>
+    <div v-loading='loadingGoodByCity'>
+      <div class="shop-item my-ref" ref='food' data-title='food'>
+      <shopContent :goodList='goodByCity["美食"]' @goToDetail='goToDetail' title="美食"/>
     </div>
     <div class="shop-item my-ref" ref='entertainment' data-title='entertainment'>
-      <shopContent @goToDetail='goToDetail' title="休闲娱乐"/>
+      <shopContent :goodList='goodByCity["休闲娱乐"]' @goToDetail='goToDetail' title="休闲娱乐"/>
     </div>
     <div class="shop-item my-ref" ref='movie' data-title='movie'>
-      <shopContent @goToDetail='goToDetail' title="电影"/>
+      <shopContent :goodList='goodByCity["电影/在线选座"]' @goToDetail='goToDetail' title="电影"/>
     </div>
     <div class="shop-item my-ref" ref='hotel' data-title='hotel'>
-      <shopContent @goToDetail='goToDetail' title="酒店"/>
+      <shopContent :goodList='goodByCity["酒店"]' @goToDetail='goToDetail' title="酒店"/>
     </div>
     <div class="shop-item my-ref" ref='tourism' data-title='tourism'>
-      <shopContent @goToDetail='goToDetail' title="旅游"/>
-    </div> -->
+      <shopContent :goodList='goodByCity["生活服务"]' @goToDetail='goToDetail' title="生活服务"/>
+    </div>
+    </div>
     <transition name="router" mode="out-in">
       <div class="navigation-elevator" v-if="isShowNav">
         <NavigationElevator :title='title' @nav='goToNav'/>
@@ -79,13 +81,16 @@ export default {
       sliderNum: 0,
       hotGoods: {},
       newGoods: [],
+      goodByCity: {},
       loadingHotFood: false,
-      loadingNewFood: false
+      loadingNewFood: false,
+      loadingGoodByCity: false
     };
   },
   created() {
     this.getHotGoods();
     this.getNewGoods();
+    this.getgoodByCity();
   },
   mounted() {
     this.hot = this.$refs.hot;
@@ -214,6 +219,10 @@ export default {
       this.sliderTimer = setInterval(this.Interval, 6000);
     },
     async getHotGoods() {
+      if(!navigator.onLine){
+        this.hotGoods = this.$storage.get('hotGoods',{})
+        return;
+      }
       try {
         this.loadingHotFood = true;
         const res = await get("/xiaojian/hotGoods", {
@@ -234,6 +243,7 @@ export default {
             second: res[1]
           };
           this.hotGoods = arr;
+          this.$storage.set('hotGoods',arr)
         }
       } catch (e) {
       } finally {
@@ -241,6 +251,10 @@ export default {
       }
     },
     async getNewGoods() {
+      if(!navigator.onLine){
+        this.newGoods = this.$storage.get('newGoods',[])
+        return;
+      }
       try {
         this.loadingNewFood = true;
         const res = await get("/xiaojian/newGoods", {
@@ -248,10 +262,28 @@ export default {
         });
         if (res.length > 0) {
           this.newGoods = res;
+          this.$storage.set('newGoods',res)
         }
       } catch (e) {
       } finally {
         this.loadingNewFood = false;
+      }
+    },
+    async getgoodByCity() {
+      if(!navigator.onLine){
+        this.goodByCity = this.$storage.get('goodByCity',[])
+        return;
+      }
+      try {
+        this.loadingGoodByCity = true;
+        const res = await get("/xiaojian/goodsByCategory", {
+          city: this.location
+        });
+        this.goodByCity = res;
+        this.$storage.set('goodByCity',res)
+      } catch (e) {
+      } finally {
+        this.loadingGoodByCity = false;
       }
     }
   },
@@ -262,6 +294,7 @@ export default {
     location() {
       this.getHotGoods();
       this.getNewGoods();
+      this.getgoodByCity()
     },
     hotGoods() {
       this.initSlider();

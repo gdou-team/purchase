@@ -2,10 +2,10 @@
   <div>
     <h2 class="h2">{{title}}</h2>
     <ul class="big-good-list">
-      <li>
-        <biggoods @biggoods='goToDetail(17)' infoBgColor='white' width='250px'/>
+      <li  v-for="(item,index) in goodList" :key="index">
+        <biggoods :goodInfo='item' height='150px'  @biggoods='goToDetail(item.id)' infoBgColor='white' width='250px'/>
       </li>
-      <li>
+      <!-- <li>
         <biggoods @biggoods='goToDetail(27)' infoBgColor='white' width='250px'/>
       </li>
       <li>
@@ -37,7 +37,7 @@
       </li>
       <li>
         <biggoods @biggoods='goToDetail(7)' infoBgColor='white' width='250px'/>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
@@ -48,6 +48,12 @@
       title: {
         type: String,
         default: '美食'
+      },
+      goodList:{
+        type:Array,
+        default:function(){
+          return []
+        }
       }
     },
     methods: {

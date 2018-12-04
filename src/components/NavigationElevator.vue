@@ -6,7 +6,7 @@
       <li ref="entertainment" data-title='entertainment'>娱乐</li>
       <li ref="movie" data-title='movie'>电影</li>
       <li ref="hotel" data-title='hotel'>酒店</li>
-      <li ref="tourism" data-title='tourism'>旅游</li>
+      <li ref="tourism" data-title='tourism'>服务</li>
     </ul>
   </div>
 </template>

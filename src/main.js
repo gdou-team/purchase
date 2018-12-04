@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import storage from 'good-storage'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -74,6 +75,28 @@ router.beforeEach((to, from, next) => {
 Vue.use(VueLazyload, {
   loading: require("@/assets/default.png")
 })
+
+Vue.prototype.$storage = storage
+
+// 断网通知
+if (window.Notification) {
+  window.addEventListener('offline', () => {
+    Notification.requestPermission(() => {
+      if (Notification.permission == 'granted') {
+        const notification = new Notification('提示', {
+          body: '网络已经断开,目前处于离线浏览中',
+          icon: require("@/assets/default.png"),
+          vibrate:3000,
+          silent:true
+        })
+      }
+    })
+    // const notification = new Notification('提示',{
+    //   body:'网络已经断开',
+    //   icon:require("@/assets/default.png")
+    // })
+  })
+}
 
 
 new Vue({
