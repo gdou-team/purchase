@@ -1,21 +1,29 @@
 <template>
   <div class="small_goods noml" @click="smallGoods">
     <a @click.prevent class="small_goods_img" href="javascritp:;">
-      <img class="dynload" src="../assets/smallgoods.jpg" alt="【庞各庄镇】西瓜礼盒1个，可配送可自提" width="198" height="126">
+      <img class="dynload" v-lazy='goodDetail.imageUrl' :alt="goodDetail.goodsDesc" width="198" height="126">
     </a>
     <h4>
-      <a @click.prevent class="small_goods_name" href="javascritp:;">【庞各庄镇】小仇西瓜</a>
-      <a @click.prevent class="small_goods_text" href="javascritp:;">西瓜礼盒1个，可配送可自提</a>
+      <a @click.prevent class="small_goods_name" href="javascritp:;">{{goodDetail.goodsTitle}}</a>
+      <a @click.prevent class="small_goods_text" href="javascritp:;">{{goodDetail.goodsDesc}}</a>
     </h4>
     <div class="small_goods_info">
-      <span class="price"><em>¥</em>99</span>
-      <span class="money">¥<del>128</del></span>
+      <span class="price"><em>¥</em>{{goodDetail.discountPrice}}</span>
+      <span class="money">¥<del>{{goodDetail.oringinalPrice}}</del></span>
     </div>
   </div>
 </template>
 
 <script>
   export default {
+    props:{
+      goodDetail:{
+        type:Object,
+        default:function(){
+          return {}
+        }
+      }
+    },
     methods: {
       smallGoods() {
         this.$emit('smallGoods')
@@ -78,7 +86,7 @@
   .small_goods_name {
     font-size: 14px;
     color: #3d3d3d;
-    text-indent: -7px;
+    /* text-indent: -7px; */
     font-family: Microsoft Yahei;
   }
 

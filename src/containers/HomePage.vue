@@ -24,53 +24,24 @@
                 <biggoods :goodInfo='item.second' @biggoods='goToDetail(item.second.id)'/>
               </div>
             </div>
-            <!-- <div class="good-food">
-              <div>
-                <biggoods @biggoods='goToDetail(3)'/>
-              </div>
-              <div>
-                <biggoods @biggoods='goToDetail(4)'/>
-              </div>
-            </div>
-            <div class="good-food">
-              <div>
-                <biggoods @biggoods='goToDetail(5)'/>
-              </div>
-              <div>
-                <biggoods @biggoods='goToDetail(6)'/>
-              </div>
-            </div> -->
-            <!-- <div class="good-food">
-              <div>
-                <biggoods @biggoods='goToDetail(7)'/>
-              </div>
-              <div>
-                <biggoods @biggoods='goToDetail(8)'/>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
-      <div class="right" style="width:200px;background-color:white;">
+      <div class="right" style="width:200px;background-color:white;" v-loading='loadingNewFood'>
         <div class="smallgoods">
-          <smallgoods @smallGoods='goToDetail(13)'/>
+          <smallgoods :goodDetail='newGoods[0]' @smallGoods='goToDetail(newGoods[0].id)'/>
         </div>
         <div>
-          <smallgoods @smallGoods='goToDetail(13)'/>
+          <smallgoods :goodDetail='newGoods[0]' @smallGoods='goToDetail(newGoods[0].id)'/>
         </div>
       </div>
     </div>
     <div class="home-content-hot my-ref" ref="hot" data-title='hot'>
       <div class="flexrow title">
-        <span>今日新单</span>
-        <span>一周热卖</span>
+        <span>最新上架</span>
       </div>
-      <div class="flexrow food">
-        <smallgoods @smallGoods='goToDetail(9)'/>
-        <smallgoods @smallGoods='goToDetail(10)'/>
-        <smallgoods @smallGoods='goToDetail(11)'/>
-        <smallgoods @smallGoods='goToDetail(12)'/>
-        <smallgoods @smallGoods='goToDetail(13)'/>
+      <div class="flexrow food" v-loading='loadingNewFood'>
+        <smallgoods v-for="(item,index) in newGoods" :goodDetail='item' :key="index" @smallGoods='goToDetail(item.id)'/>
       </div>
     </div>
     <!-- <div class="shop-item my-ref" ref='food' data-title='food'>
@@ -106,14 +77,15 @@ export default {
       isShowNav: false,
       num: 0,
       sliderNum: 0,
-      hotGoods: [],
+      hotGoods: {},
       newGoods: [],
-      loadingHotFood: false
+      loadingHotFood: false,
+      loadingNewFood: false
     };
   },
   created() {
-    this.getHotGoods();
-    this.getNewGoods();
+    // this.getHotGoods();
+    // this.getNewGoods();
   },
   mounted() {
     this.hot = this.$refs.hot;
@@ -242,20 +214,22 @@ export default {
         const res = await get("/xiaojian/hotGoods", {
           city: this.location
         });
-        let arr = {};
-        let j = 0;
-        for (let i = 0; i < res.length; i += 2) {
+        if (res.length > 0) {
+          let arr = {};
+          let j = 0;
+          for (let i = 0; i < res.length; i += 2) {
+            arr[j] = {
+              first: res[i],
+              second: res[i + 1]
+            };
+            j++;
+          }
           arr[j] = {
-            first: res[i],
-            second: res[i + 1]
+            first: res[0],
+            second: res[1]
           };
-          j++;
+          this.hotGoods = arr;
         }
-        arr[j] = {
-          first: res[0],
-          second: res[1]
-        };
-        this.hotGoods = arr;
       } catch (e) {
       } finally {
         this.loadingHotFood = false;
@@ -263,11 +237,28 @@ export default {
     },
     async getNewGoods() {
       try {
+        this.loadingNewFood = true
         const res = await get("/xiaojian/newGoods", {
           city: this.location
         });
-        this.newGoods = res;
-      } catch (e) {}
+        if(res.length>0){
+          this.newGoods = res;
+        }
+      } catch (e) {}finally{
+        this.loadingNewFood = false
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(["location"])
+  },
+  watch: {
+    location: {
+      immediate: true,
+      handler: function() {
+        this.getHotGoods();
+        this.getNewGoods();
+      }
     }
   },
   beforeDestroy() {

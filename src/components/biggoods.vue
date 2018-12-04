@@ -40,7 +40,9 @@
       },
       goodInfo:{
         type:Object,
-        require:true
+        default:function(){
+          return {}
+        }
       }
     },
     methods: {
