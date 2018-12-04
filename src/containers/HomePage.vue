@@ -84,8 +84,8 @@ export default {
     };
   },
   created() {
-    // this.getHotGoods();
-    // this.getNewGoods();
+    this.getHotGoods();
+    this.getNewGoods();
   },
   mounted() {
     this.hot = this.$refs.hot;
@@ -96,7 +96,6 @@ export default {
     this.leader = 0;
     this.myRef = document.getElementsByClassName("my-ref");
     window.addEventListener("scroll", this.addEvent);
-    this.initSlider();
   },
   methods: {
     goTo(obj) {
@@ -194,6 +193,12 @@ export default {
         return;
       }
       this.sliderNum++;
+      if (this.sliderNum >= 4) {
+        this.sliderNum = 0;
+        this.slider.style.transition = "transform 0s";
+        this.slider.style.transform = `translateX(0)`;
+        this.sliderNum++;
+      }
       this.slider.style.transition = "transform 2s";
       this.slider.style.transform = `translateX(${this.sliderNum * -25}%)`;
     },
@@ -237,15 +242,16 @@ export default {
     },
     async getNewGoods() {
       try {
-        this.loadingNewFood = true
+        this.loadingNewFood = true;
         const res = await get("/xiaojian/newGoods", {
           city: this.location
         });
-        if(res.length>0){
+        if (res.length > 0) {
           this.newGoods = res;
         }
-      } catch (e) {}finally{
-        this.loadingNewFood = false
+      } catch (e) {
+      } finally {
+        this.loadingNewFood = false;
       }
     }
   },
@@ -253,12 +259,12 @@ export default {
     ...mapGetters(["location"])
   },
   watch: {
-    location: {
-      immediate: true,
-      handler: function() {
-        this.getHotGoods();
-        this.getNewGoods();
-      }
+    location() {
+      this.getHotGoods();
+      this.getNewGoods();
+    },
+    hotGoods() {
+      this.initSlider();
     }
   },
   beforeDestroy() {
