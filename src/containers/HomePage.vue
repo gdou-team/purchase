@@ -28,10 +28,10 @@
         </div>
       </div>
       <div class="right" style="width:200px;background-color:white;" v-loading='loadingNewFood'>
-        <div class="smallgoods">
+        <div class="smallgoods" v-if="newGoods[0]">
           <smallgoods :goodDetail='newGoods[0]' @smallGoods='goToDetail(newGoods[0].id)'/>
         </div>
-        <div>
+        <div v-if="newGoods[0]">
           <smallgoods :goodDetail='newGoods[0]' @smallGoods='goToDetail(newGoods[0].id)'/>
         </div>
       </div>
@@ -246,6 +246,8 @@ export default {
           this.$storage.set('hotGoods',arr)
         }
       } catch (e) {
+        this.hotGoods = this.$storage.get('hotGoods',{})
+        this.$message.error('服务器或者网络出现问题')
       } finally {
         this.loadingHotFood = false;
       }
@@ -265,6 +267,8 @@ export default {
           this.$storage.set('newGoods',res)
         }
       } catch (e) {
+        this.newGoods = this.$storage.get('newGoods',[])
+        this.$message.error('服务器或者网络出现问题')
       } finally {
         this.loadingNewFood = false;
       }
@@ -282,6 +286,8 @@ export default {
         this.goodByCity = res;
         this.$storage.set('goodByCity',res)
       } catch (e) {
+        this.goodByCity = this.$storage.get('goodByCity',[])
+        this.$message.error('服务器或者网络出现问题')
       } finally {
         this.loadingGoodByCity = false;
       }
@@ -316,7 +322,7 @@ export default {
     if (this.slider) {
       this.slider = null;
     }
-    window.removeEventListener("scroll", this.addEvent, false);
+    window.removeEventListener("scroll", this.addEvent);
   }
 };
 </script>
@@ -398,6 +404,7 @@ export default {
   position: fixed;
   right: 5px;
   bottom: 50%;
+  z-index: 10000;
 }
 
 .slider-container {
