@@ -15,6 +15,7 @@ import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/HomePage.vue'
 import Order from '@/components/order.vue'
 import OrderPay from '@/components/orderPay.vue'
+import shopSettled from '@/containers/shopSettled.vue'
 
 Vue.use(Router)
 
@@ -112,6 +113,10 @@ export default new Router({
           path:'order',
           name:'order',
           component:Order
+        },{
+          path:'shopSettled',
+          paht:'shopSettled',
+          component:shopSettled
         }
       ]
     },
