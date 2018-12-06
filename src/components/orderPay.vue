@@ -30,7 +30,7 @@ export default {
   methods: {
     setTime() {
       this.timer = setInterval(() => {
-        let latest = new Date("2018-12-1");
+        let latest = new Date("2018-12-10");
         let now = Date.now();
         let time = latest.getTime() - now;
         let s = parseInt((time / 1000) % 60);

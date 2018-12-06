@@ -106,7 +106,6 @@ export default {
           code: this.form.code,
           mobile: this.form.phone
         });
-        console.log(res);
         if(res.status == 'success'){
           this.setUserInfo(res.user)
           this.$router.push({ name: "homeContent" });

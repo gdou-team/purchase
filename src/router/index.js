@@ -15,7 +15,11 @@ import Vanni from '@/components/HelloWorld.vue'
 import HomeContent from '@/containers/HomePage.vue'
 import Order from '@/components/order.vue'
 import OrderPay from '@/components/orderPay.vue'
+<<<<<<< HEAD
 import shopSettled from '@/containers/shopSettled.vue'
+=======
+import SettledIn from '@/containers/settledIn.vue'
+>>>>>>> 43abd0d820e5aa6d2e722e3bb599b9d386f09e85
 
 Vue.use(Router)
 
@@ -66,6 +70,11 @@ export default new Router({
       path: '/orderPay/:id',
       name: 'orderPay',
       component: OrderPay
+    },
+    {
+      path: '/settledIn',
+      name: 'settledIn',
+      component: SettledIn
     },
     {
       path: '/loginandregister',
