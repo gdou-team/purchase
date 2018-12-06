@@ -7,7 +7,7 @@
 			</h2>
 			<ul>
 				<li>
-					<a href="javascript:;" class="choose_service">
+					<a @click.stop.prevent='settledIn' href="javascript:;" class="choose_service">
 						<span class="service_logo food"></span>
 					</a>
 					<div class="desc">
@@ -16,7 +16,7 @@
 					</div>
 				</li>
 				<li>
-					<a href="javascript:;" class="choose_service">
+					<a @click.stop.prevent='settledIn' href="javascript:;" class="choose_service">
 						<span class="service_logo service"></span>
 					</a>
 					<div class="desc">
@@ -25,7 +25,7 @@
 					</div>
 				</li>
 				<li>
-					<a href="javascript:;" class="choose_service">
+					<a @click.stop.prevent='settledIn' href="javascript:;" class="choose_service">
 						<span class="service_logo hotel"></span>
 					</a>
 					<div class="desc">
@@ -34,7 +34,7 @@
 					</div>
 				</li>
 				<li>
-					<a href="javascript:;" class="choose_service">
+					<a @click.stop.prevent='settledIn' href="javascript:;" class="choose_service">
 						<span class="service_logo travel"></span>
 					</a>
 					<div class="desc">
@@ -43,7 +43,7 @@
 					</div>
 				</li>
 				<li>
-					<a href="javascript:;" class="choose_service">
+					<a @click.stop.prevent='settledIn' href="javascript:;" class="choose_service">
 						<span class="service_logo other"></span>
 					</a>
 					<div class="desc">
@@ -59,7 +59,13 @@
 
 <script>
 export default {
-    
+    methods:{
+		settledIn(){
+			this.$router.push({
+				name:'settledIn'
+			})
+		}
+	}
 }
 </script>
 

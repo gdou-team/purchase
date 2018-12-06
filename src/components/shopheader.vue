@@ -2,7 +2,7 @@
 	<div class="main">
 		<div class="shop_header" >
 			<a href="javascript:;">
-				商家中心
+				{{title}}
 			</a>
 		</div>
 	</div>
@@ -10,8 +10,16 @@
 </template>
 
 <script>
-	
+export default {
+	props:{
+		title:{
+			type:String,
+			default:'商家中心'
+		}
+	}
+}
 </script>
+
 
 <style scoped>
 	.main{

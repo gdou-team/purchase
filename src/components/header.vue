@@ -8,7 +8,7 @@
     </div>
     <div class="my-right fontsize14">
       <ul>
-        <li class="my-item">商家入住</li>
+        <li class="my-item" @click='settledIn'>商家入住</li>
         <!-- <li>团购购物车(0)</li> -->
         <li @click="handelClick('orderList')">我的</li>
         <!-- <li>更多</li> -->
@@ -33,6 +33,9 @@
       },
       login() {
         this.$emit('login')
+      },
+      settledIn(){
+        this.$emit('settledIn')
       },
       handelClick(str) {
         this.$emit('goTo', {

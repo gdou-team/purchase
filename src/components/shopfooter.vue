@@ -1,9 +1,9 @@
 <template>
 	<div class="shop_footer">
 		<div class="shop_footer_top" >
-			<a href="javascript:;" target="_blank">关于美团</a>
+			<a href="javascript:;" target="_blank">关于网站</a>
 			<span>|</span>
-			<a href="javascript:;" target="_blank">美团承诺</a>
+			<a href="javascript:;" target="_blank">团购承诺</a>
 			<span>|</span>
 			<a href="javascript:;" target="_blank">购物保障</a>
 			<span>|</span>

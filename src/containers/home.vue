@@ -5,6 +5,7 @@
         @register='register'
         @login='login'
         @goTo='goTo'
+        @settledIn='settledIn'
         class="my-container my-center"/>
     </div>
     <div class="my-bg">
@@ -54,6 +55,11 @@ import {get} from '@/util'
         this.$router.push({
           name: "login"
         });
+      },
+      settledIn(){
+        this.$router.push({
+          name:'shopSettled'
+        })
       },
       selectCity(flag) {
         this.isShowSelectCity = !flag;
