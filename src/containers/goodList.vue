@@ -1,5 +1,6 @@
 <template>
-  <ul>
+  <div>
+    <ul>
     <li @click="goToDetail(11)">
       <goodslist class="my-container"/>
     </li>
@@ -16,15 +17,35 @@
       <goodslist class="my-container"/>
     </li>
   </ul>
+  <div class="page" v-if="totalPage>pageSize">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :page-size="pageSize"
+      layout="prev, pager, next, jumper"
+      :background='true'
+      :total="totalPage">
+    </el-pagination>
+  </div>
+  </div>
 </template>
 
 <script>
 import {get} from '@/util'
   export default {
+    data(){
+      return {
+        pageSize:5,
+        totalPage:1000,
+        list:[]
+      }
+    },
     created() {
       console.log(this.$route.query.keyWord);
     },
     methods: {
+      handleCurrentChange(e){
+        console.log(e)
+      },
       goToDetail(id) {
         this.$router.push({
           name: "goodDetail",
@@ -52,6 +73,10 @@ import {get} from '@/util'
         background-color: #dddddd;
       }
     }
+  }
+  .page{
+    text-align: center;
+    padding-top: 20px;
   }
 </style>
 

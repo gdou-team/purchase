@@ -65,6 +65,9 @@ import {get} from '@/util'
         this.isShowSelectCity = !flag;
       },
       search(obj) {
+        if(!obj.keyWord){
+          return;
+        }
         this.$router.push({
           name: "goodList",
           query:{
