@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="settlesIn">
+      <ShopHeader title="商家入驻" />
         <div class="my-center" style="width:70%;">
             <el-steps :active="active" simple style="height:60px">
             <el-step title="注册账户" icon="el-icon-edit"></el-step>
@@ -35,28 +36,48 @@
         </div>
         <div v-if="active==2" class="my-center item" style="width:360px;">
             <div>
-                <span></span>
+                <span class="star">*</span>
                 <el-input v-model="shopMessage.name" placeholder="店铺名称" />
             </div>
             <div>
+              <span class="star">*</span>
                 <el-input v-model="shopMessage.location" placeholder="店铺位置" />
             </div>
             <div>
+              <span class="star">*</span>
                 <el-input v-model="shopMessage.desc" placeholder="店铺描述" />
             </div>
+            <div class="fontsize12"><span style="color:red;">*</span>是必填信息</div>
             <div>
-                <el-button @click="submit" type="primary" style="width:100%">提交</el-button>
+                <el-button 
+                :disabled="!shopMessage.name || !shopMessage.location || !shopMessage.desc" 
+                @click="submit" 
+                type="primary" 
+                style="width:100%">提交</el-button>
                 <p class="back" @click="back">返回</p>
             </div>
         </div>
         <div v-if="active==3" class="my-center item" style="width:360px;">
-            <div><el-input v-model="userInfo.name" placeholder="姓名" /></div>
-            <div><el-input placeholder="身份证" v-model="userInfo.num" /></div>
             <div>
-                <el-button @click="authentication" type="primary" style="width:100%">认证</el-button>
+              <span class="star">*</span>
+              <el-input v-model="userInfo.name" placeholder="姓名" />
+            </div>
+            <div>
+              <span class="star">*</span>
+              <el-input placeholder="身份证" v-model="userInfo.num" />
+              <p v-if="userInfoError.num" class="p" style="font-size:12px;">身份证格式不正确</p>
+            </div>
+            <div class="fontsize12"><span style="color:red;">*</span>是必填信息</div>
+            <div>
+                <el-button 
+                :disabled="!userInfo.name || !userInfo.num"
+                @click="authentication" 
+                type="primary" 
+                style="width:100%">认证</el-button>
                 <p class="back" @click="back">返回</p>
             </div>
         </div>
+        <ShopFooter/>
     </div>
 </template>
 
@@ -85,17 +106,12 @@ export default {
         password: false,
         code: false
       },
-      shopMessageError: {
-        name: false,
-        location: false,
-        desc: false
-      },
       userInfoError: {
         name: false,
         num: false
       },
-      getcode:false,
-      second:60
+      getcode: false,
+      second: 60
     };
   },
   mounted() {
@@ -113,14 +129,21 @@ export default {
         return;
       }
       this.active++;
-      if(this.timer){
-          clearInterval(this.timer)
+      if (this.timer) {
+        clearInterval(this.timer);
       }
     },
     submit() {
       this.active++;
     },
-    authentication() {},
+    authentication() {
+      this.userInfoError.num = false;
+      let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      if (reg.test(this.userInfo.num) === false) {
+        this.userInfoError.num = true;
+        return;
+      }
+    },
     back() {
       this.active--;
     },
@@ -148,20 +171,40 @@ export default {
       }, 1000);
     }
   },
-  beforeDestroy(){
-      if(this.timer){
-          clearInterval(this.timer)
-      }
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 };
 </script>
 
 
 <style lang="less" scoped>
+.settlesIn{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .item {
   margin-top: 10px;
   > div {
     margin-top: 10px;
+    position: relative;
+    .star {
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: red;
+      font-size: 16px;
+    }
   }
 }
 .back {

@@ -74,6 +74,11 @@ export default new Router({
       component: SettledIn
     },
     {
+      path:'/shopSettled',
+      name:'shopSettled',
+      component:shopSettled
+    },
+    {
       path: '/loginandregister',
       name: 'loginandregister',
       component: LoginAndRegister,
@@ -121,7 +126,7 @@ export default new Router({
           component:Order
         },{
           path:'shopSettled',
-          paht:'shopSettled',
+          name:'shopSettled',
           component:shopSettled
         }
       ]
