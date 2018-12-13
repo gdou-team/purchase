@@ -11,7 +11,7 @@
     </div>
     <div>
       <el-button @click='login' type="primary" style='width:100%;' :disabled='disabled'>
-        登录
+        {{title}}
       </el-button>
     </div>
     <div style="text-align:right;">
@@ -23,13 +23,14 @@
 </template>
 
 <script>
-import { checkPhone, get } from "@/util";
+import { checkPhone, get,post } from "@/util";
 import { mapMutations } from "vuex";
 // 登录表单
 export default {
   data() {
     return {
       disabled: false,
+      title:'登录',
       form: {
         phone: "",
         password: ""
@@ -51,10 +52,11 @@ export default {
       //   return
       // }
       try{
-        const res = await get("/tjsanshao/user/login", {
-        username: this.form.phone,
-        password: this.form.password
-      });
+        this.title='登录中....'
+        const formData = new FormData()
+        formData.append('username',this.form.phone)
+        formData.append('password',this.form.password)
+        const res = await post("/tjsanshao/user/login", formData);
       if (res.status == "success") {
         this.setUserInfo(res.user);
         this.$router.push({ name: "homeContent" });
@@ -62,6 +64,7 @@ export default {
         this.isError.password = true;
       }
       }catch(e){
+        this.title = '登录'
         this.$message.error('网络错误')
       }
     },

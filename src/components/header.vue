@@ -24,6 +24,7 @@
 <script>
   // 头部
   import {mapGetters,mapMutations} from 'vuex'
+  import {get} from '../util'
 
   export default {
     methods: {
@@ -43,6 +44,11 @@
         })
       },
       logout(){
+        try {
+          // const result = 
+        } catch (error) {
+          
+        }
         window.localStorage.setItem('userInfo',{})
         this.setUserInfo({})
       }
