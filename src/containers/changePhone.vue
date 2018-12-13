@@ -12,8 +12,8 @@
         <div class="first">
           <i class="el-icon-setting"></i>
           <div>
-            <p>通过手机号</p>
-            <p>自需填写绑定手机号</p>
+            <p>通过手机号和密码</p>
+            <p>需填写绑定手机号</p>
           </div>
           <el-button type="success" @click="next('second')">去修改</el-button>
         </div>
@@ -28,6 +28,12 @@
               <el-input v-model="phone.oldPhone" placeholder="请输入手机号码"></el-input>
             </div>
             <p v-if="isError.oldPhone" class="p fontsize12" style="color:red;">手机格式有误</p>
+          </div>
+          <div class="phone">
+            <div class="flexrow" style="align-items: center;">
+              <label>密码</label>
+              <el-input v-model="phone.oldPassword" type="password" placeholder="请输入手机密码"></el-input>
+            </div>
           </div>
           <div class="btn">
             <el-button type="success" @click="nextThird('third')">下一步</el-button>
@@ -46,9 +52,15 @@
             <p v-if="isError.newPhone" class="p fontsize12" style="color:red;">手机格式有误</p>
           </div>
           <div class="phone">
-            <div class="flexrow" style="align-items: center;">
-              <label>短信动态码</label>
+            <div>
+              <div class="flexrow" style="align-items: center;">
+                <label>短信动态码</label>
               <el-input v-model="phone.code" placeholder="短信动态码"></el-input>
+              </div>
+              <div style="text-align: right;margin-top:20px">
+                <el-button :disabled='getcode' @click='getCode'>获取手机验证码</el-button>
+                <p v-if="getcode" class="fontsize12 send">{{second}}s后可以重新发送</p>
+              </div>
             </div>
             <p v-if="isError.code" class="p fontsize12" style="color:red;">短信动态码错误</p>
           </div>
@@ -66,130 +78,209 @@
 </template>
 
 <script>
-  import {checkPhone} from "@/util";
+import { checkPhone, get, post } from "@/util";
+import { mapMutations } from "vuex";
 
-  export default {
-    data() {
-      return {
-        active: 0,
-        activeName: "first",
-        phone: {
-          oldPhone: "",
-          newPhone: "",
-          code: ""
-        },
-        isError: {
-          oldPhone: false,
-          newPhone: false,
-          code: false
-        }
-      };
+export default {
+  props: {
+    dialogVisiblePhone: {
+      type: Boolean
+    }
+  },
+  data() {
+    return {
+      second: 60,
+      getcode: false,
+      active: 0,
+      activeName: "first",
+      phone: {
+        oldPhone: "13427491053",
+        newPhone: "17607591628",
+        code: "082324",
+        oldPassword: ""
+      },
+      isError: {
+        oldPhone: false,
+        newPhone: false,
+        code: false
+      }
+    };
+  },
+
+  mounted() {
+    this.timer = null;
+  },
+
+  methods: {
+    next(str) {
+      this.active++;
+      this.activeName = str;
     },
-
-    methods: {
-      next(str) {
-        this.active++;
-        this.activeName = str;
-      },
-      nextThird(str) {
-        this.isError.oldPhone = false;
-        if (!checkPhone(this.phone.oldPhone)) {
-          this.isError.oldPhone = true;
-          return;
+    async nextThird(str) {
+      this.isError.oldPhone = false;
+      if (!checkPhone(this.phone.oldPhone)) {
+        this.isError.oldPhone = true;
+        return;
+      }
+      try {
+        let formData = new FormData();
+        formData.append("mobile", this.phone.oldPhone);
+        formData.append("password", this.phone.oldPassword);
+        const result = await post("/tjsanshao/user/verifyMobile", formData);
+        if (result.status == "success") {
+          this.active++;
+          this.activeName = str;
+        } else {
+          this.$message.error("验证失败");
         }
-        this.active++;
-        this.activeName = str;
-      },
-      nextForth(str) {
-        this.isError.newPhone = false;
-        this.isError.code = false;
-        if (!checkPhone(this.phone.newPhone)) {
-          this.isError.newPhone = true;
-          return;
+      } catch (error) {
+        this.$message.error("网络错误");
+      }
+    },
+    async nextForth(str) {
+      this.isError.newPhone = false;
+      this.isError.code = false;
+      if (!checkPhone(this.phone.newPhone)) {
+        this.isError.newPhone = true;
+        return;
+      }
+      if (!this.phone.code) {
+        this.isError.code = true;
+        return;
+      }
+      try {
+        const result = await get("/tjsanshao/user/mobile", {
+          mobile: this.phone.newPhone,
+          code: this.phone.code
+        });
+        if (result.status == "success") {
+          this.setUser(result.user);
+          this.active = this.active + 1;
+          this.activeName = str;
+        }else{
+          this.$message.error('解绑失败')
         }
-        if (!this.phone.code) {
-          this.isError.code = true;
-          return;
+      } catch (error) {
+        this.$message.error('网络错误')
+      }
+    },
+    pre(str) {
+      this.active--;
+      this.activeName = str;
+      this.isError.oldPhone = false;
+      this.isError.newPhone = false;
+      this.isError.code = false;
+    },
+    async getCode() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
+      this.getcode = true;
+      this.timer = setInterval(() => {
+        this.second--;
+        if (this.second == 0) {
+          clearInterval(this.timer);
+          this.getcode = false;
+          this.second = 60;
         }
-        this.active = this.active + 2;
-        this.activeName = str;
-      },
-      pre(str) {
-        this.active--;
-        this.activeName = str;
-        this.isError.oldPhone = false;
-        this.isError.newPhone = false;
-        this.isError.code = false;
+      }, 1000);
+      try {
+        const result = await get("/tjsanshao/user/sendMsgCode", {
+          mobileNumber: this.phone.newPhone
+        });
+        if(result.status == 'success'){
+          this.$message.success('发送成功')
+        }else{
+          this.$message.error('发送失败')
+        }
+      } catch (error) {
+        this.$message.error('网络错误')
       }
     }
-  };
+  },
+  watch: {
+    dialogVisiblePhone(newVal) {
+      if (!newVal) {
+        this.activeName = "first";
+      }
+    }
+  },
+  computed: {
+    ...mapMutations(["setUser"])
+  },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+};
 </script>
 
 
 <style lang="less" scoped>
-  .first {
-    border: 1px solid #cccccc;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    i {
-      font-size: 30px;
+.first {
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  i {
+    font-size: 30px;
+  }
+  > div {
+    margin: 0px 90px 0 40px;
+    p:nth-child(1) {
+      font-weight: bold;
     }
-    > div {
-      margin: 0px 90px 0 40px;
-      p:nth-child(1) {
-        font-weight: bold;
-      }
-      p:nth-child(2) {
-        color: #ccc;
-        font-size: 12px;
-      }
+    p:nth-child(2) {
+      color: #ccc;
+      font-size: 12px;
     }
   }
+}
 
-  .second {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #cccccc;
-    padding: 50px;
-    p {
-      &:nth-child(1) {
-        font-size: 18px;
-        color: #333;
-      }
-      &:nth-child(2) {
-        font-size: 12px;
-        color: #999;
-        margin-top: 10px;
-      }
-    }
-    .btn {
-      margin-top: 20px;
-      span {
-        color: #2bb8aa;
-        margin-left: 10px;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .phone {
-    margin-top: 20px;
-    align-items: center;
-    label {
-      width: 100px;
+.second {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #cccccc;
+  padding: 50px;
+  p {
+    &:nth-child(1) {
+      font-size: 18px;
       color: #333;
-      font-size: 14px;
+    }
+    &:nth-child(2) {
+      font-size: 12px;
+      color: #999;
+      margin-top: 10px;
     }
   }
-
-  .h1 {
-    text-align: center;
-    padding: 50px;
+  .btn {
+    margin-top: 20px;
+    span {
+      color: #2bb8aa;
+      margin-left: 10px;
+      cursor: pointer;
+    }
   }
+}
+
+.phone {
+  margin-top: 20px;
+  align-items: center;
+  label {
+    width: 100px;
+    color: #333;
+    font-size: 14px;
+  }
+}
+
+.h1 {
+  text-align: center;
+  padding: 50px;
+}
 </style>
 

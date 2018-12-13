@@ -12,79 +12,89 @@
         <!-- <li>团购购物车(0)</li> -->
         <li @click="handelClick('orderList')">我的</li>
         <!-- <li>更多</li> -->
-        <li v-if="userInfo.id">{{userInfo.username}}</li>
-        <li v-if="userInfo.id" class="my-item" @click="logout">退出</li>
-        <li v-if="!userInfo.id" class="my-item" @click="login">[登录]</li>
-        <li v-if="!userInfo.id" class="my-item" @click="register">[注册]</li>
+        <li v-if="userInfo.id?true:false">{{userInfo.username}}</li>
+        <li v-if="userInfo.id?true:false" class="my-item" @click="logout">{{out}}</li>
+        <li v-if="!userInfo.id?true:false" class="my-item" @click="login">[登录]</li>
+        <li v-if="!userInfo.id?true:false" class="my-item" @click="register">[注册]</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-  // 头部
-  import {mapGetters,mapMutations} from 'vuex'
-  import {get} from '../util'
+// 头部
+import { mapGetters, mapMutations } from "vuex";
+import { get } from "../util";
 
-  export default {
-    methods: {
-      ...mapMutations(['setUserInfo']),
-      register() {
-        this.$emit('register')
-      },
-      login() {
-        this.$emit('login')
-      },
-      settledIn(){
-        this.$emit('settledIn')
-      },
-      handelClick(str) {
-        this.$emit('goTo', {
-          name: str
-        })
-      },
-      logout(){
-        try {
-          // const result = 
-        } catch (error) {
-          
-        }
-        window.localStorage.setItem('userInfo',{})
-        this.setUserInfo({})
-      }
+export default {
+  data() {
+    return {
+      out: "退出"
+    };
+  },
+  methods: {
+    ...mapMutations(["setUserInfo"]),
+    register() {
+      this.$emit("register");
     },
-    computed: {
-      ...mapGetters(['userInfo'])
+    login() {
+      this.$emit("login");
+    },
+    settledIn() {
+      this.$emit("settledIn");
+    },
+    handelClick(str) {
+      this.$emit("goTo", {
+        name: str
+      });
+    },
+    async logout() {
+      try {
+        this.out = "退出中...";
+        const result = await get("/tjsanshao/user/logout");
+        if (result.status == "success") {
+          window.localStorage.setItem("userInfo", {});
+          this.setUserInfo({});
+        }
+      } catch (error) {
+        this.$message.error('网络错误')
+      }finally{
+        this.out = "退出";
+      }
     }
+  },
+  computed: {
+    ...mapGetters(["userInfo"])
   }
+};
 </script>
 
 
 <style lang="less" scoped>
-  .my-header {
+.my-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 10px 0;
-    ul {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      li {
-        padding: 0 20px 0 0;
-        cursor: pointer;
-        &.my-item {
-          color: #506EAA;
-        }
-        > a {
-          display: block;
-          text-decoration: none;
-          color: black;
-        }
+    li {
+      padding: 0 20px 0 0;
+      cursor: pointer;
+      &.my-item {
+        color: #506eaa;
+      }
+      > a {
+        display: block;
+        text-decoration: none;
+        color: black;
       }
     }
   }
+}
 </style>
 

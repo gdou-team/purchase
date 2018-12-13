@@ -32,8 +32,8 @@ export default {
       disabled: false,
       title:'登录',
       form: {
-        phone: "",
-        password: ""
+        phone: "13427491053",
+        password: "123456"
       },
       isError: {
         phone: false,
@@ -46,11 +46,6 @@ export default {
     async login() {
       this.isError.phone = false;
       this.isError.password = false;
-      // const result = checkPhone(this.form.phone)
-      // if (!result) {
-      //   this.isError.phone = true
-      //   return
-      // }
       try{
         this.title='登录中....'
         const formData = new FormData()
@@ -58,7 +53,8 @@ export default {
         formData.append('password',this.form.password)
         const res = await post("/tjsanshao/user/login", formData);
       if (res.status == "success") {
-        this.setUserInfo(res.user);
+        this.setUserInfo(res);
+        this.title = '登录'
         this.$router.push({ name: "homeContent" });
       } else {
         this.isError.password = true;
@@ -66,6 +62,8 @@ export default {
       }catch(e){
         this.title = '登录'
         this.$message.error('网络错误')
+      }finally{
+        this.title = '登录'
       }
     },
     goBack() {

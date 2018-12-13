@@ -2,10 +2,10 @@
   <div class="main">
     <div class="user_info">
       <div class="head_img">
-        <img class="avatar" src="../assets/avatar.jpg"/>
+        <img class="avatar" :src="userDetail.userImageUrl?userDetail.userImageUrl:require('../assets/avatar.jpg')"/>
       </div>
       <div class="nickname">
-        <p class="username">Vanni辉</p>
+        <p class="username">{{userDetail.nickName}}</p>
         <p class="usermoney">我的余额：￥<span class="money">0</span></p>
       </div>
       <div class="setting">
@@ -70,7 +70,7 @@
       width="50%"
       top='10px'
     >
-      <ChangePhone/>
+      <ChangePhone :dialogVisiblePhone='dialogVisiblePhone'/>
       <span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisiblePhone = false">关 闭</el-button>
 			</span>
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
   export default {
     data() {
       return {
@@ -107,6 +108,9 @@
       goBack() {
         this.isShowOrderDetails = false
       }
+    },
+    computed:{
+      ...mapGetters(['userDetail'])
     }
   };
 </script>
