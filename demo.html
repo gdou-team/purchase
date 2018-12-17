@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form name="punchout_form" method="post" action="https://openapi.alipaydev.com/gateway.do?charset=utf-8&method=alipay.trade.page.pay&sign=U9ay%2FndiylffAKCyWuM0jsfxl3W3w%2BhdD6uzNGG1rN7WfNlTvDD0xeKszLSWJ0BUNE19g1ow9BXs5ndDsg5qyDnNJWjWJbNaAe6yBpXGtRwZwedCvQ%2BKuyfMxBtn3nGFNgzhAE3OG6vRDukXfo04pRHQnm09ym1BsG2XWUTyGzSTNbjzno0ObUbjkG6Yr6RihsiPGMfm47k9w4kCOv2scKKP5zP500VjN4wR7vA7oMOZa%2FunehchQp2htWoxKRpbWVl%2FnFK9y60mst%2Fegf2WS5ubIZ%2BKK5ZIaLchR6LPghW4O1mAN0eacEFU%2FbmN7%2Bh0e7E8O7xD4zPfhxRyKPfvdA%3D%3D&return_url=http%3A%2F%2Ftjsanshao.free.idcfengye.com%2Falipay%2Freturn&notify_url=http%3A%2F%2Ftjsanshao.free.idcfengye.com%2Falipay%2Fnotify&version=1.0&app_id=2016091900549543&sign_type=RSA&timestamp=2018-12-17+20%3A36%3A53&alipay_sdk=alipay-sdk-java-3.4.27.ALL&format=json">
+        <input type="hidden" name="biz_content" value="{&quot;out_trade_no&quot;:&quot;15450502086370424&quot;,&quot;total_amount&quot;:&quot;500.00&quot;,&quot;subject&quot;:&quot;小汉风烤肉自助午餐1位&quot;,&quot;body&quot;:&quot;小汉风烤肉自助午餐，你值得拥有!!!&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}">
+        <input type="submit" value="立即支付" style="display:none" >
+        </form>
+        <script>document.forms[0].submit();</script>
+</body>
+</html>
