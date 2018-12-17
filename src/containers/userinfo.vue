@@ -7,18 +7,18 @@
       </div>
       <div class="item clearfix">
         <div class="field_name">头像</div>
-        <div class="field_value"><img class="head_img" src="../assets/avatar.jpg"></div>
+        <div class="field_value"><img class="head_img" :src="userDetail.userImageUrl?userDetail.userImageUrl:require('../assets/avatar.jpg')"></div>
         <button class="btn_change" @click="upload">修改</button>
         <input @change="uploadFile" ref='input' type="file" name="avater" class="user_avater">
       </div>
       <div class="item clearfix">
         <div class="field_name">昵称</div>
-        <div class="field_value">Vanni辉</div>
+        <div class="field_value">{{userDetail.nickName}}</div>
         <button class="btn_change" @click="changeName">修改</button>
       </div>
       <div class="item clearfix">
         <div class="field_name">解绑手机</div>
-        <div class="field_value">137****9839</div>
+        <div class="field_value">{{userDetail.mobile|formatPhone}}</div>
         <button class="btn_change" @click="changeMobile">换绑</button>
       </div>
       <div class="item clearfix">
@@ -43,7 +43,7 @@
           <div class="dialog-body">
             <div class="row">
               <label class="field-name">当前昵称</label>
-              <span class="field-value">Vanni辉</span>
+              <span class="field-value">{{userDetail.nickName}}</span>
             </div>
             <div class="row">
               <label class="field-name">新昵称</label>
@@ -65,7 +65,8 @@
             </div>
           </div>
           <div class="btn-group">
-            <button class="btn btn-ok btn-disabled">确认修改</button>
+            <button class="btn btn-ok btn-disabled" 
+            @click='editName'>确认修改</button>
             <button class="btn btn-cancel" @click="close">取消</button>
           </div>
         </div>
@@ -139,14 +140,14 @@
 </template>
 
 <script>
-import { get,post } from "@/util";
-import {mapGetters} from 'vuex'
+import { get, post } from "@/util";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   data() {
     return {
-      getcode:false,
-      second:60,
+      getcode: false,
+      second: 60,
       name_tip_flag: true,
       name_success: false,
       show_name_tag: false,
@@ -159,18 +160,39 @@ export default {
 
       pass_right: true,
       pass2_confirm: false,
-      pass3_confirm: false
+      pass3_confirm: false,
     };
   },
+  filters: {
+    formatPhone(value) {
+      let str = value.substring(0, 3);
+      let str1 = value.substring(value.length - 4, value.length);
+      return `${str}****${str1}`;
+    }
+  },
   methods: {
+    ...mapMutations(["setUserInfo"]),
     upload() {
       this.$refs.input.click();
+      
     },
     //上传头像
-    uploadFile() {
+    async uploadFile() {
       let file = this.$refs.input.files[0];
-      let formData = new FormData();
-      formData.append("file", file);
+      try {
+        let formData = new FormData();
+        formData.append("headImage", file);
+        const result = await post('/tjsanshao/user/detail',formData)
+        console.log(result)
+        if(result.message == 'success'){
+          this.$message.success('修改成功')
+          this.setUserInfo(result);
+        }else{
+          this.$message.error('修改失败')
+        }
+      } catch (error) {
+        this.$message.error('网络错误')
+      }
     },
     async changeName() {
       this.show_name_tag = true;
@@ -286,7 +308,7 @@ export default {
       try {
         const res = await get("/tjsanshao/user/sendMsgCode", {
           mobileNumber: this.userInfo.mobile,
-          requestParam:'password'
+          requestParam: "password"
         });
         if (res.status == "success") {
           this.$message.success("发送成功");
@@ -297,23 +319,43 @@ export default {
         this.$message.error("网络错误");
       }
     },
-    sureEdit(){
-      if(this.password_second != this.password_new || !this.password_old || this.password_second || !this.password_new){
-        return
+    sureEdit() {
+      if (
+        this.password_second != this.password_new ||
+        !this.password_old ||
+        this.password_second ||
+        !this.password_new
+      ) {
+        return;
       }
-      
+    },
+    async editName() {
+      try {
+        let formData = new FormData();
+        formData.append("nickName", this.username);
+        const result = await post("/tjsanshao/user/detail", formData);
+        if (result.message == "success") {
+          this.$message.success("修改成功");
+          this.setUserInfo(result);
+          this.show_name_tag = false;
+        } else {
+          this.$message.error("修改错误");
+        }
+      } catch (error) {
+        this.$message.error("网络错误");
+      }
     }
   },
   mounted() {
     this.timer = null;
   },
-  computed:{
-    ...mapGetters(['userInfo'])
+  computed: {
+    ...mapGetters(["userInfo", "userDetail"])
   },
-  beforeDestroy(){
+  beforeDestroy() {
     if (this.timer) {
-        clearInterval(this.timer);
-      }
+      clearInterval(this.timer);
+    }
   }
 };
 </script>

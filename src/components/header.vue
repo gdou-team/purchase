@@ -14,8 +14,8 @@
         <!-- <li>更多</li> -->
         <li v-if="userInfo.id?true:false">{{userInfo.username}}</li>
         <li v-if="userInfo.id?true:false" class="my-item" @click="logout">{{out}}</li>
-        <li v-if="!userInfo.id?true:false" class="my-item" @click="login">[登录]</li>
-        <li v-if="!userInfo.id?true:false" class="my-item" @click="register">[注册]</li>
+        <li v-if="userInfo.id?false:true" class="my-item" @click="login">[登录]</li>
+        <li v-if="userInfo.id?false:true" class="my-item" @click="register">[注册]</li>
       </ul>
     </div>
   </div>
@@ -53,8 +53,10 @@ export default {
         this.out = "退出中...";
         const result = await get("/tjsanshao/user/logout");
         if (result.status == "success") {
-          window.localStorage.setItem("userInfo", {});
-          this.setUserInfo({});
+          this.setUserInfo({
+            user:{},
+            userDetail:{}
+          });
         }
       } catch (error) {
         this.$message.error('网络错误')

@@ -30,10 +30,17 @@
       }
     },
     mounted() {
+      console.log(1111)
       this.initMap();
     },
     computed: {
       ...mapGetters(["location"])
+    },
+    activated(){
+      this.initMap()
+    },
+    deactivated(){
+      this.map = null
     },
     methods: {
       ...mapMutations(['setLocation']),

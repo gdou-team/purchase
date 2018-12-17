@@ -80,13 +80,19 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import { get, post } from "@/util";
+
   export default {
     data() {
       return {
         activeName: "first",
         dialogVisible: false,
         dialogVisiblePhone: false,
-        isShowOrderDetails: false
+        isShowOrderDetails: false,
+        orders:[],
+        ordersNotPay:[],
+        ordersNotUse:[],
+        ordersNotComment:[]
       };
     },
     methods: {
@@ -108,6 +114,20 @@ import {mapGetters} from 'vuex'
       goBack() {
         this.isShowOrderDetails = false
       }
+    },
+    created(){
+      get('/tjsanshao/user/orders').then(res=>{
+        console.log(res)
+      })
+      get('/tjsanshao/user/ordersNotPay').then(res=>{
+        console.log(res)
+      })
+      get('/tjsanshao/user/ordersNotUse').then(res=>{
+        console.log(res)
+      })
+      get('/tjsanshao/user/ordersNotComment').then(res=>{
+        console.log(res)
+      })
     },
     computed:{
       ...mapGetters(['userDetail'])
