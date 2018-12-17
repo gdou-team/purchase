@@ -51,13 +51,17 @@ export default {
     async logout() {
       try {
         this.out = "退出中...";
-        const result = await get("/tjsanshao/user/logout");
-        if (result.status == "success") {
-          this.setUserInfo({
+        this.setUserInfo({
             user:{},
             userDetail:{}
           });
-        }
+        const result = await get("/tjsanshao/user/logout");
+        // if (result.status == "success") {
+        //   this.setUserInfo({
+        //     user:{},
+        //     userDetail:{}
+        //   });
+        // }
       } catch (error) {
         this.$message.error('网络错误')
       }finally{

@@ -46,3 +46,21 @@ export const checkPhone = (phone) =>{
     const reg = /^1(3|4|5|7|8)\d{9}$/
     return reg.test(phone)
 }
+
+export const formateDate = (str) => {
+    let date = new Date(str)
+
+    let year = date.getFullYear()
+
+    let month = date.getMonth()
+
+    let day = date.getDate()
+
+    let h = date.getHours()
+
+    let m = date.getMinutes()
+
+    let s = date.getSeconds()
+
+    return `${year}-${month+1}-${day} ${h}:${m}:${s}`
+}

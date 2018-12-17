@@ -4,12 +4,12 @@
             请在<span>{{time}}</span>内完成支付，超时会自动取消订单
         </div>
         <div class="detail">
-            <div>项目 ：自助餐下午茶</div>
-            <div>应付金额 ： ￥<span>41.5</span></div>
+            <div>项目 ：{{orderPayDetail.}}</div>
+            <div>应付金额 ： ￥<span>{{orderPayDetail.order.total}}</span></div>
         </div>
         <div class="pay">
             <el-radio class="radio" v-model="pay" label="1" size='medium'>支付宝支付</el-radio>
-            <div class="num">支付 ￥<span>41.5</span></div>
+            <div class="num">支付 ￥<span>{{orderPayDetail.order.total}}</span></div>
             <div class="gopay">
                 <div @click="goBack">返回修改订单</div>
                 <el-button :disabled="isOverdue" type="primary">去付款</el-button>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data() {
     return {
@@ -30,7 +31,7 @@ export default {
   methods: {
     setTime() {
       this.timer = setInterval(() => {
-        let latest = new Date("2018-12-10");
+        let latest = new Date(this.orderPayDetail.expire);
         let now = Date.now();
         let time = latest.getTime() - now;
         let s = parseInt((time / 1000) % 60);
@@ -61,6 +62,9 @@ export default {
   mounted() {
     this.timer = null;
     this.setTime();
+  },
+  computed:{
+    ...mapGetters(['orderPayDetail'])
   },
   beforeDestroy(){
       if(this.timer){

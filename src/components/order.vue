@@ -43,6 +43,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import { post } from "@/util";
 export default {
   data() {
     return {
@@ -58,7 +59,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setOrderDetail"]),
+    ...mapMutations(["setOrderDetail",'setOrderPayDetail']),
     handleChange(index) {
       let total =
         this.tableData[index].count * this.orderDetail["single_price"];
@@ -74,13 +75,29 @@ export default {
       // 	this.total_price_num += element.total
       // });
     },
-    submit_order() {
-      this.$router.push({
-        name: "orderPay",
-        params: {
-          id: 101
+    async submit_order() {
+      try {
+        const formDate = new FormData();
+        formDate.append("goodsId", this.orderDetail.goodsId);
+        formDate.append("count", this.orderDetail.count);
+        const result = await post("/tjsanshao/order/create", formDate);
+        if (result.status == "success") {
+          this.setOrderPayDetail(result)
+          this.$router.push({
+            name: "orderPay"
+          });
+        }else{
+          this.$message.error('提交失败')
         }
-      });
+      } catch (error) {
+        this.$message.error('网络错误')
+      }
+      // this.$router.push({
+      //   name: "orderPay",
+      //   params: {
+      //     id: 101
+      //   }
+      // });
     },
     goBack() {
       this.$router.back();

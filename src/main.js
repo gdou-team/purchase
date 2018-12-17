@@ -68,10 +68,8 @@ Vue.component('ShopFooter',ShopFooter)
 
 // 登录权限控制
 router.beforeEach((to, from, next) => {
-  console.log(to.name)
   if (!store.state.userInfo.id) {
     if(to.name == 'orderList'){
-      console.log('用户还没有登陆')
       next({name:'login'})
     }
   }

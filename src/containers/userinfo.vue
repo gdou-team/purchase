@@ -183,7 +183,6 @@ export default {
         let formData = new FormData();
         formData.append("headImage", file);
         const result = await post('/tjsanshao/user/detail',formData)
-        console.log(result)
         if(result.message == 'success'){
           this.$message.success('修改成功')
           this.setUserInfo(result);

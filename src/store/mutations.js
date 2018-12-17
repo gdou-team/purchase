@@ -22,3 +22,7 @@ export const setUser = (state,user)=>{
     state.userInfo = user
     storage.set('userInfo',user)
 } 
+
+export const setOrderPayDetail = (state,orderPayDetail) =>{
+    state.orderPayDetail = orderPayDetail
+}

@@ -32,8 +32,8 @@ export default {
       disabled: false,
       title:'登录',
       form: {
-        phone: "13427491053",
-        password: "123456"
+        phone: "TjSanshao",
+        password: "666666"
       },
       isError: {
         phone: false,

@@ -8,7 +8,8 @@ let state = {
     userInfo:userInfo,
     location:'湛江市',
     orderDetail:{},
-    userDetail:userDetail
+    userDetail:userDetail,
+    orderPayDetail:null
 }
 
 
