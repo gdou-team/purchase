@@ -69,7 +69,7 @@ Vue.component('ShopFooter',ShopFooter)
 // 登录权限控制
 router.beforeEach((to, from, next) => {
   if (!store.state.userInfo.id) {
-    if(to.name == 'orderList'){
+    if(to.name == 'orderList' || to.name == 'order' ||to.name == 'orderPay' ||to.name == 'orderList'){
       next({name:'login'})
     }
   }

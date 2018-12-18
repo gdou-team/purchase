@@ -64,7 +64,7 @@ export default new Router({
       component: Order
     },
     {
-      path: '/orderPay/',
+      path: '/orderPay',
       name: 'orderPay',
       component: OrderPay
     },

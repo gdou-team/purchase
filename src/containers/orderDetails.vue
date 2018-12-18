@@ -19,8 +19,8 @@
       <h3 class="title">订单信息</h3>
       <div class="order_info">
         <div class="field_item">
-          <div class="field_name">订单总价</div>
-          <div class="field_value">￥{{orderDetail.goods.discountPrice * orderDetail.order.count}}</div>
+          <div class="field_name">单价</div>
+          <div class="field_value">￥{{orderDetail.goods.discountPrice}}</div>
         </div>
         <div class="field_item">
           <div class="field_name">下单时间</div>
@@ -28,38 +28,38 @@
         </div>
         <div class="field_item">
           <div class="field_name">订单总价</div>
-          <div class="field_value">￥108</div>
+          <div class="field_value">{{orderDetail.order.total}}</div>
         </div>
       </div>
       <!-- 右侧按钮 -->
       <div class="btn_group">
-        <button class="btn order_again">再次预定</button>
-        <button class="btn">删除订单</button>
+        <button @click="againOrder" class="btn order_again">再次预定</button>
+        <button @click='deleteOrder' class="btn">删除订单</button>
       </div>
     </div>
     <div class="item">
       <h3 class="title">商家信息</h3>
-      <div class="shop_name">玫瑰海岸娱乐会所</div>
-      <div class="info">湛江市麻章区海大路一号</div>
+      <div class="shop_name">{{orderDetail.goods.goodsTitle}}</div>
+      <div class="info">{{orderDetail.goods.goodsCategory}}</div>
       <div class="info">0759-2383111</div>
     </div>
-    <div class="item">
+    <!-- <div class="item">
       <h3 class="title">标准大床房</h3>
       <div class="info">华南地区最奢华的享受</div>
       <div class="info">wifi</div>
       <div class="info">空调/热水</div>
 
-    </div>
+    </div> -->
     <div class="item">
       <h3 class="title">预定信息</h3>
       <div class="user_info">
         <div class="field_item">
           <div class="field_name">预订人</div>
-          <div class="field_value">Vanni辉</div>
+          <div class="field_value">{{userDetail.nickName}}</div>
         </div>
         <div class="field_item">
           <div class="field_name">联系电话</div>
-          <div class="field_value">15521634926</div>
+          <div class="field_value">{{userInfo.mobile}}</div>
         </div>
         <div class="field_item">
           <div class="field_name">使用说明</div>
@@ -78,6 +78,7 @@
 
 <script>
 import { get, formateDate } from "@/util";
+import {mapGetters} from 'vuex'
 
 export default {
   data() {
@@ -112,9 +113,18 @@ export default {
         });
       }
     },
+    deleteOrder(){
+      this.$emit('deleteOrder')
+    },
     goBack() {
       this.$emit("goBack");
+    },
+    againOrder(){
+      this.$emit('againOrder')
     }
+  },
+  computed:{
+    ...mapGetters(['userInfo','userDetail'])
   }
 };
 </script>

@@ -15,7 +15,12 @@
     </div>
 
     <transition name="router" mode="out-in">
-      <orderdetails v-if="isShowOrderDetails" :orderDetail='orderDetail' @goBack="goBack"/>
+      <orderdetails 
+      v-if="isShowOrderDetails" 
+      @deleteOrder='deleteOrder' 
+      @againOrder='againOrder'
+      :orderDetail='orderDetail' 
+      @goBack="goBack"/>
     </transition>
 
     <transition name="router" mode="out-in">
@@ -27,7 +32,7 @@
       @tab-click="handleClick">
         <el-tab-pane label="全部订单" name="orders">
           <div v-loading='ordersLoading' v-if="ordersLoading" style="height:200px;"></div>
-          <orderlist v-for="(item,index) in orders" :order='item' :key="index" class="order-list"/>
+          <orderlist @comment='comment(item)' v-for="(item,index) in orders" :order='item' :key="index" class="order-list"/>
         </el-tab-pane>
         <el-tab-pane label="待付款" name="ordersNotPay">
           <orderlist v-for="(item,index) in ordersNotPay" :order='item' @comment='goToPay(item)' :key="index" class="order-list"/>
@@ -83,7 +88,7 @@ export default {
       dialogVisible: false,
       dialogVisiblePhone: false,
       isShowOrderDetails: false,
-      orderDetail:{},
+      orderDetail: {},
       orders: [],
       ordersNotPay: [],
       ordersNotUse: [],
@@ -96,8 +101,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setOrderDetail"]),
-    async handleClick(tab, event) {
-    },
+    async handleClick(tab, event) {},
     setUserInfo() {
       this.dialogVisible = true;
     },
@@ -108,7 +112,7 @@ export default {
       this.dialogVisiblePhone = true;
     },
     comment(item) {
-      this.orderDetail = item
+      this.orderDetail = item;
       this.isShowOrderDetails = true;
     },
     goBack() {
@@ -119,9 +123,9 @@ export default {
         this[`${name}Loading`] = true;
         const result = await get(`/tjsanshao/user/${name}`);
         this[name] = result.orders;
-        this.$storage.set(name,result.orders)
+        this.$storage.set(name, result.orders);
       } catch (error) {
-        this[name] = this.$storage.get(name,[])
+        this[name] = this.$storage.get(name, []);
         this.$message.error("服务器错误");
       } finally {
         this[`${name}Loading`] = false;
@@ -129,7 +133,7 @@ export default {
     },
     goToPay(item) {
       this.setOrderDetail({
-        goodsId:item.goods.id,
+        goodsId: item.goods.id,
         name: item.goods.goodsTitle,
         count: item.order.count,
         single_price: item.order.discountPrice,
@@ -138,8 +142,34 @@ export default {
       this.$router.push({ name: "order" });
     },
     goToUse(item) {
-      this.orderDetail = item
+      this.orderDetail = item;
       this.isShowOrderDetails = true;
+    },
+    async deleteOrder() {
+      try {
+        const result = await get("/tjsanshao/user/deleteOrder", {
+          id: this.orderDetail.order.id
+        });
+        if (result.status == "success") {
+          this.isShowOrderDetails = false;
+          this.initOrder("orders");
+          this.initOrder("ordersNotPay");
+          this.initOrder("ordersNotUse");
+          this.initOrder("ordersNotComment");
+        } else {
+          this.$message.error("删除失败");
+        }
+      } catch (error) {
+        this.$message.error("网络错误");
+      }
+    },
+    againOrder(){
+      this.$router.push({
+        name:'goodDetail',
+        params:{
+          id:this.orderDetail.goods.id
+        }
+      })
     }
   },
   async created() {

@@ -1,36 +1,36 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading='goodDetailLoading'>
     <div class="detail_intro">
       <!-- 商品名称 -->
       <div class="roduct_name">
-        <span>【20店通用】</span>
-        <h1>华美食品</h1>
-        <p>花团锦簇月饼1盒，免费配送，独特美味，一吃难忘，品质享受</p>
+        <span>{{goodDetail.resultGoods?goodDetail.resultGoods.goods.goodsTitle:''}}</span>
+        <h1>{{goodDetail.resultGoods?goodDetail.resultGoods.goods.goodsCategory:''}}</h1>
+        <p>{{goodDetail.resultGoods?goodDetail.resultGoods.goods.goodsTitle:''}}</p>
       </div>
       <div class="product_bottom">
         <!-- 商品图片 -->
         <div class="roduct_left">
-          <img src="">
+          <img :src="goodDetail.resultGoods?goodDetail.resultGoods.goodsImage.imageUrl:''">
         </div>
         <!-- 右边商品部分 -->
         <div class="roduct_info">
           <!-- 商品价格和销量 -->
           <div class="cl">
             <div class="roduct_price cl">
-              <span class="price"><em>¥</em>72</span>
-              <span class="money">¥<del>188</del></span>
+              <span class="price"><em>¥</em>{{goodDetail.resultGoods?goodDetail.resultGoods.goods.discountPrice:''}}</span>
+              <span class="money">¥<del>{{goodDetail.resultGoods?goodDetail.resultGoods.goods.oringinalPrice:''}}</del></span>
             </div>
 
             <div class="roduct_stars">
-              <span>已售<strong>10</strong></span>
+              <span>已售<strong>{{goodDetail.resultGoods?goodDetail.resultGoods.goodsDetail.salesVolumn:''}}</strong></span>
             </div>
           </div>
 
           <!-- 商品信息 -->
           <div class="roduct_otherinfo roduct_linetop">
-            <span class="otherinfo_title">有效期</span>
+            <span class="otherinfo_title">上架时间</span>
             <div class="otherinfo_content">
-              <span class="text">2019_12_31</span>
+              <span class="text">{{goodDetail.resultGoods?goodDetail.resultGoods.goodsDetail.creatGoodsTime:''}}</span>
             </div>
           </div>
 
@@ -49,7 +49,7 @@
           </div>
 
           <!-- 商品套餐选择 -->
-          <div class="roduct_otherinfo">
+          <!-- <div class="roduct_otherinfo">
             <span class="otherinfo_title">套餐</span>
             <div class="otherinfo_module cl newga ga" p="套餐切换">
               <a @click.prevent class="current" href="javascript:;"><span>华美食品单黄白莲蓉铁盒<em>¥</em>72</span><i></i></a>
@@ -60,24 +60,25 @@
               <a @click.prevent href="javascript:;"><span>华美食品时尚双黄月饼1盒<em>¥</em>85</span><i></i></a>
               <a @click.prevent href="http://shenzhen.lashou.com/deal/14365498.html"><span>华美食品华美蛋黄酥1盒<em>¥</em>88</span><i></i></a>
             </div>
-          </div>
+          </div> -->
 
           <!-- 商品数量 -->
           <div class="roduct_otherinfo  goods_num">
             <span class="otherinfo_title">数量</span>
             <div class="otherinfo_content">
-              <span class="minus disabled" v-on:click="minus"><i class="minus_icon"></i></span>
+              <span style="text-align:center;" class="minus disabled" v-on:click="minus">-</span>
               <input type="text" v-bind:value="goods_num" autocomplete="off" name="amount" class="buyin amount"
                      price="72" goods_id="13993308" min_per_user="1" max_per_user="30"
                      style="_webkit_user_select: all;">
-              <span class="plus" v-on:click="add"><i class="plus_icon"></i></span>
+              <span style="text-align:center;" class="plus" v-on:click="add">+</span>
             </div>
           </div>
-
           <!-- 按钮 -->
           <div class="roduct_button" v-if="!end">
-            <a @click.stop.prevent="buy" class="button_red" href="javascript:;">立即购买</a>
-            <a @click.stop.prevent="addCar" class="button_cart button_cart_add"><i></i><span>加入购物车</span></a>
+            <div v-if="goodDetail.isOnSecKill" style="padding:10px;">抢购结束时间 : {{goodDetail.secKill.tgwSeckill.seckillEnd}}</div>
+            <a v-if="!goodDetail.isOnSecKill" @click.stop.prevent="buy" class="button_red" href="javascript:;">立即购买</a>
+            <a v-if="goodDetail.isOnSecKill" @click.stop.prevent="buyNow" class="button_red" href="javascript:;">马上抢购</a>
+            <a @click.stop.prevent="addCar" class="button_cart button_cart_add"><i></i><span>买一个</span></a>
           </div>
           <div class="roduct_button end" v-if="end">
             <a @click.prevent class="button-gray" href="javascript:void(0)">已结束</a>
@@ -90,19 +91,50 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations,mapGetters } from "vuex";
+import { get, post } from "../util";
 export default {
   data() {
     return {
       end: false,
-      goods_num: 1
+      goods_num: 1,
+      goodDetail: {},
+      goodDetailLoading: false
     };
   },
   created() {
-    console.log(this.$route.params.id);
+    this.getGoodDetail();
+  },
+  activated() {
+    this.getGoodDetail();
+  },
+  computed:{
+...mapGetters(['userInfo'])
   },
   methods: {
-    ...mapMutations(["setOrderDetail"]),
+    ...mapMutations(["setOrderDetail",'setOrderPayDetail']),
+    async buyNow() {
+      if(!this.userInfo.id){
+        this.$message.warning('请先登录')
+        return
+      }
+      try {
+        const formDate = new FormData();
+        formDate.append("goodsId", this.goodDetail.resultGoods.goods.id);
+        formDate.append("count", this["goods_num"]);
+        const result = await post("/tjsanshao/order/create", formDate);
+        if (result.status == "success") {
+          this.setOrderPayDetail(result);
+          this.$router.push({
+            name: "orderPay"
+          });
+        } else {
+          this.$message.error("抢购失败");
+        }
+      } catch (error) {
+        this.$message.error("网络错误");
+      }
+    },
     add() {
       this.goods_num++;
     },
@@ -110,16 +142,55 @@ export default {
       this.goods_num == 1 ? 1 : this.goods_num--;
     },
     buy() {
+      if(!this.userInfo.id){
+        this.$message.warning('请先登录')
+        return
+      }
       this.setOrderDetail({
-        name: '大汉风',
-        count: 1,
-        'single_price': 123,
-        total: this['goods_num']*123
+        goodsId: this.goodDetail.resultGoods.goods.id,
+        name: this.goodDetail.resultGoods.goods.goodsTitle,
+        count: this["goods_num"],
+        single_price: this.goodDetail.resultGoods.goods.discountPrice,
+        total:
+          this["goods_num"] * this.goodDetail.resultGoods.goods.discountPrice
       });
       this.$router.push({ name: "order" });
     },
-    addCar() {
-      this.$message.success("添加成功");
+    async addCar() {
+      if(!this.userInfo.id){
+        this.$message.warning('请先登录')
+        return
+      }
+      try {
+        const formDate = new FormData();
+        formDate.append("goodsId", this.goodDetail.resultGoods.goods.id);
+        formDate.append("count", this["goods_num"]);
+        const result = await post("/tjsanshao/order/create", formDate);
+        if (result.status == "success") {
+          this.$message.success("添加成功");
+        } else {
+          this.$message.error("添加失败");
+        }
+      } catch (error) {
+        this.$message.error("网络错误");
+      }
+    },
+    async getGoodDetail() {
+      try {
+        this.goodDetailLoading = true;
+        const result = await get("/xiaojian/goodsById", {
+          id: this.$route.params.id
+        });
+        if (result.status == "success") {
+          this.goodDetail = result;
+        } else {
+          this.$message.error("获取失败");
+        }
+      } catch (error) {
+        this.$message.error("网络错误");
+      } finally {
+        this.goodDetailLoading = false;
+      }
     }
   }
 };
