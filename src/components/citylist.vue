@@ -1,18 +1,9 @@
 <template>
   <div class="citylist">
     <ul>
-      <span>A</span>
+      <span>{{title}}</span>
       <li>
-        <a @click.prevent href="javascript:;">安庆</a>
-        <a @click.prevent href="javascript:;">安阳</a>
-        <a @click.prevent href="javascript:;">鞍山</a>
-        <a @click.prevent href="javascript:;">阿拉善盟</a>
-        <a @click.prevent href="javascript:;">安达</a>
-        <a @click.prevent href="javascript:;">安顺</a>
-        <a @click.prevent href="javascript:;">阿克苏</a>
-        <a @click.prevent href="javascript:;">阿勒泰</a>
-        <a @click.prevent href="javascript:;">阿坝州</a>
-        <a @click.prevent href="javascript:;">安康</a>
+        <a v-for="(item,index) in city" :key='index' @click.prevent href="javascript:;">{{item}}</a>
       </li>
     </ul>
   </div>
@@ -23,14 +14,14 @@
   // 城市列表
   export default {
     props: {
-      // city:{
-      // 	type:Array,
-      // 	default:[]
-      // },
-      // title:{
-      // 	type:String,
-      // 	default:''
-      // }
+      city:{
+      	type:Array,
+      	default:[]
+      },
+      title:{
+      	type:String,
+      	default:''
+      }
     }
   }
 </script>
@@ -64,7 +55,15 @@
     padding-top: 4px;
     font-size: 0;
   }
-
+  .citylist ul:hover{
+    background-color: #FAFBFB;
+    border-color: #F0F3F5;
+  }
+  .citylist ul:hover span{
+    background-color: #6586CB;
+    border-color: #6586CB;
+    color: #fff;
+  }
   .citylist a {
     display: inline-block;
     height: 22px;
@@ -74,5 +73,12 @@
     color: #565656;
     text-decoration: none;
   }
+  .citylist a:hover{
+      border-color: #6586CB;
+      background-color: #6586CB;
+      color: #FFF;
+      font-weight: bolder;
+  }
+
 
 </style>
