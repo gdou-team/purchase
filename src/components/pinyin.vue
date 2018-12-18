@@ -1,7 +1,7 @@
 <template>
 	<div class="pinyin">
 		<span>按拼音首字母选择</span>
-		<a href="javascript:;" @click=letter() v-for="(item,index) in letter_list" :key="index">{{item}}</a>
+		<a href="javascript:;" @click.stop.prevent="handlerClick($event)" v-for="(item,index) in letter_list" :key="index" :data-title="item">{{item}}</a>
 	</div>
 </template>
 
@@ -10,13 +10,14 @@
 		name: 'pinyin',
 		data(){
 			return {
-				letter_list:['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+				letter_list:['A','B','C','D','E','F','G','H','J','K','L','M','N','O','P','Q','R','S','T','W','X','Y','Z']
 			}
 		},
 		methods:{
-			letter(){
-
-			}
+			handlerClick(e){
+				this.$emit("nav", e.target.dataset.title);
+				//console.log(e.target.dataset.title);
+			},
 		}
 	}
 
@@ -37,5 +38,9 @@
 	    font-family: arial;
 	    color: #565656;
 	}
-
+	.pinyin a:hover{
+		border-color: #6586CB;
+    	background-color: #6586CB;
+    	color: #FFF;
+	}
 </style>

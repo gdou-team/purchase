@@ -1,7 +1,8 @@
 <template>
   <el-container class="my-container">
     <el-header class="my-el-header flexrow">
-      <img src="../assets/login-logo.png" alt="">
+     <!--  <img src="../assets/login-logo.png" alt=""> -->
+     <h3 class="head_title">团购网</h3>
       <div class="my-login flexrow">
         <i style="font-size:22px;margin-right:15px;" class="el-icon-location-outline
 "/>
@@ -65,7 +66,11 @@
     width: 100%;
     height: 100%;
   }
-
+  .head_title{
+    margin-left: 3%;
+    font-size: 28px;
+    color: #fff;
+  }
   .my-login-item {
     width: 710px;
     height: 470px;
