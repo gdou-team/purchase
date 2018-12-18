@@ -39,7 +39,6 @@
       }
     },
     created() {
-      console.log(this.$route.name)
       if (this.$route.name == 'login') {
         this.title = '登录'
       } else {

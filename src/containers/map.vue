@@ -35,6 +35,12 @@
     computed: {
       ...mapGetters(["location"])
     },
+    activated(){
+      this.initMap()
+    },
+    deactivated(){
+      this.map = null
+    },
     methods: {
       ...mapMutations(['setLocation']),
       search() {

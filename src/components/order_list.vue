@@ -4,21 +4,21 @@
       <div class="order_img">
         <a href="javascript:;" class="link" target="_blank">
           <div>
-            <img src="../assets/order_list.png" class="image">
+            <img :src="order.goodsImage.imageUrl" class="image">
           </div>
         </a>
       </div>
       <div class="order_info">
         <div class="info_box">
           <a href="javascript:;" class="link" target="_blank">
-            <p class="order_title">Dream cake 蛋糕屋[东站店]双层儿童生日蛋糕</p>
+            <p class="order_title">{{order.goods.goodsTitle}}</p>
           </a>
-          <p class="info">数量：1</p>
+          <p class="info">数量：{{order.order.count}}</p>
         </div>
       </div>
-      <div class="order_price">总价：¥188.00</div>
-      <div v-if="!isComment" class="order_status">去付款</div>
-      <div v-else class="order_status" @click="comment">去评论</div>
+      <div class="order_price">总价：¥{{order.order.count*order.goods.discountPrice}}</div>
+      <div class="order_status" @click="comment">{{order.sellStatus}}</div>
+      <!-- <div v-else class="order_status" @click="comment">去评论</div> -->
       <div class="order_btn"></div>
     </div>
   </div>
@@ -28,9 +28,11 @@
 <script>
   export default {
     props: {
-      isComment: {
-        type: Boolean,
-        default: false
+      order:{
+        type:Object,
+        default:()=>{
+          return {}
+        }
       }
     },
     methods: {

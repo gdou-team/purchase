@@ -239,7 +239,6 @@ export default {
         const res = await get("/xiaojian/hotGoods", {
           city: this.location
         });
-        console.log(res);
       } catch (e) {}
     },
     async getNewGoods() {
@@ -247,7 +246,6 @@ export default {
         const res = await get("/xiaojian/newGoods", {
           city: this.location
         });
-        console.log(res);
       } catch (e) {}
     }
   },

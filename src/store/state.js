@@ -1,13 +1,15 @@
-let userInfo = window.localStorage.getItem('userInfo')
+import storage from 'good-storage'
 
-userInfo = userInfo ? JSON.parse(userInfo) : {}
+let userInfo = storage.get('userInfo',{})
 
-
+let userDetail = storage.get('userDetail',{})
 // 仓库
 let state = {
     userInfo:userInfo,
     location:'湛江市',
-    orderDetail:{}
+    orderDetail:{},
+    userDetail:userDetail,
+    orderPayDetail:null
 }
 
 

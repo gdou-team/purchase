@@ -18,7 +18,7 @@
       <p v-if="isError.code" class="p fontsize12">验证码错误</p>
     </div>
     <div>
-      <el-button @click='register' type="primary" style='width:100%;' :disabled='disabled'>注册</el-button>
+      <el-button @click='register' type="primary" style='width:100%;' :disabled='disabled'>{{title}}</el-button>
     </div>
     <div style="text-align:right;">
       <router-link class="my-regist fontsize14" :to='{name:"login"}'>登陆</router-link>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { checkPhone, get } from "@/util";
+import { checkPhone, get ,post} from "@/util";
 import {mapMutations} from 'vuex'
 // 注册表单
 export default {
@@ -38,6 +38,7 @@ export default {
       second: 60,
       getcode: false,
       disabled: false,
+      title:'注册',
       form: {
         phone: "",
         password: "",
@@ -100,20 +101,24 @@ export default {
         return;
       }
       try {
-        const res = await get("/tjsanshao/user/register", {
-          username: this.form.phone,
-          password: this.form.password,
-          code: this.form.code,
-          mobile: this.form.phone
-        });
+        let formData = new FormData()
+        formData.append('username',this.form.phone)
+        formData.append('password',this.form.password)
+        formData.append('code',this.form.code)
+        formData.append('mobile',this.form.phone)
+        this.title = '注册中...'
+        const res = await post("/tjsanshao/user/register", formData);
         if(res.status == 'success'){
-          this.setUserInfo(res.user)
+          this.setUserInfo(res)
+          this.title = '退出'
           this.$router.push({ name: "homeContent" });
         }else{
           this.$message.error('注册失败')
         }
       } catch (e) {
         this.$message.error("网络错误");
+      }finally{
+        this.title = '退出'
       }
     },
     goToHome() {
