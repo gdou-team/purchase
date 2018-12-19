@@ -82,6 +82,7 @@ export default {
         formDate.append("count", this.orderDetail.count);
         const result = await post("/tjsanshao/order/create", formDate);
         if (result.status == "success") {
+          console.log(result)
           this.setOrderPayDetail(result)
           this.$router.push({
             name: "orderPay"

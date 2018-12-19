@@ -108,9 +108,9 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setOrderDetail"]),
+    ...mapMutations(["setOrderDetail", "setOrderPayDetail"]),
     async handleClick(tab, event) {
-      this.initOrder(tab.name)
+      this.initOrder(tab.name);
     },
     setUserInfo() {
       this.dialogVisible = true;
@@ -132,10 +132,10 @@ export default {
       try {
         this[`${name}Loading`] = true;
         const result = await get(`/tjsanshao/user/${name}`);
-        if(!result.orders){
-          this.$message.warning('登陆已经过期')
+        if (!result.orders) {
+          this.$message.warning("登陆已经过期");
           this[`${name}Loading`] = false;
-          return
+          return;
         }
         this[name] = result.orders;
         this.$storage.set(name, result.orders);
@@ -146,7 +146,7 @@ export default {
         this[`${name}Loading`] = false;
       }
     },
-    goToPay(item) {
+    async goToPay(item) {
       this.setOrderDetail({
         goodsId: item.goods.id,
         name: item.goods.goodsTitle,
@@ -154,8 +154,44 @@ export default {
         single_price: item.order.discountPrice,
         total: item.goods.discountPrice * item.order.count
       });
-      this.$router.push({ name: "order" });
+      try {
+        const formDate = new FormData();
+        formDate.append("goodsId", item.goods.id);
+        formDate.append("count", item.order.count);
+        const result = await post("/tjsanshao/order/create", formDate);
+        if (result.status == "success") {
+          this.setOrderPayDetail(result);
+          this.$router.push({
+            name: "orderPay"
+          });
+        } else {
+          this.$message.error("支付失败");
+        }
+      } catch (error) {
+        this.$message.error("服务器或者网络出现问题");
+      }
     },
+
+    async submit_order() {
+      try {
+        const formDate = new FormData();
+        formDate.append("goodsId", this.orderDetail.goodsId);
+        formDate.append("count", this.orderDetail.count);
+        const result = await post("/tjsanshao/order/create", formDate);
+        if (result.status == "success") {
+          console.log(result);
+          this.setOrderPayDetail(result);
+          this.$router.push({
+            name: "orderPay"
+          });
+        } else {
+          this.$message.error("提交订单失败");
+        }
+      } catch (error) {
+        this.$message.error("服务器或者网络出现问题");
+      }
+    },
+
     goToUse(item) {
       this.orderDetail = item;
       this.isShowOrderDetails = true;

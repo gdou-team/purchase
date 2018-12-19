@@ -80,6 +80,7 @@ export default {
   mounted() {
     this.timer = null;
     this.setTime();
+    console.log(this.orderPayDetail)
   },
   computed: {
     ...mapGetters(["orderPayDetail"])
