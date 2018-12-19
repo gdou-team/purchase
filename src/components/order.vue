@@ -87,10 +87,10 @@ export default {
             name: "orderPay"
           });
         }else{
-          this.$message.error('提交失败')
+          this.$message.error('提交订单失败')
         }
       } catch (error) {
-        this.$message.error('网络错误')
+        this.$message.error('服务器或者网络出现问题')
       }
       // this.$router.push({
       //   name: "orderPay",

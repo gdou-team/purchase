@@ -15,6 +15,27 @@
       </el-input>
       <button :disabled='title=="提交中"' class="btn order_again commit" @click="commit">{{title}}</button>
     </div>
+
+    <div v-loading='loading' class="head" v-if="orderDetail.sellStatus == '已完成' && isComment">
+      <p class="title">已完成</p>
+      <el-rate
+      disabled
+        v-model="readRate"
+        show-text>
+      </el-rate>
+      <p style="padding:10px 0;">评论内容 : {{comment.commentDesc || ''}}</p>
+      <p style='padding:10px 0;'>评论时间 : {{comment.commentTime || ''}}</p>
+      <!-- <el-input
+        class='comment'
+        type="textarea"
+        :rows="2"
+        placeholder="请输入内容"
+        v-model="textarea">
+      </el-input> -->
+    </div>
+    <div class="head" v-if="orderDetail.sellStatus == '已完成' && !isComment">
+      <p>还没有进行评论</p>
+    </div>
     <div class="item">
       <h3 class="title">订单信息</h3>
       <div class="order_info">
@@ -87,7 +108,11 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       rate: null,
-      textarea: null
+      textarea: null,
+      comment:{},
+      readRate:0,
+      loading:false,
+      isComment:true
     };
   },
   filters: {
@@ -119,7 +144,7 @@ export default {
           this.$message.error('评论失败')
         }
       } catch (error) {
-        this.$message.error('网络错误')
+        this.$message.error('服务器或者网络出现问题')
       }finally{
         this.title = '提交评论'
       }
@@ -132,7 +157,34 @@ export default {
     },
     againOrder(){
       this.$emit('againOrder')
+    },
+    async getComment(){
+      if(this.orderDetail.sellStatus != '已完成'){
+        return
+      }
+      try {
+        this.loading = true
+        const result = await get('/xiaojian/getCommentByOrderId',{orderId:this.orderDetail.order.id})
+        if(!result.comment){
+          this.isComment=false
+          return
+        }
+        if(result.status == 'success'){
+          this.comment = result.comment
+          this.readRate = result.comment.commentStars
+        }else{
+          this.$message.error('获取评论失败')
+        }
+      } catch (error) {
+        this.loading = false
+        this.$message.error('服务器或者网络错误')
+      }finally{
+        this.loading = false
+      }
     }
+  },
+  created(){
+    this.getComment()
   },
   computed:{
     ...mapGetters(['userInfo','userDetail'])

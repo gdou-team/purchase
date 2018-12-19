@@ -184,13 +184,13 @@ export default {
         formData.append("headImage", file);
         const result = await post('/tjsanshao/user/detail',formData)
         if(result.message == 'success'){
-          this.$message.success('修改成功')
+          this.$message.success('修改头像成功')
           this.setUserInfo(result);
         }else{
-          this.$message.error('修改失败')
+          this.$message.error('修改头像失败')
         }
       } catch (error) {
-        this.$message.error('网络错误')
+        this.$message.error('服务器或者网络出现问题')
       }
     },
     async changeName() {
@@ -310,12 +310,12 @@ export default {
           requestParam: "password"
         });
         if (res.status == "success") {
-          this.$message.success("发送成功");
+          this.$message.success("发送验证码成功");
         } else {
-          this.$message.error("发送失败");
+          this.$message.error("发送验证码失败");
         }
       } catch (e) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     },
     sureEdit() {
@@ -334,14 +334,14 @@ export default {
         formData.append("nickName", this.username);
         const result = await post("/tjsanshao/user/detail", formData);
         if (result.message == "success") {
-          this.$message.success("修改成功");
+          this.$message.success("修改昵称成功");
           this.setUserInfo(result);
           this.show_name_tag = false;
         } else {
-          this.$message.error("修改错误");
+          this.$message.error("修改昵称错误");
         }
       } catch (error) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     }
   },

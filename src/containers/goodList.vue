@@ -2,35 +2,37 @@
   <div>
     <ul v-loading='loading' style="min-height:200px;">
       <li v-if="list.length == 0" style="text-align:center;padding:50px 0">暂无数据</li>
-    <li @click="goToDetail(item.id)" v-for="(item,index) in list" :key="index">
+    <li @click="goToDetail(item.id)" v-for="(item,index) in list" :key="index" style="padding-bottom:20px;">
       <goodslist class="my-container" :listDetail='item'/>
     </li>
   </ul>
-  <!-- <div class="page" v-if="totalPage>pageSize">
+  <div class="page" v-if="totalPage>pageSize">
     <el-pagination
       @current-change="handleCurrentChange"
       :page-size="pageSize"
       layout="prev, pager, next, jumper"
       :background='true'
+      :current-page='num'
       :total="totalPage">
     </el-pagination>
-  </div> -->
+  </div>
   </div>
 </template>
 
 <script>
 import {get} from '@/util'
+import {mapGetters} from 'vuex'
   export default {
     data(){
       return {
         pageSize:5,
-        totalPage:1000,
+        totalPage:0,
         list:[],
-        loading:false
+        loading:false,
+        num:1
       }
     },
     created() {
-      // console.log(this.$route.query.keyWord);
       this.getList()
     },
     methods: {
@@ -42,24 +44,34 @@ import {get} from '@/util'
           }
         });
       },
+      handleCurrentChange(e){
+        this.num = e
+        this.getList()
+      },
       async getList(){
         try {
           this.loading = true
-          const result = await get('/xiaojian/findByShopNameOrGoodsTitle',{goodsTitle:this.$route.query.keyWord})
-          this.list  = result.data
+          const result = await get('/xiaojian/serachByOption',{
+            searchOption:this.$route.query.keyWord,
+            num:this.num,
+            size:this.pageSize,
+            city:this.location
+            })
+          this.list  = result.result.resultGoods
+          this.totalPage = result.result.total
         } catch (error) {
-          this.$message.error('网络错误')
+          this.$message.error('服务器或者网络出现问题')
         }finally{
           this.loading = false
         }
       }
     },
-    // activated(){
-    //   this.getList()
-    // },
+    computed:{
+      ...mapGetters(['location'])
+    },
     watch: {
       $route() {
-        // console.log(this.$route.query.keyWord);
+        this.num = 1
         this.getList()
       }
     }

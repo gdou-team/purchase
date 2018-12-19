@@ -134,7 +134,7 @@ export default {
           this.$message.error("验证失败");
         }
       } catch (error) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     },
     async nextForth(str) {
@@ -161,7 +161,7 @@ export default {
           this.$message.error('解绑失败')
         }
       } catch (error) {
-        this.$message.error('网络错误')
+        this.$message.error('服务器或者网络出现问题')
       }
     },
     pre(str) {
@@ -189,12 +189,12 @@ export default {
           mobileNumber: this.phone.newPhone
         });
         if(result.status == 'success'){
-          this.$message.success('发送成功')
+          this.$message.success('发送验证码成功')
         }else{
-          this.$message.error('发送失败')
+          this.$message.error('发送验证码失败')
         }
       } catch (error) {
-        this.$message.error('网络错误')
+        this.$message.error('服务器或者网络出现问题')
       }
     }
   },

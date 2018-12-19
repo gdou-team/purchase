@@ -63,7 +63,7 @@ export default {
         //   });
         // }
       } catch (error) {
-        this.$message.error('网络错误')
+        this.$message.error('服务器或者网络出现问题')
       }finally{
         this.out = "退出";
       }

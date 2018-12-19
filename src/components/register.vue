@@ -83,12 +83,12 @@ export default {
           mobileNumber: this.form.phone
         });
         if (res.status == "success") {
-          this.$message.success("发送成功");
+          this.$message.success("发送验证码成功");
         } else {
-          this.$message.error("发送失败");
+          this.$message.error("发送验证码失败");
         }
       } catch (e) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     },
     async register() {
@@ -116,7 +116,7 @@ export default {
           this.$message.error('注册失败')
         }
       } catch (e) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }finally{
         this.title = '注册'
         this.disabled = false

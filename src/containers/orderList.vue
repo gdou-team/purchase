@@ -31,21 +31,24 @@
       class='my_tabs' 
       v-model="activeName" 
       @tab-click="handleClick">
-        <el-tab-pane data-title='order' label="全部订单" name="orders">
+        <el-tab-pane data-title='orders' label="全部订单" name="orders">
           <div style="text-align:center;padding:50px;background-color:white" v-if="orders.length==0 && !ordersLoading">暂无数据</div>
           <div v-loading='ordersLoading' v-if="ordersLoading" style="height:200px;"></div>
           <orderlist @comment='comment(item)' v-for="(item,index) in orders" :order='item' :key="index" class="order-list"/>
         </el-tab-pane>
-        <el-tab-pane label="待付款" name="ordersNotPay">
+        <el-tab-pane data-title='ordersNotPay' label="待付款" name="ordersNotPay">
           <div style="text-align:center;padding:50px;background-color:white" v-if="ordersNotPay.length==0 && !ordersLoading">暂无数据</div>
+          <div v-loading='ordersLoading' v-if="ordersLoading" style="height:200px;"></div>
           <orderlist v-for="(item,index) in ordersNotPay" :order='item' @comment='goToPay(item)' :key="index" class="order-list"/>
         </el-tab-pane>
         <el-tab-pane label="待使用" name="ordersNotUse">
           <div style="text-align:center;padding:50px;background-color:white" v-if="ordersNotUse.length==0 && !ordersLoading">暂无数据</div>
+          <div v-loading='ordersLoading' v-if="ordersLoading" style="height:200px;"></div>
           <orderlist v-for="(item,index) in ordersNotUse" :order='item' @comment='goToUse(item)' :key="index" class="order-list"/>
         </el-tab-pane>
         <el-tab-pane label="待评价" name="ordersNotComment">
           <div style="text-align:center;padding:50px;background-color:white" v-if="ordersNotComment.length==0 && !ordersLoading">暂无数据</div>
+          <div v-loading='ordersLoading' v-if="ordersLoading" style="height:200px;"></div>
           <orderlist v-for="(item,index) in ordersNotComment" :order='item' :key="index" @comment='comment(item)' class="order-list"/>
         </el-tab-pane>
         <!-- <el-tab-pane label="退款/售后" name="fifth">
@@ -107,7 +110,7 @@ export default {
   methods: {
     ...mapMutations(["setOrderDetail"]),
     async handleClick(tab, event) {
-      console.log(tab,event)
+      this.initOrder(tab.name)
     },
     setUserInfo() {
       this.dialogVisible = true;
@@ -129,11 +132,16 @@ export default {
       try {
         this[`${name}Loading`] = true;
         const result = await get(`/tjsanshao/user/${name}`);
+        if(!result.orders){
+          this.$message.warning('登陆已经过期')
+          this[`${name}Loading`] = false;
+          return
+        }
         this[name] = result.orders;
         this.$storage.set(name, result.orders);
       } catch (error) {
         this[name] = this.$storage.get(name, []);
-        this.$message.error("服务器错误");
+        this.$message.error("服务器或者网络出现问题");
       } finally {
         this[`${name}Loading`] = false;
       }
@@ -159,15 +167,12 @@ export default {
         });
         if (result.status == "success") {
           this.isShowOrderDetails = false;
-          this.initOrder("orders");
-          this.initOrder("ordersNotPay");
-          this.initOrder("ordersNotUse");
-          this.initOrder("ordersNotComment");
+          this.initOrder(this.activeName);
         } else {
-          this.$message.error("删除失败");
+          this.$message.error("删除订单失败");
         }
       } catch (error) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     },
     againOrder() {
@@ -179,20 +184,11 @@ export default {
       });
     },
     commonsuccess() {
-      this.initOrder("orders");
-      this.initOrder("ordersNotPay");
-      this.initOrder("ordersNotUse");
-      this.initOrder("ordersNotComment");
-    },
-    allOrder(){
-      console.log(1111111)
+      this.initOrder(this.activeName);
     }
   },
   async created() {
-    this.initOrder("orders");
-    this.initOrder("ordersNotPay");
-    this.initOrder("ordersNotUse");
-    this.initOrder("ordersNotComment");
+    this.initOrder(this.activeName);
   },
   computed: {
     ...mapGetters(["userDetail"])

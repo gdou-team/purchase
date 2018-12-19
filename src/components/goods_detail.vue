@@ -99,7 +99,7 @@ export default {
       end: false,
       goods_num: 1,
       goodDetail: {},
-      goodDetailLoading: false
+      goodDetailLoading: false,
     };
   },
   created() {
@@ -132,7 +132,7 @@ export default {
           this.$message.error("抢购失败");
         }
       } catch (error) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     },
     add() {
@@ -167,12 +167,12 @@ export default {
         formDate.append("count", this["goods_num"]);
         const result = await post("/tjsanshao/order/create", formDate);
         if (result.status == "success") {
-          this.$message.success("添加成功");
+          this.$message.success("添加商品成功");
         } else {
-          this.$message.error("添加失败");
+          this.$message.error("添加商品失败");
         }
       } catch (error) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       }
     },
     async getGoodDetail() {
@@ -184,10 +184,10 @@ export default {
         if (result.status == "success") {
           this.goodDetail = result;
         } else {
-          this.$message.error("获取失败");
+          this.$message.error("获取商品详情信息失败");
         }
       } catch (error) {
-        this.$message.error("网络错误");
+        this.$message.error("服务器或者网络出现问题");
       } finally {
         this.goodDetailLoading = false;
       }

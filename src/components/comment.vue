@@ -1,9 +1,9 @@
 <template>
   <div class="my-container1">
     <div class="my-user flexrow">
-      <img src="@/assets/default.png">
+      <img v-lazy='comment.userDetail.userImageUrl'>
       <div class="rate">
-        <p>1234567</p>
+        <p>{{comment.userDetail.nickName}}</p>
         <el-rate
           v-model="value5"
           disabled
@@ -14,19 +14,25 @@
       </div>
     </div>
     <p class="content">
-      这里第一眼看上去很满意，房东人很好的，很好相处好说话，卫生很干净，地理位置比较好找，性价比挺高的
-      这里第一眼看上去很满意，房东人很好的，很好相处好说话，卫生很干净，地理位置比较好找，性价比挺高的
-      这里第一眼看上去很满意，房东人很好的，很好相处好说话，卫生很干净，地理位置比较好找，性价比挺高的
+      {{comment.resultComment.commentDesc}}
     </p>
   </div>
 </template>
 
 <script>
   export default {
+    props:{
+      comment:{
+        type:Object
+      }
+    },
     data() {
       return {
         value5: 3.7
       };
+    },
+    created(){
+      this.value5 = this.comment.resultComment.commentStars
     }
   };
 </script>
