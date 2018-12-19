@@ -26,3 +26,7 @@ export const setUser = (state,user)=>{
 export const setOrderPayDetail = (state,orderPayDetail) =>{
     state.orderPayDetail = orderPayDetail
 }
+
+export const setIsShowSelectCity = (state,isShowSelectCity)=>{
+    state.isShowSelectCity=isShowSelectCity
+}

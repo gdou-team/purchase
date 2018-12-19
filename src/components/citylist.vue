@@ -3,7 +3,7 @@
     <ul>
       <span>{{title}}</span>
       <li>
-        <a v-for="(item,index) in city" :key='index' @click.prevent href="javascript:;">{{item}}</a>
+        <a v-for="(item,index) in city" :key='index' @click.prevent='handelClick(item)' href="javascript:;">{{item}}</a>
       </li>
     </ul>
   </div>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
   // 城市列表
   export default {
     props: {
@@ -21,6 +22,13 @@
       title:{
       	type:String,
       	default:''
+      }
+    },
+    methods:{
+      ...mapMutations(['setLocation','setIsShowSelectCity']),
+      handelClick(item){
+        this.setLocation(item)
+        this.setIsShowSelectCity(false)
       }
     }
   }

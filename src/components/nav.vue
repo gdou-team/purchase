@@ -4,11 +4,11 @@
       <li class="all">全部商品分类</li>
       <li @click="handelClick('homeContent')">首页</li>
       <li @click="handelClick('map')">周边地图</li>
-      <li @click="handelClick('goodList','new')">今日新单</li>
-      <li @click="handelClick('goodList','food')">美食</li>
-      <li @click="handelClick('goodList','movie')">电影</li>
-      <li @click="handelClick('goodList','Tourism')">旅游</li>
-      <li @click="handelClick('goodList','ticket')">特价机票</li>
+      <li @click="handelClick('goodList','酒店')">酒店</li>
+      <li @click="handelClick('goodList','美食')">美食</li>
+      <li @click="handelClick('goodList','电影')">电影</li>
+      <li @click="handelClick('goodList','旅游')">旅游</li>
+      <li @click="handelClick('goodList','特价机票')">特价机票</li>
     </ul>
   </div>
 </template>

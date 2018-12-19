@@ -9,7 +9,8 @@ let state = {
     location:'湛江市',
     orderDetail:{},
     userDetail:userDetail,
-    orderPayDetail:null
+    orderPayDetail:null,
+    isShowSelectCity:false
 }
 
 

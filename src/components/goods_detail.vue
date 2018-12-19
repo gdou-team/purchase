@@ -10,7 +10,7 @@
       <div class="product_bottom">
         <!-- 商品图片 -->
         <div class="roduct_left">
-          <img :src="goodDetail.resultGoods?goodDetail.resultGoods.goodsImage.imageUrl:''">
+          <img v-lazy="goodDetail.resultGoods?goodDetail.resultGoods.goodsImage.imageUrl:''">
         </div>
         <!-- 右边商品部分 -->
         <div class="roduct_info">

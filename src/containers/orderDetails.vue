@@ -13,7 +13,7 @@
         placeholder="请输入内容"
         v-model="textarea">
       </el-input>
-      <button class="btn order_again commit" @click="commit">提交评论</button>
+      <button :disabled='title=="提交中"' class="btn order_again commit" @click="commit">{{title}}</button>
     </div>
     <div class="item">
       <h3 class="title">订单信息</h3>
@@ -77,12 +77,13 @@
 
 
 <script>
-import { get, formateDate } from "@/util";
+import { get, formateDate,post } from "@/util";
 import {mapGetters} from 'vuex'
 
 export default {
   data() {
     return {
+      title:'提交评论',
       dialogImageUrl: "",
       dialogVisible: false,
       rate: null,
@@ -98,19 +99,29 @@ export default {
     }
   },
   methods: {
-    commit() {
-      //const res = await post('addr',{rate:this.rate,comment:this.textarea});
-      var res = true;
-      if (res) {
-        this.$message({
-          message: "评论成功",
-          type: "success"
-        });
-      } else {
-        this.$message({
-          message: "评论失败",
-          type: "warning"
-        });
+    async commit() {
+      if(!this.textarea){
+        this.$message.error('评论内容不能为空')
+        return
+      }
+      try {
+        this.title = '提交中'
+        const form = new FormData()
+        form.append('commentStars',this.rate)
+        form.append('commentDesc',this.textarea)
+        form.append('orderId',this.orderDetail.order.id)
+        const res = await post('/xiaojian/createComment',form);
+        if(res.status == 'success'){
+          this.$message.success('评论成功')
+          this.goBack()
+          this.$emit('commonsuccess')
+        }else{
+          this.$message.error('评论失败')
+        }
+      } catch (error) {
+        this.$message.error('网络错误')
+      }finally{
+        this.title = '提交评论'
       }
     },
     deleteOrder(){

@@ -11,3 +11,5 @@ export const orderDetail = state => state.orderDetail
 export const userDetail = state => state.userDetail
 
 export const orderPayDetail = state => state.orderPayDetail
+
+export const isShowSelectCity = state => state.isShowSelectCity 

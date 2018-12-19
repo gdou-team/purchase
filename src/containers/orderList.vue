@@ -16,6 +16,7 @@
 
     <transition name="router" mode="out-in">
       <orderdetails 
+      @commonsuccess='commonsuccess'
       v-if="isShowOrderDetails" 
       @deleteOrder='deleteOrder' 
       @againOrder='againOrder'
@@ -30,17 +31,21 @@
       class='my_tabs' 
       v-model="activeName" 
       @tab-click="handleClick">
-        <el-tab-pane label="全部订单" name="orders">
+        <el-tab-pane data-title='order' label="全部订单" name="orders">
+          <div style="text-align:center;padding:50px;background-color:white" v-if="orders.length==0 && !ordersLoading">暂无数据</div>
           <div v-loading='ordersLoading' v-if="ordersLoading" style="height:200px;"></div>
           <orderlist @comment='comment(item)' v-for="(item,index) in orders" :order='item' :key="index" class="order-list"/>
         </el-tab-pane>
         <el-tab-pane label="待付款" name="ordersNotPay">
+          <div style="text-align:center;padding:50px;background-color:white" v-if="ordersNotPay.length==0 && !ordersLoading">暂无数据</div>
           <orderlist v-for="(item,index) in ordersNotPay" :order='item' @comment='goToPay(item)' :key="index" class="order-list"/>
         </el-tab-pane>
         <el-tab-pane label="待使用" name="ordersNotUse">
+          <div style="text-align:center;padding:50px;background-color:white" v-if="ordersNotUse.length==0 && !ordersLoading">暂无数据</div>
           <orderlist v-for="(item,index) in ordersNotUse" :order='item' @comment='goToUse(item)' :key="index" class="order-list"/>
         </el-tab-pane>
         <el-tab-pane label="待评价" name="ordersNotComment">
+          <div style="text-align:center;padding:50px;background-color:white" v-if="ordersNotComment.length==0 && !ordersLoading">暂无数据</div>
           <orderlist v-for="(item,index) in ordersNotComment" :order='item' :key="index" @comment='comment(item)' class="order-list"/>
         </el-tab-pane>
         <!-- <el-tab-pane label="退款/售后" name="fifth">
@@ -101,7 +106,9 @@ export default {
   },
   methods: {
     ...mapMutations(["setOrderDetail"]),
-    async handleClick(tab, event) {},
+    async handleClick(tab, event) {
+      console.log(tab,event)
+    },
     setUserInfo() {
       this.dialogVisible = true;
     },
@@ -163,13 +170,22 @@ export default {
         this.$message.error("网络错误");
       }
     },
-    againOrder(){
+    againOrder() {
       this.$router.push({
-        name:'goodDetail',
-        params:{
-          id:this.orderDetail.goods.id
+        name: "goodDetail",
+        params: {
+          id: this.orderDetail.goods.id
         }
-      })
+      });
+    },
+    commonsuccess() {
+      this.initOrder("orders");
+      this.initOrder("ordersNotPay");
+      this.initOrder("ordersNotUse");
+      this.initOrder("ordersNotComment");
+    },
+    allOrder(){
+      console.log(1111111)
     }
   },
   async created() {

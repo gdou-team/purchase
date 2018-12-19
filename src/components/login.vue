@@ -48,6 +48,7 @@ export default {
       this.isError.password = false;
       try{
         this.title='登录中....'
+        this.disabled = true
         const formData = new FormData()
         formData.append('username',this.form.phone)
         formData.append('password',this.form.password)
@@ -64,6 +65,7 @@ export default {
         this.$message.error('网络错误')
       }finally{
         this.title = '登录'
+        this.disabled = false
       }
     },
     goBack() {

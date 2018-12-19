@@ -101,6 +101,7 @@ export default {
         return;
       }
       try {
+        this.disabled = true
         let formData = new FormData()
         formData.append('username',this.form.phone)
         formData.append('password',this.form.password)
@@ -110,7 +111,6 @@ export default {
         const res = await post("/tjsanshao/user/register", formData);
         if(res.status == 'success'){
           this.setUserInfo(res)
-          this.title = '退出'
           this.$router.push({ name: "homeContent" });
         }else{
           this.$message.error('注册失败')
@@ -118,7 +118,8 @@ export default {
       } catch (e) {
         this.$message.error("网络错误");
       }finally{
-        this.title = '退出'
+        this.title = '注册'
+        this.disabled = false
       }
     },
     goToHome() {

@@ -38,14 +38,16 @@
 
 <script>
 import {get} from '@/util'
+import {mapMutations,mapGetters} from 'vuex'
   // 首页
   export default {
     data() {
       return {
-        isShowSelectCity: false
+        // isShowSelectCity: false
       };
     },
     methods: {
+      ...mapMutations(['setIsShowSelectCity']),
       register() {
         this.$router.push({
           name: "register"
@@ -62,7 +64,7 @@ import {get} from '@/util'
         })
       },
       selectCity(flag) {
-        this.isShowSelectCity = !flag;
+        this.setIsShowSelectCity(!flag);
       },
       search(obj) {
         if(!obj.keyWord){
@@ -83,6 +85,9 @@ import {get} from '@/util'
           }
         });
       }
+    },
+    computed:{
+      ...mapGetters(['isShowSelectCity'])
     }
   };
 </script>
