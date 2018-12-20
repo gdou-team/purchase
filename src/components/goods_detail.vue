@@ -86,6 +86,11 @@
         </div>
       </div>
     </div>
+    <div
+    v-html="goodDetail.resultGoods?goodDetail.resultGoods.goodsDetail.goodsDesc : '暂无描述'"
+     class="my-comment" 
+     style="background-color:white;text-align:center;padding:50px;">
+    </div>
   </div>
 
 </template>
@@ -515,4 +520,9 @@ export default {
   text-align: center;
   float: left;
 }
+
+.my-comment {
+      width: 100%;
+      margin-top: 10px;
+      border: 1px solid #cccccc;}
 </style>

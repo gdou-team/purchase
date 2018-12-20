@@ -5,7 +5,7 @@
             <el-steps :active="active" simple style="height:60px">
             <el-step title="注册账户" icon="el-icon-edit"></el-step>
             <el-step title="店铺信息" icon="el-icon-upload"></el-step>
-            <el-step title="身份认证" icon="el-icon-picture"></el-step>
+            <!-- <el-step title="身份认证" icon="el-icon-picture"></el-step> -->
             </el-steps>
         </div>
         <div v-if="active==1" class="my-center item" style="width:360px;">
@@ -14,7 +14,7 @@
                 <p v-if="registerError.phone" class="p" style="font-size:12px;">手机格式不正确</p>
             </div>
             <div>
-                <el-input v-model="registerMessage.password" placeholder="密码" />
+                <el-input type="password" v-model="registerMessage.password" placeholder="密码" />
                 <p v-if="registerError.password" class="p" style="font-size:12px;">密码不能为空</p>
             </div>
             <div class="flexrow">
@@ -37,27 +37,47 @@
         <div v-if="active==2" class="my-center item" style="width:360px;">
             <div>
                 <span class="star">*</span>
-                <el-input v-model="shopMessage.name" placeholder="店铺名称" />
+                <el-input v-model="shopMessage.shopName" placeholder="商家名称" />
             </div>
             <div>
               <span class="star">*</span>
-                <el-input v-model="shopMessage.location" placeholder="店铺位置" />
+                <el-input v-model="shopMessage.shopLocation" placeholder="商家位置" />
             </div>
             <div>
               <span class="star">*</span>
-                <el-input v-model="shopMessage.desc" placeholder="店铺描述" />
+                <el-input v-model="shopMessage.shopDesc" placeholder="商家描述" />
+            </div>
+            <div>
+              <span class="star">*</span>
+                <el-input v-model="shopMessage.shopTimeOpen" placeholder="开门时间" />
+            </div>
+            <div>
+              <span class="star">*</span>
+                <el-input v-model="shopMessage.shopTimeClose" placeholder="关门时间" />
+            </div>
+            <div>
+              <span class="star">*</span>
+                <el-input v-model="shopMessage.phoneNumber" placeholder="商家客服电话" />
+            </div>
+            <div>
+              <span class="star">*</span>
+                <el-input v-model="shopMessage.contactPhoneNumber" placeholder="商家代表人电话" />
+            </div>
+
+            <div>
+                <el-input v-model="shopMessage.shopNotice" placeholder="公告" />
             </div>
             <div class="fontsize12"><span style="color:red;">*</span>是必填信息</div>
             <div>
                 <el-button 
-                :disabled="!shopMessage.name || !shopMessage.location || !shopMessage.desc" 
+                :disabled="!shopMessage.shopName || !shopMessage.shopLocation || !shopMessage.shopDesc || !shopMessage.shopTimeOpen || !shopMessage.shopTimeClose || !shopMessage.phoneNumber || !shopMessage.contactPhoneNumber" 
                 @click="submit" 
                 type="primary" 
                 style="width:100%">提交</el-button>
-                <p class="back" @click="back">返回</p>
+                <!-- <p class="back" @click="back">返回</p> -->
             </div>
         </div>
-        <div v-if="active==3" class="my-center item" style="width:360px;">
+        <!-- <div v-if="active==3" class="my-center item" style="width:360px;">
             <div>
               <span class="star">*</span>
               <el-input v-model="userInfo.name" placeholder="姓名" />
@@ -76,13 +96,14 @@
                 style="width:100%">认证</el-button>
                 <p class="back" @click="back">返回</p>
             </div>
-        </div>
+        </div> -->
         <ShopFooter/>
     </div>
 </template>
 
 <script>
 import { checkPhone } from "@/util";
+import { get, post } from "../util";
 export default {
   data() {
     return {
@@ -93,22 +114,19 @@ export default {
         code: null
       },
       shopMessage: {
-        name: null,
-        location: null,
-        desc: null
-      },
-      userInfo: {
-        name: null,
-        num: null
+        shopName: null,
+        shopLocation: null,
+        shopDesc: null,
+        shopTimeOpen: null,
+        shopTimeClose: null,
+        phoneNumber: null,
+        contactPhoneNumber: null,
+        shopNotice:null
       },
       registerError: {
         phone: false,
         password: false,
         code: false
-      },
-      userInfoError: {
-        name: false,
-        num: false
       },
       getcode: false,
       second: 60
@@ -118,7 +136,7 @@ export default {
     this.timer = null;
   },
   methods: {
-    register() {
+    async register() {
       this.registerError = {
         phone: false,
         password: false,
@@ -128,13 +146,59 @@ export default {
         this.registerError.phone = true;
         return;
       }
-      this.active++;
-      if (this.timer) {
-        clearInterval(this.timer);
+      if (!this.registerMessage.password) {
+        this.registerError.password = true;
+        return;
+      }
+      if (!this.registerMessage.code) {
+        this.registerError.code = true;
+        return;
+      }
+      try {
+        const formData = new FormData();
+        formData.append("username", this.registerMessage.phone);
+        formData.append("password", this.registerMessage.password);
+        formData.append("mobile", this.registerMessage.phone);
+        formData.append("code", this.registerMessage.code);
+        const result = await post("/tjsanshao/businessman/register", formData);
+        if (result.status == "success") {
+          this.active++;
+          if (this.timer) {
+            clearInterval(this.timer);
+          }
+        }else{
+          this.$message.error(result.message)
+        }
+      } catch (error) {
+        this.$message.error('服务器或者网络错误')
       }
     },
-    submit() {
-      this.active++;
+    async submit() {
+      try {
+        const formData = new FormData()
+        formData.append('shopName',this.shopMessage.shopName)
+        formData.append('shopLocation',this.shopMessage.shopLocation)
+        formData.append('shopDesc',this.shopMessage.shopDesc)
+        formData.append('shopTimeOpen',this.shopMessage.shopTimeOpen)
+        formData.append('shopTimeClose',this.shopMessage.shopTimeClose)
+        formData.append('phoneNumber',this.shopMessage.phoneNumber)
+        formData.append('contactPhoneNumber',this.shopMessage.contactPhoneNumber)
+        if(!this.shopMessage.shopNotice){
+          formData.append('shopNotice',this.shopMessage.shopNotice)
+        }
+        const result = await post('/tjsanshao/businessman/settle',formData)
+        if(result.status == 'success'){
+          // this.active++;
+          // window.location.href = 'http://localhost:3000/#/shop'
+          this.$message.success('提交成功，等待审核')
+          this.$router.replace({name:'homeContent'})
+        }else{
+          this.$message.error(result.message)
+        }
+      } catch (error) {
+        this.$message.error('服务器或者网络错误')
+      }
+      // this.active++;
     },
     authentication() {
       this.userInfoError.num = false;
@@ -147,7 +211,7 @@ export default {
     back() {
       this.active--;
     },
-    getCode() {
+    async getCode() {
       this.registerError = {
         phone: false,
         password: false,
@@ -169,6 +233,18 @@ export default {
           this.second = 60;
         }
       }, 1000);
+      try {
+        const result = await get("/tjsanshao/businessman/sendMsgCode", {
+          mobileNumber: this.registerMessage.phone
+        });
+        if (result.status == "success") {
+          this.$message.success("发送验证码成功");
+        } else {
+          this.$message.error("发送验证码失败");
+        }
+      } catch (error) {
+        this.$message.error("服务器或者网络错误");
+      }
     }
   },
   beforeDestroy() {
@@ -181,7 +257,7 @@ export default {
 
 
 <style lang="less" scoped>
-.settlesIn{
+.settlesIn {
   background-color: white;
   display: flex;
   flex-direction: column;
