@@ -114,6 +114,11 @@ if (window.Notification) {
   })
 }
 
+window.addEventListener('unload',()=>{
+  storage.remove('userInfo')
+  storage.remove('userDetail')
+})
+
 
 new Vue({
   el: '#app',
