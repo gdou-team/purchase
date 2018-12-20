@@ -39,7 +39,6 @@ export default {
           goodsId: this.$route.params.id
         });
         if (result.status == "success") {
-          console.log(result.comment)
           this.commentList = result.comment;
         } else {
           this.$message.error("获取商品评论失败");

@@ -62,8 +62,15 @@ export default {
         this.time = `${h}:${m}:${s}`;
       }, 1000);
     },
-    goBack() {
-      this.$router.back();
+    async goBack() {
+      try {
+        const formData = new FormData();
+        formData.append("id", this.orderPayDetail.order.id);
+        const result = await post("/tjsanshao/user/deleteOrder", formData);
+        this.$router.back();
+      } catch (error) {
+        this.$message.error('服务器或者网络出错了')
+      }
     },
     async goToPay() {
       try {
@@ -80,7 +87,6 @@ export default {
   mounted() {
     this.timer = null;
     this.setTime();
-    console.log(this.orderPayDetail)
   },
   computed: {
     ...mapGetters(["orderPayDetail"])

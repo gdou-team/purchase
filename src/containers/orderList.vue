@@ -9,7 +9,7 @@
         <p class="usermoney">我的余额：￥<span class="money">0</span></p>
       </div>
       <div class="setting">
-        <div @click="setUserInfo">个人信息设置 ></div>
+        <div @click="setuserInfo">个人信息设置 ></div>
         <div @click="goBackHome">返回首页</div>
       </div>
     </div>
@@ -108,11 +108,11 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setOrderDetail", "setOrderPayDetail"]),
+    ...mapMutations(["setOrderDetail", "setOrderPayDetail", "setUserInfo"]),
     async handleClick(tab, event) {
       this.initOrder(tab.name);
     },
-    setUserInfo() {
+    setuserInfo() {
       this.dialogVisible = true;
     },
     goBackHome() {
@@ -135,6 +135,11 @@ export default {
         if (!result.orders) {
           this.$message.warning("登陆已经过期");
           this[`${name}Loading`] = false;
+          this.setUserInfo({
+            user: {},
+            userDetail: {}
+          });
+          this.$router.push({ name: "login" });
           return;
         }
         this[name] = result.orders;
@@ -147,18 +152,17 @@ export default {
       }
     },
     async goToPay(item) {
-      this.setOrderDetail({
-        goodsId: item.goods.id,
-        name: item.goods.goodsTitle,
-        count: item.order.count,
-        single_price: item.order.discountPrice,
-        total: item.goods.discountPrice * item.order.count
-      });
+      // this.setOrderDetail({
+      //   goodsId: item.goods.id,
+      //   name: item.goods.goodsTitle,
+      //   count: item.order.count,
+      //   single_price: item.order.discountPrice,
+      //   total: item.goods.discountPrice * item.order.count
+      // });
       try {
-        const formDate = new FormData();
-        formDate.append("goodsId", item.goods.id);
-        formDate.append("count", item.order.count);
-        const result = await post("/tjsanshao/order/create", formDate);
+        const result = await get("/tjsanshao/order/query", {
+          id: item.order.id
+        });
         if (result.status == "success") {
           this.setOrderPayDetail(result);
           this.$router.push({
@@ -179,7 +183,6 @@ export default {
         formDate.append("count", this.orderDetail.count);
         const result = await post("/tjsanshao/order/create", formDate);
         if (result.status == "success") {
-          console.log(result);
           this.setOrderPayDetail(result);
           this.$router.push({
             name: "orderPay"

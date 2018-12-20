@@ -64,6 +64,7 @@ export default {
       let total =
         this.tableData[index].count * this.orderDetail["single_price"];
       this.setOrderDetail({
+        goodsId: this.orderDetail.goodsId,
         name: this.orderDetail.name,
         count: this.tableData[index].count,
         single_price: this.orderDetail["single_price"],
@@ -71,9 +72,6 @@ export default {
       });
       this.tableData[index].total = total;
       this.total_price_num = this.tableData[index].total;
-      // this.tableData.forEach( (element, index)=> {
-      // 	this.total_price_num += element.total
-      // });
     },
     async submit_order() {
       try {
@@ -82,7 +80,6 @@ export default {
         formDate.append("count", this.orderDetail.count);
         const result = await post("/tjsanshao/order/create", formDate);
         if (result.status == "success") {
-          console.log(result)
           this.setOrderPayDetail(result)
           this.$router.push({
             name: "orderPay"
