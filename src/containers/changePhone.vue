@@ -94,9 +94,9 @@ export default {
       active: 0,
       activeName: "first",
       phone: {
-        oldPhone: "13427491053",
-        newPhone: "17607591628",
-        code: "082324",
+        oldPhone: "",
+        newPhone: "",
+        code: "",
         oldPassword: ""
       },
       isError: {

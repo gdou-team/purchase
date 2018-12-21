@@ -109,7 +109,7 @@ export default {
     return {
       active: 1,
       registerMessage: {
-        phone: 13427491053,
+        phone: '',
         password: null,
         code: null
       },
