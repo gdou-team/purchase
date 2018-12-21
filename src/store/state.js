@@ -1,8 +1,8 @@
 import storage from 'good-storage'
 
-let userInfo = storage.get('userInfo',{})
+let userInfo = storage.session.get('userInfo',{})
 
-let userDetail = storage.get('userDetail',{})
+let userDetail = storage.session.get('userDetail',{})
 // 仓库
 let state = {
     userInfo:userInfo,

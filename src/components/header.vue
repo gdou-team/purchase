@@ -56,12 +56,6 @@ export default {
             userDetail:{}
           });
         const result = await get("/tjsanshao/user/logout");
-        // if (result.status == "success") {
-        //   this.setUserInfo({
-        //     user:{},
-        //     userDetail:{}
-        //   });
-        // }
       } catch (error) {
         this.$message.error('服务器或者网络出现问题')
       }finally{
