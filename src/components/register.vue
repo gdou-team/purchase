@@ -1,6 +1,6 @@
 <template>
 
-  <div class='input'>
+  <div class='input' @keyup.enter="keyupEnter">
     <div><h2>Welcome~</h2></div>
     <div>
       <el-input v-model="form.phone" placeholder="请输入手机号码"/>
@@ -55,6 +55,9 @@ export default {
   },
   methods: {
     ...mapMutations(['setUserInfo']),
+    keyupEnter(){
+      this.register()
+    },
     goBack() {
       this.$router.back();
     },

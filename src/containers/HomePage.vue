@@ -244,6 +244,9 @@ export default {
           };
           this.hotGoods = arr;
           this.$storage.set('hotGoods',arr)
+        }else{
+          this.hotGoods = {};
+          this.$storage.set('hotGoods',{})
         }
       } catch (e) {
         this.hotGoods = this.$storage.get('hotGoods',{})
@@ -262,10 +265,10 @@ export default {
         const res = await get("/xiaojian/newGoods", {
           city: this.location
         });
-        if (res.length > 0) {
+        // if (res.length > 0) {
           this.newGoods = res;
           this.$storage.set('newGoods',res)
-        }
+        // }
       } catch (e) {
         this.newGoods = this.$storage.get('newGoods',[])
         this.$message.error('服务器或者网络出现问题')

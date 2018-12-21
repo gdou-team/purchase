@@ -6,7 +6,7 @@
     </div>
     <div class="demo">
       <div class="my-input flexrowcenter">
-        <input type="text" placeholder="请输入关键字" v-model="keyWord">
+        <input type="text" placeholder="请输入关键字" v-model="keyWord" @keyup.enter="keyupEnter">
         <span @click="handelClick">搜索</span>
       </div>
       <ul class="my-list flexrow fontsize12">
@@ -33,6 +33,9 @@
       ...mapGetters(["location"])
     },
     methods: {
+      keyupEnter(){
+        this.handelClick()
+      },
       selectCity() {
         if (this.isShow == false) {
           this.$emit("selectCity", false);

@@ -141,9 +141,15 @@ export default {
       }
     },
     add() {
+      if(this.goodDetail.isOnSecKill){
+        return
+      }
       this.goods_num++;
     },
     minus() {
+      if(this.goodDetail.isOnSecKill){
+        return
+      }
       this.goods_num == 1 ? 1 : this.goods_num--;
     },
     buy() {
