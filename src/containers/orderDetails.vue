@@ -48,6 +48,10 @@
           <div class="field_value">{{orderDetail.order.orderCreateTime | formateDate}}</div>
         </div>
         <div class="field_item">
+          <div class="field_name">订单编号</div>
+          <div class="field_value">{{orderDetail.order.uniqueOrderNumber}}</div>
+        </div>
+        <div class="field_item">
           <div class="field_name">订单总价</div>
           <div class="field_value">{{orderDetail.order.total}}</div>
         </div>

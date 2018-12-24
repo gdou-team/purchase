@@ -18,7 +18,7 @@
       </div>
       <div class="item clearfix">
         <div class="field_name">解绑手机</div>
-        <div class="field_value">{{userDetail.mobile|formatPhone}}</div>
+        <div class="field_value">{{userInfo.mobile|formatPhone}}</div>
         <button class="btn_change" @click="changeMobile">换绑</button>
       </div>
       <div class="item clearfix">

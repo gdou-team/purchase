@@ -112,6 +112,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["setUser"]),
     next(str) {
       this.active++;
       this.activeName = str;
@@ -153,6 +154,7 @@ export default {
           mobile: this.phone.newPhone,
           code: this.phone.code
         });
+        console.log(result)
         if (result.status == "success") {
           this.setUser(result.user);
           this.active = this.active + 1;
@@ -206,7 +208,6 @@ export default {
     }
   },
   computed: {
-    ...mapMutations(["setUser"])
   },
   beforeDestroy() {
     if (this.timer) {

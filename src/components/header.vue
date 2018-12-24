@@ -8,7 +8,10 @@
     </div>
     <div class="my-right fontsize14">
       <ul>
-        <li class="my-item" @click='settledIn'>商家入住</li>
+        <li class="my-item">
+          <a href="/shop/index.html/" target="_blank">商家后台</a>
+        </li>
+        <li class="my-item" @click='settledIn'>商家入驻</li>
         <!-- <li>团购购物车(0)</li> -->
         <li @click="handelClick('orderList')">我的</li>
         <!-- <li>更多</li> -->

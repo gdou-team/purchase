@@ -119,6 +119,17 @@ if (window.Notification) {
 //   storage.remove('userDetail')
 // })
 
+// 更新缓存
+// window.applicationCache.addEventListener('updateready', function(e) {
+//   if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+//    window.applicationCache .swapCache();
+//     if (confirm('A new version of this site is available. Load it?')) {
+//       window.location.reload();
+//     }
+//   } else {
+//     // Manifest didn't changed. Nothing new to server.
+//   }
+// }, false);
 
 new Vue({
   el: '#app',
