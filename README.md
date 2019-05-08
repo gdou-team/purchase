@@ -2,6 +2,9 @@
 
 > 团购网
 
+TGW Client，团购网前端  
+团购网使用前后端分离开发，后端仓库链接地址：[purchase by TjSanshao https://github.com/TjSanshao/TGW](https://github.com/TjSanshao/TGW)
+
 ## Build Setup
 
 ``` bash
